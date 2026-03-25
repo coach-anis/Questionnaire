@@ -772,15 +772,16 @@ body::after {
       <div id="summaryContent"></div>
     </div>
 
-    <a id="waLink" href="#" class="btn-wa-big" target="_blank">
-      📲 تواصل مباشر مع Coach Anis
+    <a href="https://instagram.com/coach__anis" class="btn-wa-big" target="_blank">
+      📸 تواصل معي على الإنستغرام · @coach__anis
     </a>
   </div>
 
 </div>
 
 <script>
-const WA_NUMBER = "213XXXXXXXXX";
+// Formspree endpoint
+const FORMSPREE_URL = "https://formspree.io/f/maqlwbdy";
 const TOTAL_STEPS = 5;
 let formData = {};
 let checkboxData = { f_supps: [] };
@@ -934,56 +935,57 @@ function submitForm() {
   collectStep(5);
   if (!formData.f_plan) { alert('يرجى اختيار الباقة'); return; }
 
-  // Build summary
-  const rows = [
-    { k: 'الاسم', v: formData.f_name },
-    { k: 'العمر', v: formData.f_age + ' سنة' },
-    { k: 'الوزن / الطول', v: `${formData.f_weight}كغ / ${formData.f_height}سم` },
-    { k: 'الهدف', v: formData.f_goal },
-    { k: 'المستوى', v: formData.f_level },
-    { k: 'أيام التدريب', v: formData.f_days + ' أيام/أسبوع' },
-    { k: 'الباقة', v: formData.f_plan },
-    { k: 'الجدية', v: formData.f_commit + '/10' },
-  ];
+  // Fill hidden form fields
+  document.getElementById('hf_name').value         = formData.f_name || '';
+  document.getElementById('hf_age').value          = formData.f_age || '';
+  document.getElementById('hf_phone').value        = formData.f_phone || '';
+  document.getElementById('hf_gender').value       = formData.f_gender || '';
+  document.getElementById('hf_weight').value       = (formData.f_weight || '') + 'kg';
+  document.getElementById('hf_height').value       = (formData.f_height || '') + 'cm';
+  document.getElementById('hf_goal').value         = formData.f_goal || '';
+  document.getElementById('hf_level').value        = formData.f_level || '';
+  document.getElementById('hf_days').value         = (formData.f_days || '') + ' أيام/أسبوع';
+  document.getElementById('hf_diet').value         = formData.f_diet || 'لم يحدد';
+  document.getElementById('hf_supps').value        = formData.f_supps || 'لا شيء';
+  document.getElementById('hf_restrictions').value = formData.f_restrictions || 'لا يوجد';
+  document.getElementById('hf_injuries').value     = formData.f_injuries || 'لا يوجد';
+  document.getElementById('hf_lifestyle').value    = formData.f_lifestyle || 'لم يحدد';
+  document.getElementById('hf_sleep').value        = formData.f_sleep ? formData.f_sleep + ' ساعات' : 'لم يحدد';
+  document.getElementById('hf_plan').value         = formData.f_plan || '';
+  document.getElementById('hf_commit').value       = (formData.f_commit || '') + '/10';
+  document.getElementById('hf_expect').value       = formData.f_expect || '—';
+  document.getElementById('hf_notes').value        = formData.f_notes || 'لا يوجد';
+  document.getElementById('hf_subject').value      = 'تقييم عميل جديد: ' + formData.f_name + ' — ' + formData.f_plan;
 
-  document.getElementById('summaryContent').innerHTML = rows.map(r => `
-    <div class="summary-row">
-      <span class="sum-key">${r.k}</span>
-      <span class="sum-val">${r.v || '—'}</span>
-    </div>
-  `).join('');
-
-  // Build WA message
-  const msg = `السلام عليكم Coach Anis 👋
-
-📋 *تقييم عميل جديد*
-
-👤 *الاسم:* ${formData.f_name}
-📅 *العمر:* ${formData.f_age} سنة
-⚖️ *الوزن:* ${formData.f_weight}كغ | *الطول:* ${formData.f_height}سم
-🎯 *الهدف:* ${formData.f_goal}
-📊 *المستوى:* ${formData.f_level}
-🏋️ *أيام التدريب:* ${formData.f_days} أيام/أسبوع
-🥗 *النظام الغذائي:* ${formData.f_diet || 'لم يحدد'}
-💊 *المكملات:* ${formData.f_supps || 'لا شيء'}
-🚫 *ممنوعات:* ${formData.f_restrictions || 'لا يوجد'}
-🩺 *إصابات:* ${formData.f_injuries || 'لا يوجد'}
-💼 *نمط الحياة:* ${formData.f_lifestyle || 'لم يحدد'}
-😴 *النوم:* ${formData.f_sleep || '—'} ساعات
-📦 *الباقة:* ${formData.f_plan}
-💪 *الجدية:* ${formData.f_commit}/10
-
-💬 *التوقعات:* ${formData.f_expect || '—'}
-📝 *ملاحظات:* ${formData.f_notes || 'لا يوجد'}`;
-
-  document.getElementById('waLink').href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
-
-  // Hide steps, show thankyou
-  document.getElementById(`step5`).classList.remove('active');
-  document.getElementById('thankyou').style.display = 'block';
-  document.querySelector('.progress-wrap').style.display = 'none';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Submit the real HTML form
+  document.getElementById('formspreeForm').submit();
 }
 </script>
+
+<!-- HIDDEN FORMSPREE FORM -->
+<form id="formspreeForm" action="https://formspree.io/f/maqlwbdy" method="POST" style="display:none">
+  <input type="hidden" id="hf_name"         name="الاسم">
+  <input type="hidden" id="hf_age"          name="العمر">
+  <input type="hidden" id="hf_phone"        name="الواتساب">
+  <input type="hidden" id="hf_gender"       name="الجنس">
+  <input type="hidden" id="hf_weight"       name="الوزن">
+  <input type="hidden" id="hf_height"       name="الطول">
+  <input type="hidden" id="hf_goal"         name="الهدف">
+  <input type="hidden" id="hf_level"        name="المستوى">
+  <input type="hidden" id="hf_days"         name="أيام_التدريب">
+  <input type="hidden" id="hf_diet"         name="النظام_الغذائي">
+  <input type="hidden" id="hf_supps"        name="المكملات">
+  <input type="hidden" id="hf_restrictions" name="الممنوعات">
+  <input type="hidden" id="hf_injuries"     name="الإصابات">
+  <input type="hidden" id="hf_lifestyle"    name="نمط_الحياة">
+  <input type="hidden" id="hf_sleep"        name="النوم">
+  <input type="hidden" id="hf_plan"         name="الباقة">
+  <input type="hidden" id="hf_commit"       name="الجدية">
+  <input type="hidden" id="hf_expect"       name="التوقعات">
+  <input type="hidden" id="hf_notes"        name="ملاحظات">
+  <input type="hidden" id="hf_subject"      name="_subject">
+  <input type="hidden"                       name="_next" value="https://anisbitam21-png.github.io/ASSESSMENT/thanks.html">
+</form>
+
 </body>
 </html>
