@@ -3,989 +3,457 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تقييم العميل | Coach Anis</title>
+<title>استبيان الانضمام | Coach Anis</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
-:root {
-  --gold: #C9A84C;
-  --gold2: #E8C97A;
-  --dark: #080808;
-  --dark2: #0F0F0F;
-  --dark3: #161616;
-  --dark4: #1E1E1E;
-  --text: #EFEFEF;
-  --dim: #666;
-  --dim2: #444;
-  --border: rgba(201,168,76,0.18);
-  --green: #2DC653;
-  --red: #E63946;
-}
-
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--dark);
-  color: var(--text);
-  font-family: 'Cairo', sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-body::after {
-  content:'';
-  position:fixed; inset:0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
-  pointer-events:none; z-index:999; opacity:.4;
-}
-
-.bg-glow {
-  position: fixed; inset: 0;
-  background: radial-gradient(ellipse 70% 40% at 50% 0%, rgba(201,168,76,0.07) 0%, transparent 60%);
-  pointer-events: none; z-index: 0;
-}
-
-/* ─── HEADER ─── */
-.header {
-  text-align: center;
-  padding: 44px 24px 28px;
-  position: relative; z-index: 1;
-}
-
-.header-line {
-  width: 1px; height: 36px;
-  background: linear-gradient(180deg, transparent, var(--gold));
-  margin: 0 auto 16px;
-}
-
-.header-tag {
-  font-family: 'Bebas Neue', sans-serif;
-  letter-spacing: 5px; font-size: 11px;
-  color: var(--gold); opacity: 0.7;
-  margin-bottom: 12px;
-}
-
-.header h1 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(30px, 7vw, 52px);
-  letter-spacing: 2px; line-height: 1;
-  margin-bottom: 8px;
-}
-
-.header h1 span { color: var(--gold); }
-
-.header p {
-  font-size: 13px; color: var(--dim);
-  max-width: 360px; margin: 0 auto;
-  line-height: 1.7;
-}
-
-/* ─── PROGRESS ─── */
-.progress-wrap {
-  max-width: 580px; margin: 0 auto 28px;
-  padding: 0 20px;
-  position: relative; z-index: 1;
-}
-
-.step-dots {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-  margin-bottom: 10px;
-}
-
-.step-dot {
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  border: 1.5px solid var(--dim2);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 13px; color: var(--dim);
-  background: var(--dark2);
-  transition: all 0.3s ease;
-  flex-shrink: 0;
-  position: relative; z-index: 1;
-}
-
-.step-dot.active {
-  border-color: var(--gold);
-  color: var(--gold);
-  box-shadow: 0 0 14px rgba(201,168,76,0.25);
-}
-
-.step-dot.done {
-  border-color: var(--green);
-  background: rgba(45,198,83,0.1);
-  color: var(--green);
-}
-
-.step-line {
-  flex: 1; height: 1px;
-  background: var(--dim2);
-  transition: background 0.3s;
-  max-width: 40px;
-}
-
-.step-line.done { background: var(--green); }
-
-.progress-text {
-  text-align: center;
-  font-size: 11px; color: var(--dim);
-  letter-spacing: 1px;
-}
-
-.progress-text span { color: var(--gold); font-weight: 700; }
-
-/* ─── FORM CARD ─── */
-.form-wrap {
-  max-width: 580px;
-  margin: 0 auto;
-  padding: 0 20px 60px;
-  position: relative; z-index: 1;
-}
-
-.step-card {
-  background: var(--dark2);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 28px 24px;
-  display: none;
-  animation: stepIn 0.35s ease;
-}
-
-.step-card.active { display: block; }
-
-@keyframes stepIn {
-  from { opacity:0; transform: translateX(-16px); }
-  to   { opacity:1; transform: translateX(0); }
-}
-
-.step-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 22px; letter-spacing: 2px;
-  margin-bottom: 4px;
-}
-
-.step-title span { color: var(--gold); }
-
-.step-sub {
-  font-size: 12px; color: var(--dim);
-  margin-bottom: 24px; line-height: 1.6;
-}
-
-/* ─── INPUTS ─── */
-.field { margin-bottom: 18px; }
-
-.field label {
-  display: flex; justify-content: space-between;
-  align-items: center;
-  font-size: 13px; font-weight: 600;
-  color: var(--text); margin-bottom: 7px;
-}
-
-.field label .en {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 10px; letter-spacing: 2px;
-  color: var(--gold); opacity: 0.5;
-}
-
-.field input[type="text"],
-.field input[type="number"],
-.field input[type="tel"],
-.field textarea,
-.field select {
-  width: 100%;
-  background: var(--dark3);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 10px;
-  padding: 12px 14px;
-  color: var(--text);
-  font-family: 'Cairo', sans-serif;
-  font-size: 14px;
-  transition: border-color 0.2s;
-  -webkit-appearance: none;
-}
-
-.field textarea {
-  resize: none; min-height: 80px;
-  line-height: 1.6;
-}
-
-.field input:focus,
-.field textarea:focus,
-.field select:focus {
-  outline: none;
-  border-color: rgba(201,168,76,0.5);
-  background: rgba(201,168,76,0.03);
-}
-
-.field input::placeholder,
-.field textarea::placeholder { color: var(--dim); font-size: 13px; }
-
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-
-/* ─── OPTION CARDS ─── */
-.options-grid {
-  display: grid;
-  gap: 10px;
-}
-
-.options-grid.cols2 { grid-template-columns: 1fr 1fr; }
-.options-grid.cols3 { grid-template-columns: 1fr 1fr 1fr; }
-
-.opt-card {
-  background: var(--dark3);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 10px;
-  padding: 14px 12px;
-  cursor: pointer;
-  text-align: center;
-  transition: all 0.2s;
-  font-family: 'Cairo', sans-serif;
-  color: var(--dim);
-  font-size: 13px;
-  font-weight: 600;
-  user-select: none;
-}
-
-.opt-card:hover { border-color: var(--gold); color: var(--text); }
-
-.opt-card.selected {
-  border-color: var(--gold);
-  background: rgba(201,168,76,0.07);
-  color: var(--gold);
-}
-
-.opt-icon { font-size: 22px; display: block; margin-bottom: 7px; }
-.opt-label { display: block; font-size: 13px; font-weight: 700; }
-.opt-en { display: block; font-family: 'Bebas Neue', sans-serif; font-size: 9px; letter-spacing: 2px; opacity: 0.5; margin-top: 3px; }
-
-/* ─── SCALE ─── */
-.scale-wrap { margin-bottom: 6px; }
-
-.scale-track {
-  display: flex; gap: 6px;
-  margin-bottom: 6px;
-}
-
-.scale-btn {
-  flex: 1; height: 40px;
-  background: var(--dark3);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 8px;
-  cursor: pointer;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 14px; color: var(--dim);
-  transition: all 0.2s;
-}
-
-.scale-btn:hover { border-color: var(--gold); color: var(--text); }
-.scale-btn.selected { border-color: var(--gold); background: rgba(201,168,76,0.08); color: var(--gold); }
-
-.scale-labels {
-  display: flex; justify-content: space-between;
-  font-size: 10px; color: var(--dim);
-}
-
-/* ─── CHECKBOX LIST ─── */
-.check-list { display: flex; flex-direction: column; gap: 8px; }
-
-.check-item {
-  display: flex; align-items: center; gap: 12px;
-  background: var(--dark3);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 10px;
-  padding: 12px 16px;
-  cursor: pointer;
-  transition: all 0.2s;
-  user-select: none;
-}
-
-.check-item:hover { border-color: var(--gold); }
-.check-item.checked { border-color: var(--gold); background: rgba(201,168,76,0.06); }
-
-.check-box {
-  width: 20px; height: 20px;
-  border-radius: 5px;
-  border: 1.5px solid var(--dim2);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  transition: all 0.2s;
-  font-size: 11px;
-}
-
-.check-item.checked .check-box {
-  background: var(--gold);
-  border-color: var(--gold);
-  color: var(--dark);
-}
-
-.check-label { font-size: 13px; font-weight: 600; }
-
-/* ─── NAV BUTTONS ─── */
-.nav-btns {
-  display: flex; gap: 10px; margin-top: 24px;
-}
-
-.btn-next {
-  flex: 1;
-  background: linear-gradient(135deg, var(--gold), var(--gold2));
-  color: var(--dark);
-  border: none; border-radius: 10px;
-  padding: 14px;
-  font-family: 'Cairo', sans-serif;
-  font-size: 15px; font-weight: 900;
-  cursor: pointer;
-  transition: all 0.25s;
-}
-
-.btn-next:hover {
-  box-shadow: 0 8px 28px rgba(201,168,76,0.4);
-  transform: translateY(-2px);
-}
-
-.btn-prev {
-  width: 48px; height: 48px;
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  color: var(--dim); font-size: 18px;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex; align-items: center; justify-content: center;
-}
-
-.btn-prev:hover { border-color: var(--gold); color: var(--text); }
-
-/* ─── THANK YOU ─── */
-.thankyou {
-  display: none;
-  text-align: center;
-  padding: 40px 24px;
-  animation: stepIn 0.4s ease;
-}
-
-.ty-icon {
-  font-size: 52px; margin-bottom: 20px;
-  animation: popIn 0.5s ease;
-}
-
-@keyframes popIn {
-  from { transform: scale(0.5); opacity:0; }
-  to   { transform: scale(1); opacity:1; }
-}
-
-.ty-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 36px; letter-spacing: 2px;
-  margin-bottom: 8px;
-}
-
-.ty-title span { color: var(--gold); }
-
-.ty-sub { font-size: 14px; color: var(--dim); line-height: 1.8; margin-bottom: 28px; }
-
-.summary-box {
-  background: var(--dark2);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 20px;
-  text-align: right;
-  margin-bottom: 20px;
-}
-
-.summary-title {
-  font-family: 'Bebas Neue', sans-serif;
-  letter-spacing: 3px; font-size: 11px;
-  color: var(--gold); opacity: 0.6;
-  margin-bottom: 14px; text-align: center;
-}
-
-.summary-row {
-  display: flex; justify-content: space-between;
-  align-items: flex-start;
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  font-size: 13px; gap: 10px;
-}
-
-.summary-row:last-child { border-bottom: none; }
-.sum-key { color: var(--dim); flex-shrink: 0; }
-.sum-val { font-weight: 700; color: var(--text); text-align: left; }
-
-.btn-wa-big {
-  display: flex; align-items: center; justify-content: center;
-  gap: 10px;
-  background: linear-gradient(135deg, var(--gold), var(--gold2));
-  color: var(--dark);
-  padding: 16px 28px; border-radius: 10px;
-  font-family: 'Cairo', sans-serif;
-  font-size: 15px; font-weight: 900;
-  text-decoration: none;
-  transition: all 0.25s;
-  width: 100%;
-}
-
-.btn-wa-big:hover {
-  box-shadow: 0 10px 32px rgba(201,168,76,0.4);
-  transform: translateY(-2px);
-}
-
-.required { color: var(--red); margin-right: 3px; }
-
-@media (max-width: 400px) {
-  .grid2 { grid-template-columns: 1fr; }
-  .options-grid.cols3 { grid-template-columns: 1fr 1fr; }
-}
+:root{--gold:#C9A84C;--gold2:#E8C97A;--dark:#080808;--dark2:#0F0F0F;--dark3:#161616;--text:#EFEFEF;--dim:#666;--dim2:#333;--border:rgba(201,168,76,0.18);--green:#2DC653;--red:#E63946;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--dark);color:var(--text);font-family:'Cairo',sans-serif;min-height:100vh;overflow-x:hidden;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:.4;}
+.bg-glow{position:fixed;inset:0;background:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(201,168,76,0.07) 0%,transparent 60%);pointer-events:none;z-index:0;}
+
+/* HEADER */
+.header{text-align:center;padding:40px 24px 24px;position:relative;z-index:1;}
+.header-line{width:1px;height:34px;background:linear-gradient(180deg,transparent,var(--gold));margin:0 auto 12px;}
+.header-tag{font-family:'Bebas Neue',sans-serif;letter-spacing:5px;font-size:11px;color:var(--gold);opacity:.7;margin-bottom:10px;}
+.header h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(26px,6vw,48px);letter-spacing:2px;line-height:1;margin-bottom:8px;}
+.header h1 span{color:var(--gold);}
+.header p{font-size:13px;color:var(--dim);max-width:380px;margin:0 auto;line-height:1.7;}
+
+/* PACKAGE */
+.pkg-wrap{max-width:580px;margin:0 auto 24px;padding:0 20px;position:relative;z-index:1;}
+.pkg-card{background:linear-gradient(135deg,#141008,#1c1608);border:1px solid rgba(201,168,76,.4);border-radius:16px;padding:22px 20px;position:relative;overflow:hidden;}
+.pkg-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.pkg-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;gap:12px;}
+.pkg-badge{font-family:'Bebas Neue',sans-serif;font-size:9px;letter-spacing:3px;color:var(--dark);background:var(--gold);padding:3px 10px;border-radius:12px;display:inline-block;margin-bottom:6px;}
+.pkg-name{font-size:18px;font-weight:900;}
+.pkg-price{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--gold2);line-height:1;white-space:nowrap;text-align:left;}
+.pkg-price span{font-size:13px;color:var(--dim);display:block;}
+.pkg-features{display:flex;flex-direction:column;gap:7px;}
+.pkg-feat{display:flex;align-items:flex-start;gap:9px;font-size:12px;color:#CCC;line-height:1.5;}
+.pkg-feat::before{content:'✦';color:var(--gold);font-size:9px;flex-shrink:0;margin-top:3px;}
+
+/* PROGRESS */
+.progress-wrap{max-width:580px;margin:0 auto 18px;padding:0 20px;position:relative;z-index:1;}
+.progress-bar-outer{background:var(--dark3);border:1px solid var(--border);border-radius:2px;height:3px;margin-bottom:7px;overflow:hidden;}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));transition:width .4s ease;box-shadow:0 0 8px rgba(201,168,76,.5);}
+.progress-info{display:flex;justify-content:space-between;font-size:11px;color:var(--dim);}
+.progress-info b{color:var(--gold);}
+
+/* FORM */
+.form-wrap{max-width:580px;margin:0 auto;padding:0 20px 60px;position:relative;z-index:1;}
+.section-card{background:var(--dark2);border:1px solid var(--border);border-radius:16px;padding:22px 18px;margin-bottom:12px;display:none;animation:slideIn .3s ease;}
+.section-card.active{display:block;}
+@keyframes slideIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* SEC HEAD */
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+.sec-icon{width:38px;height:38px;border-radius:9px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.25);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.sec-num{font-family:'Bebas Neue',sans-serif;font-size:9px;letter-spacing:3px;color:var(--gold);opacity:.6;}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;}
+.sec-title span{color:var(--gold);}
+
+/* FIELDS */
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.5;}
+.field label .req{color:var(--red);}
+.field input[type="text"],.field input[type="number"],.field input[type="tel"],.field textarea,.field select{width:100%;background:var(--dark3);border:1px solid rgba(255,255,255,.07);border-radius:9px;padding:10px 13px;color:var(--text);font-family:'Cairo',sans-serif;font-size:13px;transition:border-color .2s;-webkit-appearance:none;}
+.field textarea{resize:vertical;min-height:68px;line-height:1.6;}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:rgba(201,168,76,.5);background:rgba(201,168,76,.03);}
+.field input::placeholder,.field textarea::placeholder{color:var(--dim2);font-size:12px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+
+/* CHIPS */
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:4px;}
+.chip{padding:7px 13px;border-radius:18px;border:1px solid rgba(255,255,255,.07);background:var(--dark3);font-family:'Cairo',sans-serif;font-size:12px;font-weight:600;color:var(--dim);cursor:pointer;transition:all .2s;user-select:none;}
+.chip:hover{border-color:var(--gold);color:var(--text);}
+.chip.on{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08);}
+
+/* NOTE */
+.note-box{background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.18);border-right:3px solid var(--gold);border-radius:8px;padding:10px 13px;font-size:11px;color:var(--dim);line-height:1.7;margin-bottom:13px;}
+.note-box strong{color:var(--gold);}
+.divider-line{border:none;border-top:1px solid var(--border);margin:14px 0;}
+
+/* NAV */
+.nav-btns{display:flex;gap:10px;margin-top:18px;}
+.btn-next{flex:1;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--dark);border:none;border-radius:10px;padding:13px;font-family:'Cairo',sans-serif;font-size:15px;font-weight:900;cursor:pointer;transition:all .25s;}
+.btn-next:hover{box-shadow:0 8px 24px rgba(201,168,76,.4);transform:translateY(-2px);}
+.btn-next:disabled{opacity:.5;cursor:default;transform:none;box-shadow:none;}
+.btn-prev{width:44px;height:44px;background:transparent;border:1px solid var(--border);border-radius:10px;color:var(--dim);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.btn-prev:hover{border-color:var(--gold);color:var(--text);}
+
+/* THANK YOU */
+.thankyou{display:none;text-align:center;padding:48px 20px;animation:slideIn .4s ease;position:relative;z-index:1;}
+.ty-card{background:var(--dark2);border:1px solid rgba(201,168,76,.3);border-radius:20px;padding:44px 26px;max-width:420px;margin:0 auto;position:relative;overflow:hidden;}
+.ty-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.ty-icon{font-size:52px;display:block;margin-bottom:18px;animation:popIn .5s ease;}
+@keyframes popIn{from{transform:scale(.5);opacity:0;}to{transform:scale(1);opacity:1;}}
+.ty-title{font-family:'Bebas Neue',sans-serif;font-size:34px;letter-spacing:2px;margin-bottom:8px;}
+.ty-title span{color:var(--gold);}
+.ty-divider{width:48px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 18px;}
+.ty-sub{font-size:13px;color:var(--dim);line-height:1.9;margin-bottom:24px;}
+.ty-sub strong{color:var(--text);}
+.btn-ig{display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--dark);padding:13px 24px;border-radius:10px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:900;text-decoration:none;transition:all .25s;margin-bottom:8px;}
+.btn-ig:hover{box-shadow:0 8px 24px rgba(201,168,76,.4);transform:translateY(-2px);}
+.ty-handle{font-family:'Bebas Neue',sans-serif;letter-spacing:3px;font-size:10px;color:var(--dim);margin-top:18px;opacity:.4;}
+
+@media(max-width:400px){.grid2{grid-template-columns:1fr;}.grid3{grid-template-columns:1fr 1fr;}}
 </style>
 </head>
 <body>
-
 <div class="bg-glow"></div>
 
-<!-- HEADER -->
 <div class="header">
   <div class="header-line"></div>
-  <div class="header-tag">CLIENT ASSESSMENT · تقييم العميل</div>
+  <div class="header-tag">CLIENT INTAKE FORM · استبيان الانضمام</div>
   <h1>ابدأ رحلتك مع<br><span>COACH ANIS</span></h1>
-  <p>أجب على الأسئلة بدقة — كلما كانت المعلومات أوضح، كان برنامجك أفضل</p>
+  <p>أجب بصدق وتفصيل — كلما كانت المعلومات أدق كان البرنامج أقوى</p>
+</div>
+
+<!-- PACKAGE -->
+<div class="pkg-wrap">
+  <div class="pkg-card">
+    <div class="pkg-top">
+      <div>
+        <div class="pkg-badge">الباقة الوحيدة · FULL PACKAGE</div>
+        <div class="pkg-name">باقة التحول الكاملة</div>
+      </div>
+      <div class="pkg-price">8000<span>دج / شهر</span></div>
+    </div>
+    <div class="pkg-features">
+      <div class="pkg-feat">برنامج تدريب مخصص + نظام كارديو</div>
+      <div class="pkg-feat">تصحيح تقنيات التمارين + الإرشادات</div>
+      <div class="pkg-feat">نظام غذائي مرن + خطة مكملات حسب احتياجك</div>
+      <div class="pkg-feat">متابعة يومية + تتبع التقدم (وزن، أداء، صور)</div>
+      <div class="pkg-feat">تعديل البرامج عند الحاجة</div>
+    </div>
+  </div>
 </div>
 
 <!-- PROGRESS -->
 <div class="progress-wrap">
-  <div class="step-dots" id="stepDots"></div>
-  <div class="progress-text">الخطوة <span id="currentStepNum">1</span> من <span id="totalStepsNum">5</span></div>
+  <div class="progress-bar-outer"><div class="progress-bar-fill" id="pFill" style="width:8%"></div></div>
+  <div class="progress-info"><span>القسم <b id="pNum">1</b> من 12</span><span id="pTitle">المعلومات الشخصية</span></div>
 </div>
 
-<!-- FORM -->
 <div class="form-wrap">
 
-  <!-- STEP 1: معلومات شخصية -->
-  <div class="step-card active" id="step1">
-    <div class="step-title">معلومات <span>شخصية</span></div>
-    <div class="step-sub">Personal Information · هذه المعلومات سرية ولن تُشارك</div>
-
-    <div class="field">
-      <label>الاسم الكامل <span class="required">*</span> <span class="en">FULL NAME</span></label>
-      <input type="text" id="f_name" placeholder="أدخل اسمك الكامل">
-    </div>
-
-    <div class="grid2">
-      <div class="field">
-        <label>العمر <span class="required">*</span> <span class="en">AGE</span></label>
-        <input type="number" id="f_age" placeholder="25" min="15" max="60">
-      </div>
-      <div class="field">
-        <label>رقم الواتساب <span class="required">*</span> <span class="en">WHATSAPP</span></label>
-        <input type="tel" id="f_phone" placeholder="0555XXXXXX">
-      </div>
-    </div>
-
-    <div class="field">
-      <label>الجنس <span class="required">*</span> <span class="en">GENDER</span></label>
-      <div class="options-grid cols2">
-        <div class="opt-card" onclick="selectOpt(this, 'f_gender', 'ذكر')">
-          <span class="opt-icon">♂</span>
-          <span class="opt-label">ذكر</span>
-          <span class="opt-en">MALE</span>
-        </div>
-        <div class="opt-card" onclick="selectOpt(this, 'f_gender', 'أنثى')">
-          <span class="opt-icon">♀</span>
-          <span class="opt-label">أنثى</span>
-          <span class="opt-en">FEMALE</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="grid2">
-      <div class="field">
-        <label>الوزن (كغ) <span class="required">*</span> <span class="en">WEIGHT</span></label>
-        <input type="number" id="f_weight" placeholder="75">
-      </div>
-      <div class="field">
-        <label>الطول (سم) <span class="required">*</span> <span class="en">HEIGHT</span></label>
-        <input type="number" id="f_height" placeholder="175">
-      </div>
-    </div>
-
-    <div class="nav-btns">
-      <button class="btn-next" onclick="nextStep(1)">التالي ←</button>
-    </div>
+<!-- SEC 1 -->
+<div class="section-card active" id="sec1">
+  <div class="sec-head"><div class="sec-icon">👤</div><div><div class="sec-num">SECTION 01</div><div class="sec-title">المعلومات <span>الشخصية</span></div></div></div>
+  <div class="grid3">
+    <div class="field"><label>الاسم الكامل <span class="req">*</span></label><input type="text" id="i_name" name="الاسم_الكامل" placeholder="اسمك الكامل"></div>
+    <div class="field"><label>العمر <span class="req">*</span></label><input type="number" name="العمر" placeholder="25"></div>
+    <div class="field"><label>الجنس <span class="req">*</span></label><select name="الجنس"><option value="">اختر</option><option>ذكر</option><option>أنثى</option></select></div>
   </div>
-
-  <!-- STEP 2: الهدف والمستوى -->
-  <div class="step-card" id="step2">
-    <div class="step-title">الهدف <span>والمستوى</span></div>
-    <div class="step-sub">Goal & Level · ما الذي تريد تحقيقه؟</div>
-
-    <div class="field">
-      <label>ما هو هدفك الرئيسي؟ <span class="required">*</span> <span class="en">MAIN GOAL</span></label>
-      <div class="options-grid cols2">
-        <div class="opt-card" onclick="selectOpt(this, 'f_goal', 'تنشيف وفقدان دهون')">
-          <span class="opt-icon">🔥</span>
-          <span class="opt-label">تنشيف</span>
-          <span class="opt-en">FAT LOSS</span>
-        </div>
-        <div class="opt-card" onclick="selectOpt(this, 'f_goal', 'تضخيم وبناء عضلات')">
-          <span class="opt-icon">💪</span>
-          <span class="opt-label">تضخيم</span>
-          <span class="opt-en">MUSCLE GAIN</span>
-        </div>
-        <div class="opt-card" onclick="selectOpt(this, 'f_goal', 'ثبات وتحسين الجسم')">
-          <span class="opt-icon">⚖️</span>
-          <span class="opt-label">ثبات</span>
-          <span class="opt-en">RECOMP</span>
-        </div>
-        <div class="opt-card" onclick="selectOpt(this, 'f_goal', 'زيادة القوة')">
-          <span class="opt-icon">🏋️</span>
-          <span class="opt-label">قوة</span>
-          <span class="opt-en">STRENGTH</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>مستواك في التدريب <span class="required">*</span> <span class="en">TRAINING LEVEL</span></label>
-      <div class="options-grid cols3">
-        <div class="opt-card" onclick="selectOpt(this, 'f_level', 'مبتدئ (أقل من سنة)')">
-          <span class="opt-icon">🌱</span>
-          <span class="opt-label">مبتدئ</span>
-          <span class="opt-en">BEGINNER</span>
-        </div>
-        <div class="opt-card" onclick="selectOpt(this, 'f_level', 'متوسط (1-3 سنوات)')">
-          <span class="opt-icon">⚡</span>
-          <span class="opt-label">متوسط</span>
-          <span class="opt-en">INTERMEDIATE</span>
-        </div>
-        <div class="opt-card" onclick="selectOpt(this, 'f_level', 'متقدم (+3 سنوات)')">
-          <span class="opt-icon">🔱</span>
-          <span class="opt-label">متقدم</span>
-          <span class="opt-en">ADVANCED</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>كم يوم تتدرب في الأسبوع؟ <span class="required">*</span> <span class="en">DAYS/WEEK</span></label>
-      <div class="scale-wrap">
-        <div class="scale-track" id="scale_days"></div>
-        <div class="scale-labels"><span>يوم واحد</span><span>7 أيام</span></div>
-      </div>
-    </div>
-
-    <div class="nav-btns">
-      <button class="btn-prev" onclick="prevStep(2)">→</button>
-      <button class="btn-next" onclick="nextStep(2)">التالي ←</button>
-    </div>
+  <div class="grid3">
+    <div class="field"><label>الطول (سم)</label><input type="number" name="الطول_سم" placeholder="175"></div>
+    <div class="field"><label>الوزن الحالي (كغ)</label><input type="number" name="الوزن_كغ" placeholder="80"></div>
+    <div class="field"><label>الولاية</label><input type="text" name="الولاية" placeholder="باتنة"></div>
   </div>
-
-  <!-- STEP 3: التغذية -->
-  <div class="step-card" id="step3">
-    <div class="step-title">التغذية <span>الحالية</span></div>
-    <div class="step-sub">Current Nutrition · فهم عاداتك الغذائية</div>
-
-    <div class="field">
-      <label>هل تتبع نظام غذائي حالياً؟ <span class="en">CURRENT DIET</span></label>
-      <div class="options-grid cols2">
-        <div class="opt-card" onclick="selectOpt(this, 'f_diet', 'نعم، أتبع نظام محدد')">
-          <span class="opt-icon">✅</span>
-          <span class="opt-label">نعم</span>
-          <span class="opt-en">YES</span>
-        </div>
-        <div class="opt-card" onclick="selectOpt(this, 'f_diet', 'لا، أكل عشوائي')">
-          <span class="opt-icon">❌</span>
-          <span class="opt-label">لا</span>
-          <span class="opt-en">NO</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>كم وجبة تأكل يومياً؟ <span class="en">MEALS/DAY</span></label>
-      <div class="scale-wrap">
-        <div class="scale-track" id="scale_meals"></div>
-        <div class="scale-labels"><span>وجبة واحدة</span><span>6 وجبات</span></div>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>هل عندك حساسية أو ممنوعات غذائية؟ <span class="en">RESTRICTIONS</span></label>
-      <input type="text" id="f_restrictions" placeholder="مثال: لا حليب، لا جلوتين، أو اكتب لا يوجد">
-    </div>
-
-    <div class="field">
-      <label>هل تستخدم مكملات غذائية؟ <span class="en">SUPPLEMENTS</span></label>
-      <div class="check-list" id="supplements_list">
-        <div class="check-item" onclick="toggleCheck(this, 'f_supps', 'بروتين Whey')">
-          <div class="check-box"></div>
-          <span class="check-label">بروتين Whey</span>
-        </div>
-        <div class="check-item" onclick="toggleCheck(this, 'f_supps', 'كرياتين')">
-          <div class="check-box"></div>
-          <span class="check-label">كرياتين</span>
-        </div>
-        <div class="check-item" onclick="toggleCheck(this, 'f_supps', 'فيتامينات')">
-          <div class="check-box"></div>
-          <span class="check-label">فيتامينات</span>
-        </div>
-        <div class="check-item" onclick="toggleCheck(this, 'f_supps', 'لا شيء')">
-          <div class="check-box"></div>
-          <span class="check-label">لا شيء حالياً</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="nav-btns">
-      <button class="btn-prev" onclick="prevStep(3)">→</button>
-      <button class="btn-next" onclick="nextStep(3)">التالي ←</button>
-    </div>
+  <div class="field"><label>المهنة وطبيعة العمل</label><input type="text" name="المهنة" placeholder=""></div>
+  <div class="field"><label>كم ساعة تجلس أو تقف في العمل؟</label><input type="text" name="ساعات_العمل_جالس_واقف" placeholder=""></div>
+  <div class="grid2">
+    <div class="field"><label>كم ساعة تنام يومياً؟</label><input type="text" name="ساعات_النوم" placeholder=""></div>
+    <div class="field"><label>كيف جودة نومك؟</label><input type="text" name="جودة_النوم" placeholder=""></div>
   </div>
-
-  <!-- STEP 4: الصحة والتاريخ -->
-  <div class="step-card" id="step4">
-    <div class="step-title">الصحة <span>والتاريخ</span></div>
-    <div class="step-sub">Health & History · معلومات مهمة لسلامتك</div>
-
-    <div class="field">
-      <label>هل عندك إصابات أو مشاكل صحية؟ <span class="en">INJURIES</span></label>
-      <textarea id="f_injuries" placeholder="مثال: مشكلة في الركبة، ألم ظهر... أو اكتب لا يوجد"></textarea>
-    </div>
-
-    <div class="field">
-      <label>هل سبق لك العمل مع مدرب؟ <span class="en">PREV COACH</span></label>
-      <div class="options-grid cols2">
-        <div class="opt-card" onclick="selectOpt(this, 'f_prevcoach', 'نعم، سبق لي')">
-          <span class="opt-icon">👥</span>
-          <span class="opt-label">نعم</span>
-          <span class="opt-en">YES</span>
-        </div>
-        <div class="opt-card" onclick="selectOpt(this, 'f_prevcoach', 'لا، أول مرة')">
-          <span class="opt-icon">🆕</span>
-          <span class="opt-label">لا</span>
-          <span class="opt-en">FIRST TIME</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>ما هو جدولك اليومي؟ <span class="en">LIFESTYLE</span></label>
-      <div class="options-grid cols2">
-        <div class="opt-card" onclick="selectOpt(this, 'f_lifestyle', 'عمل مكتبي')">
-          <span class="opt-icon">💻</span>
-          <span class="opt-label">مكتبي</span>
-          <span class="opt-en">DESK JOB</span>
-        </div>
-        <div class="opt-card" onclick="selectOpt(this, 'f_lifestyle', 'عمل حركي')">
-          <span class="opt-icon">🚶</span>
-          <span class="opt-label">حركي</span>
-          <span class="opt-en">ACTIVE JOB</span>
-        </div>
-        <div class="opt-card" onclick="selectOpt(this, 'f_lifestyle', 'طالب')">
-          <span class="opt-icon">📚</span>
-          <span class="opt-label">طالب</span>
-          <span class="opt-en">STUDENT</span>
-        </div>
-        <div class="opt-card" onclick="selectOpt(this, 'f_lifestyle', 'غير ذلك')">
-          <span class="opt-icon">🔄</span>
-          <span class="opt-label">غير ذلك</span>
-          <span class="opt-en">OTHER</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>كم ساعة تنام يومياً؟ <span class="en">SLEEP</span></label>
-      <div class="scale-wrap">
-        <div class="scale-track" id="scale_sleep"></div>
-        <div class="scale-labels"><span>أقل من 5</span><span>+9 ساعات</span></div>
-      </div>
-    </div>
-
-    <div class="nav-btns">
-      <button class="btn-prev" onclick="prevStep(4)">→</button>
-      <button class="btn-next" onclick="nextStep(4)">التالي ←</button>
-    </div>
-  </div>
-
-  <!-- STEP 5: التوقعات -->
-  <div class="step-card" id="step5">
-    <div class="step-title">التوقعات <span>والالتزام</span></div>
-    <div class="step-sub">Expectations · آخر خطوة قبل الانطلاق</div>
-
-    <div class="field">
-      <label>ما الباقة التي تفكر فيها؟ <span class="en">PLAN</span></label>
-      <div class="options-grid cols3">
-        <div class="opt-card" onclick="selectOpt(this, 'f_plan', 'باقة البداية - 4500 دج')">
-          <span class="opt-icon">🌱</span>
-          <span class="opt-label">البداية</span>
-          <span class="opt-en">4500 دج</span>
-        </div>
-        <div class="opt-card" onclick="selectOpt(this, 'f_plan', 'باقة التحول - 7500 دج')">
-          <span class="opt-icon">🔥</span>
-          <span class="opt-label">التحول</span>
-          <span class="opt-en">7500 دج</span>
-        </div>
-        <div class="opt-card" onclick="selectOpt(this, 'f_plan', 'الباقة الاحترافية - 12000 دج')">
-          <span class="opt-icon">🏆</span>
-          <span class="opt-label">Elite</span>
-          <span class="opt-en">12000 دج</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>مستوى جديتك في التغيير (1-10) <span class="en">COMMITMENT</span></label>
-      <div class="scale-wrap">
-        <div class="scale-track" id="scale_commit"></div>
-        <div class="scale-labels"><span>أفكر فقط</span><span>جاهز 100%</span></div>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>ماذا تتوقع من Coach Anis؟ <span class="en">EXPECTATIONS</span></label>
-      <textarea id="f_expect" placeholder="اكتب توقعاتك بحرية — كلما كانت واضحة كلما كان أفضل..."></textarea>
-    </div>
-
-    <div class="field">
-      <label>أي معلومة إضافية تريد إضافتها؟ <span class="en">NOTES</span></label>
-      <textarea id="f_notes" placeholder="أي شيء آخر تريد Coach Anis يعرفه عنك..."></textarea>
-    </div>
-
-    <div class="nav-btns">
-      <button class="btn-prev" onclick="prevStep(5)">→</button>
-      <button class="btn-next" onclick="submitForm()">إرسال التقييم ✦</button>
-    </div>
-  </div>
-
-  <!-- THANK YOU -->
-  <div class="thankyou" id="thankyou">
-    <div class="ty-icon">🏆</div>
-    <div class="ty-title">شكراً <span>لك!</span></div>
-    <div class="ty-sub">
-      وصل تقييمك بنجاح<br>
-      سيتواصل معك Coach Anis خلال <strong style="color:var(--gold)">24 ساعة</strong>
-    </div>
-
-    <div class="summary-box">
-      <div class="summary-title">ملخص تقييمك · SUMMARY</div>
-      <div id="summaryContent"></div>
-    </div>
-
-    <a href="https://instagram.com/coach__anis" class="btn-wa-big" target="_blank">
-      📸 تواصل معي على الإنستغرام · @coach__anis
-    </a>
-  </div>
-
+  <div class="field"><label>مستوى التوتر في حياتك اليومية؟</label><input type="text" name="مستوى_التوتر" placeholder=""></div>
+  <div class="nav-btns"><button class="btn-next" onclick="go(1,2)">التالي ←</button></div>
 </div>
 
-<script>
-// Formspree endpoint
-const FORMSPREE_URL = "https://formspree.io/f/maqlwbdy";
-const TOTAL_STEPS = 5;
-let formData = {};
-let checkboxData = { f_supps: [] };
+<!-- SEC 2 -->
+<div class="section-card" id="sec2">
+  <div class="sec-head"><div class="sec-icon">🎯</div><div><div class="sec-num">SECTION 02</div><div class="sec-title">الهدف <span>Goal</span></div></div></div>
+  <div class="field">
+    <label>ما هدفك الرئيسي؟ <span class="req">*</span></label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'الهدف_الرئيسي','تضخيم وبناء عضل')">تضخيم وبناء عضل</div>
+      <div class="chip" onclick="pick(this,'الهدف_الرئيسي','تنشيف وحرق دهون')">تنشيف وحرق دهون</div>
+      <div class="chip" onclick="pick(this,'الهدف_الرئيسي','إعادة تركيب الجسم')">إعادة تركيب الجسم</div>
+      <div class="chip" onclick="pick(this,'الهدف_الرئيسي','زيادة القوة')">زيادة القوة</div>
+    </div>
+  </div>
+  <div class="field"><label>لماذا هذا الهدف تحديداً؟ ما الدافع الحقيقي؟</label><textarea name="الدافع_الحقيقي" placeholder=""></textarea></div>
+  <div class="field"><label>في كم وقت تريد تحقيق هدفك؟</label><input type="text" name="الوقت_المطلوب" placeholder=""></div>
+  <div class="field"><label>هل سبق وحققت هذا الهدف؟ إذا لا — ما الذي أوقفك؟</label><textarea name="هل_حققت_الهدف_سابقاً" placeholder=""></textarea></div>
+  <div class="field"><label>ما تعريفك للنجاح بعد 3 أشهر؟</label><textarea name="تعريف_النجاح_3_أشهر" placeholder=""></textarea></div>
+  <div class="nav-btns"><button class="btn-prev" onclick="go(2,1)">→</button><button class="btn-next" onclick="go(2,3)">التالي ←</button></div>
+</div>
 
-// ─── INIT SCALES ───
-function buildScale(id, count, dataKey) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.innerHTML = '';
-  for (let i = 1; i <= count; i++) {
-    const btn = document.createElement('button');
-    btn.className = 'scale-btn';
-    btn.textContent = i;
-    btn.type = 'button';
-    btn.onclick = () => {
-      el.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      formData[dataKey] = i;
-    };
-    el.appendChild(btn);
-  }
-}
+<!-- SEC 3 -->
+<div class="section-card" id="sec3">
+  <div class="sec-head"><div class="sec-icon">🏋️</div><div><div class="sec-num">SECTION 03</div><div class="sec-title">التاريخ <span>التدريبي</span></div></div></div>
+  <div class="field"><label>كم سنة تتدرب — وكيف تصف مستواك الحالي؟</label><textarea name="سنوات_التدريب_والمستوى" placeholder=""></textarea></div>
+  <div class="field"><label>ما البرامج التي اتبعتها سابقاً وما نتائجها؟</label><textarea name="البرامج_السابقة_ونتائجها" placeholder=""></textarea></div>
+  <div class="field"><label>هل تدربت مع مدرب من قبل؟ وكيف كانت التجربة؟</label><textarea name="تجربة_المدرب_السابق" placeholder=""></textarea></div>
+  <div class="field"><label>ما المناطق العضلية الضعيفة التي تريد تطويرها؟</label><textarea name="المناطق_العضلية_الضعيفة" placeholder=""></textarea></div>
+  <div class="nav-btns"><button class="btn-prev" onclick="go(3,2)">→</button><button class="btn-next" onclick="go(3,4)">التالي ←</button></div>
+</div>
 
-buildScale('scale_days', 7, 'f_days');
-buildScale('scale_meals', 6, 'f_meals');
-buildScale('scale_sleep', 6, 'f_sleep');
-buildScale('scale_commit', 10, 'f_commit');
+<!-- SEC 4 -->
+<div class="section-card" id="sec4">
+  <div class="sec-head"><div class="sec-icon">💪</div><div><div class="sec-num">SECTION 04</div><div class="sec-title">الوضع التدريبي <span>الحالي</span></div></div></div>
+  <div class="grid2">
+    <div class="field"><label>كم يوماً تتدرب في الأسبوع؟</label><input type="text" name="أيام_التدريب_الأسبوعية" placeholder=""></div>
+    <div class="field"><label>كم مدة الجلسة؟</label><input type="text" name="مدة_الجلسة" placeholder=""></div>
+  </div>
+  <div class="grid2">
+    <div class="field"><label>أين تتدرب؟</label><input type="text" name="مكان_التدريب" placeholder=""></div>
+    <div class="field"><label>في أي وقت؟</label><input type="text" name="وقت_التدريب" placeholder=""></div>
+  </div>
+  <div class="note-box"><strong>📸 بعد الإرسال:</strong> أرسل صور الجيم عبر الإنستغرام — المنطقة العامة، الأثقال الحرة، الأجهزة، الكارديو</div>
+  <div class="field"><label>هل لديك إصابات أو آلام مزمنة تؤثر على التمرين؟</label><textarea name="الإصابات_والآلام" placeholder=""></textarea></div>
+  <div class="field"><label>هل تلاحظ تعباً مبكراً أو ضيق تنفس أثناء التمرين؟</label><input type="text" name="التعب_المبكر_وضيق_التنفس" placeholder=""></div>
+  <div class="field"><label>كم ترغب أن تكون أيام التدريب في البرنامج؟</label><input type="text" name="الأيام_المرغوبة_في_البرنامج" placeholder=""></div>
+  <div class="nav-btns"><button class="btn-prev" onclick="go(4,3)">→</button><button class="btn-next" onclick="go(4,5)">التالي ←</button></div>
+</div>
 
-// ─── STEP DOTS ───
-function buildDots() {
-  const el = document.getElementById('stepDots');
-  el.innerHTML = '';
-  for (let i = 1; i <= TOTAL_STEPS; i++) {
-    if (i > 1) {
-      const line = document.createElement('div');
-      line.className = 'step-line';
-      line.id = `line${i-1}`;
-      el.appendChild(line);
-    }
-    const dot = document.createElement('div');
-    dot.className = 'step-dot' + (i === 1 ? ' active' : '');
-    dot.id = `dot${i}`;
-    dot.textContent = i;
-    el.appendChild(dot);
-  }
-}
+<!-- SEC 5 -->
+<div class="section-card" id="sec5">
+  <div class="sec-head"><div class="sec-icon">❤️‍🔥</div><div><div class="sec-num">SECTION 05</div><div class="sec-title">تفضيلات <span>التمارين</span></div></div></div>
+  <div class="field"><label>ما التمارين التي تحبها وتستمتع بأدائها؟</label><textarea name="التمارين_المحبوبة" placeholder=""></textarea></div>
+  <div class="field"><label>ما التمارين التي تكرهها أو تتجنبها؟ ولماذا؟</label><textarea name="التمارين_المكروهة_وسببها" placeholder=""></textarea></div>
+  <div class="field"><label>ما التمارين التي تحس فيها بالعضلة بشكل جيد؟</label><textarea name="تمارين_الإحساس_الجيد" placeholder=""></textarea></div>
+  <div class="field"><label>ما التمارين التي تجد صعوبة في أدائها التقني؟</label><textarea name="التمارين_صعبة_التقنية" placeholder=""></textarea></div>
+  <div class="field">
+    <label>تفضّل الأوزان الحرة أم الأجهزة؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'تفضيل_المعدات','أوزان حرة')">أوزان حرة</div>
+      <div class="chip" onclick="pick(this,'تفضيل_المعدات','أجهزة')">أجهزة</div>
+      <div class="chip" onclick="pick(this,'تفضيل_المعدات','كلاهما')">كلاهما</div>
+    </div>
+    <textarea name="سبب_تفضيل_المعدات" placeholder="السبب..." style="margin-top:8px"></textarea>
+  </div>
+  <div class="field"><label>كيف تشعر بعد انتهاء التمرين؟</label><textarea name="الشعور_بعد_التمرين" placeholder=""></textarea></div>
+  <div class="nav-btns"><button class="btn-prev" onclick="go(5,4)">→</button><button class="btn-next" onclick="go(5,6)">التالي ←</button></div>
+</div>
 
-buildDots();
+<!-- SEC 6 -->
+<div class="section-card" id="sec6">
+  <div class="sec-head"><div class="sec-icon">🩺</div><div><div class="sec-num">SECTION 06</div><div class="sec-title">الملف <span>الصحي</span></div></div></div>
+  <div class="note-box">⚠️ <strong>هذا القسم سري تماماً</strong> — الإجابة الصادقة تحميك وتجعل البرنامج أكثر أماناً</div>
+  <div class="field"><label>هل تعاني من أي مرض مزمن مشخّص؟</label><input type="text" name="أمراض_مزمنة" placeholder=""></div>
+  <div class="field"><label>هل لديك مشاكل في الغدة الدرقية؟</label><input type="text" name="مشاكل_الغدة_الدرقية" placeholder=""></div>
+  <div class="field"><label>هل تأخذ أي أدوية بشكل منتظم؟</label><input type="text" name="الأدوية_المنتظمة" placeholder=""></div>
+  <div class="field"><label>هل خضعت لعمليات جراحية كبيرة؟</label><input type="text" name="العمليات_الجراحية" placeholder=""></div>
+  <div class="field"><label>هل لديك حساسية من أطعمة أو مكملات؟</label><input type="text" name="الحساسية_الغذائية" placeholder=""></div>
+  <div class="field"><label>هل تعاني من مشاكل في الجهاز الهضمي؟</label><input type="text" name="مشاكل_الجهاز_الهضمي" placeholder=""></div>
+  <div class="field"><label>للنساء فقط — هل لديك مشاكل هرمونية؟</label><input type="text" name="مشاكل_هرمونية_نساء" placeholder=""></div>
+  <div class="nav-btns"><button class="btn-prev" onclick="go(6,5)">→</button><button class="btn-next" onclick="go(6,7)">التالي ←</button></div>
+</div>
 
-function updateDots(current) {
-  for (let i = 1; i <= TOTAL_STEPS; i++) {
-    const dot = document.getElementById(`dot${i}`);
-    dot.className = 'step-dot';
-    if (i < current) { dot.className = 'step-dot done'; dot.textContent = '✓'; }
-    else if (i === current) dot.className = 'step-dot active';
-    else dot.textContent = i;
+<!-- SEC 7 -->
+<div class="section-card" id="sec7">
+  <div class="sec-head"><div class="sec-icon">🧬</div><div><div class="sec-num">SECTION 07</div><div class="sec-title">الهرمونات <span>والتحاليل</span></div></div></div>
+  <div class="note-box"><strong>اختياري — لكن مهم جداً</strong></div>
+  <div class="field"><label>هل أجريت تحليلاً هرمونياً سابقاً؟ ما النتائج؟</label><textarea name="التحليل_الهرموني_ونتائجه" placeholder=""></textarea></div>
+  <div class="field"><label>هل تعاني من أعراض نقص التستوستيرون؟</label><textarea name="أعراض_نقص_التستوستيرون" placeholder=""></textarea></div>
+  <div class="field"><label>هل سبق أن استخدمت هرمونات خارجية؟</label><input type="text" name="استخدام_هرمونات_خارجية" placeholder=""></div>
+  <div class="field">
+    <label>هل أجريت تحاليل دم مؤخراً (خلال 6 أشهر)؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'تحاليل_دم_حديثة','نعم — سأرسل التقرير عبر الإنستغرام')">نعم — سأرسل التقرير</div>
+      <div class="chip" onclick="pick(this,'تحاليل_دم_حديثة','لا')">لا</div>
+    </div>
+  </div>
+  <div class="field"><label>إذا تعرف القيم، اذكرها:</label><textarea name="قيم_التحاليل" placeholder=""></textarea></div>
+  <div class="nav-btns"><button class="btn-prev" onclick="go(7,6)">→</button><button class="btn-next" onclick="go(7,8)">التالي ←</button></div>
+</div>
 
-    if (i > 1) {
-      const line = document.getElementById(`line${i-1}`);
-      line.className = 'step-line' + (i - 1 < current ? ' done' : '');
-    }
-  }
-  document.getElementById('currentStepNum').textContent = current;
-}
+<!-- SEC 8 -->
+<div class="section-card" id="sec8">
+  <div class="sec-head"><div class="sec-icon">🍽️</div><div><div class="sec-num">SECTION 08</div><div class="sec-title">التغذية <span>ونمط الحياة</span></div></div></div>
+  <div class="grid2">
+    <div class="field"><label>كم وجبة تأكل يومياً؟</label><input type="text" name="عدد_الوجبات" placeholder=""></div>
+    <div class="field"><label>كم لتر ماء تشرب؟</label><input type="text" name="كمية_الماء_اليومية" placeholder=""></div>
+  </div>
+  <div class="field"><label>كيف يبدو نظامك الغذائي اليومي؟ اذكر وجباتك</label><textarea name="النظام_الغذائي_اليومي" placeholder=""></textarea></div>
+  <div class="field"><label>هل تحسب السعرات أو البروتين؟</label><input type="text" name="حساب_السعرات_والبروتين" placeholder=""></div>
+  <div class="field"><label>ما الأطعمة التي لا تأكلها أو تكرهها؟</label><input type="text" name="الأطعمة_المكروهة" placeholder=""></div>
+  <div class="field"><label>هل تأكل خارج البيت بكثرة — وما ميزانيتك للأكل؟</label><input type="text" name="الأكل_خارج_والميزانية" placeholder=""></div>
+  <div class="field"><label>هل تدخن أو تشرب كحول؟</label><input type="text" name="التدخين_والكحول" placeholder=""></div>
+  <div class="grid2">
+    <div class="field"><label>كم مرة تأكل السمك في الأسبوع؟</label><input type="text" name="استهلاك_السمك_أسبوعياً" placeholder=""></div>
+    <div class="field"><label>كم بيضة تأكل في اليوم؟</label><input type="text" name="عدد_البيض_اليومي" placeholder=""></div>
+  </div>
+  <div class="field"><label>ما مصادر البروتين اليومية وكم تأكل منها؟</label><textarea name="مصادر_البروتين_اليومية" placeholder=""></textarea></div>
+  <div class="field">
+    <label>تطبخ بالزيت العادية أم زيت الزيتون؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'نوع_الزيت','زيت عادي')">زيت عادي</div>
+      <div class="chip" onclick="pick(this,'نوع_الزيت','زيت زيتون')">زيت زيتون</div>
+      <div class="chip" onclick="pick(this,'نوع_الزيت','كلاهما')">كلاهما</div>
+    </div>
+  </div>
+  <div class="field">
+    <label>هل تتناول المكسرات؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'تناول_المكسرات','نعم — بانتظام')">نعم بانتظام</div>
+      <div class="chip" onclick="pick(this,'تناول_المكسرات','أحياناً')">أحياناً</div>
+      <div class="chip" onclick="pick(this,'تناول_المكسرات','لا')">لا</div>
+    </div>
+  </div>
+  <div class="field">
+    <label>تفضّل ماكروز فقط أم وجبات محددة؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'تفضيل_خطة_التغذية','ماكروز فقط — أنا أقسّم')">ماكروز فقط</div>
+      <div class="chip" onclick="pick(this,'تفضيل_خطة_التغذية','وجبات محددة بأوقاتها')">وجبات محددة</div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="btn-prev" onclick="go(8,7)">→</button><button class="btn-next" onclick="go(8,9)">التالي ←</button></div>
+</div>
 
-// ─── SELECT OPTION ───
-function selectOpt(el, key, val) {
-  const parent = el.parentElement;
-  parent.querySelectorAll('.opt-card').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-  formData[key] = val;
-}
+<!-- SEC 9 -->
+<div class="section-card" id="sec9">
+  <div class="sec-head"><div class="sec-icon">😴</div><div><div class="sec-num">SECTION 09</div><div class="sec-title">النوم <span>والتعافي</span></div></div></div>
+  <div class="field"><label>كم ساعة تنام — وكيف جودة نومك؟</label><textarea name="النوم_وجودته" placeholder=""></textarea></div>
+  <div class="field"><label>هل تعاني من شخير شديد أو انقطاع التنفس أثناء النوم؟</label><input type="text" name="الشخير_وانقطاع_التنفس" placeholder=""></div>
+  <div class="nav-btns"><button class="btn-prev" onclick="go(9,8)">→</button><button class="btn-next" onclick="go(9,10)">التالي ←</button></div>
+</div>
 
-// ─── CHECKBOX ───
-function toggleCheck(el, key, val) {
-  el.classList.toggle('checked');
-  const box = el.querySelector('.check-box');
-  if (el.classList.contains('checked')) {
-    box.textContent = '✓';
-    if (!checkboxData[key]) checkboxData[key] = [];
-    if (!checkboxData[key].includes(val)) checkboxData[key].push(val);
-  } else {
-    box.textContent = '';
-    checkboxData[key] = checkboxData[key].filter(v => v !== val);
-  }
-  formData[key] = checkboxData[key].join('، ') || 'لا شيء';
-}
+<!-- SEC 10 -->
+<div class="section-card" id="sec10">
+  <div class="sec-head"><div class="sec-icon">💊</div><div><div class="sec-num">SECTION 10</div><div class="sec-title">المكملات <span>الغذائية</span></div></div></div>
+  <div class="field"><label>ما المكملات التي تستخدمها حالياً مع الجرعة؟</label><textarea name="المكملات_الحالية_والجرعة" placeholder=""></textarea></div>
+  <div class="field"><label>ما المكملات التي جربتها سابقاً وما نتيجتها؟</label><textarea name="المكملات_السابقة_ونتائجها" placeholder=""></textarea></div>
+  <div class="grid2">
+    <div class="field"><label>كيف تحملك للكافيين؟</label><input type="text" name="تحمل_الكافيين" placeholder=""></div>
+    <div class="field"><label>هل الواي بروتين يسبب مشاكل هضمية؟</label><input type="text" name="مشاكل_هضمية_من_الواي" placeholder=""></div>
+  </div>
+  <div class="field"><label>كم ميزانيتك الشهرية للمكملات؟</label><input type="text" name="ميزانية_المكملات_الشهرية" placeholder=""></div>
+  <div class="nav-btns"><button class="btn-prev" onclick="go(10,9)">→</button><button class="btn-next" onclick="go(10,11)">التالي ←</button></div>
+</div>
 
-// ─── COLLECT STEP DATA ───
-function collectStep(step) {
-  if (step === 1) {
-    formData.f_name = document.getElementById('f_name').value.trim();
-    formData.f_age = document.getElementById('f_age').value;
-    formData.f_phone = document.getElementById('f_phone').value.trim();
-    formData.f_weight = document.getElementById('f_weight').value;
-    formData.f_height = document.getElementById('f_height').value;
-  }
-  if (step === 3) {
-    formData.f_restrictions = document.getElementById('f_restrictions').value.trim() || 'لا يوجد';
-  }
-  if (step === 4) {
-    formData.f_injuries = document.getElementById('f_injuries').value.trim() || 'لا يوجد';
-  }
-  if (step === 5) {
-    formData.f_expect = document.getElementById('f_expect').value.trim();
-    formData.f_notes = document.getElementById('f_notes').value.trim();
-  }
-}
+<!-- SEC 11 -->
+<div class="section-card" id="sec11">
+  <div class="sec-head"><div class="sec-icon">🧠</div><div><div class="sec-num">SECTION 11</div><div class="sec-title">النفسي <span>والقياسات</span></div></div></div>
+  <div class="field"><label>هل مررت بفترات توقف متكررة؟ ما السبب؟</label><textarea name="فترات_التوقف_وسببها" placeholder=""></textarea></div>
+  <div class="field"><label>ما أكثر شيء يحبطك في التدريب والتغذية؟</label><textarea name="أسباب_الإحباط" placeholder=""></textarea></div>
+  <hr class="divider-line">
+  <div class="field"><label>📏 محيط الصدر / الخصر / الذراع / الفخذ (سم)</label><textarea name="القياسات_الجسمية" placeholder="الصدر:   | الخصر:   | الذراع:   | الفخذ:" style="min-height:50px"></textarea></div>
+  <div class="field"><label>💪 مستوى القوة الحالي</label><textarea name="مستوى_القوة_الحالي" placeholder="سكوات:   | ديدليفت:   | بنش:   | أوفرهيد:   | Pull Up: تكرار" style="min-height:60px"></textarea></div>
+  <div class="field">
+    <label>هل عندك ميزان في البيت؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'ميزان_في_البيت','نعم')">نعم</div>
+      <div class="chip" onclick="pick(this,'ميزان_في_البيت','لا')">لا</div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="btn-prev" onclick="go(11,10)">→</button><button class="btn-next" onclick="go(11,12)">التالي ←</button></div>
+</div>
 
-// ─── VALIDATE STEP ───
-function validateStep(step) {
-  if (step === 1) {
-    if (!formData.f_name) { alert('يرجى إدخال الاسم'); return false; }
-    if (!document.getElementById('f_age').value) { alert('يرجى إدخال العمر'); return false; }
-    if (!document.getElementById('f_phone').value) { alert('يرجى إدخال رقم الواتساب'); return false; }
-    if (!formData.f_gender) { alert('يرجى اختيار الجنس'); return false; }
-    if (!document.getElementById('f_weight').value) { alert('يرجى إدخال الوزن'); return false; }
-    if (!document.getElementById('f_height').value) { alert('يرجى إدخال الطول'); return false; }
-  }
-  if (step === 2) {
-    if (!formData.f_goal) { alert('يرجى اختيار هدفك'); return false; }
-    if (!formData.f_level) { alert('يرجى اختيار مستواك'); return false; }
-    if (!formData.f_days) { alert('يرجى تحديد عدد أيام التدريب'); return false; }
-  }
-  return true;
-}
+<!-- SEC 12 -->
+<div class="section-card" id="sec12">
+  <div class="sec-head"><div class="sec-icon">🤝</div><div><div class="sec-num">SECTION 12</div><div class="sec-title">التوقعات <span>والإنهاء</span></div></div></div>
+  <div class="field"><label>ما الذي تتوقعه من المدرب تحديداً؟</label><textarea name="التوقعات_من_المدرب" placeholder=""></textarea></div>
+  <div class="field">
+    <label>تفضّل شرح الأسباب أم التنفيذ المباشر؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'أسلوب_التواصل','أريد أفهم كل شيء')">أريد أفهم كل شيء</div>
+      <div class="chip" onclick="pick(this,'أسلوب_التواصل','أعطني البرنامج وأنفذ')">أعطني وأنفذ</div>
+      <div class="chip" onclick="pick(this,'أسلوب_التواصل','كلاهما')">كلاهما</div>
+    </div>
+  </div>
+  <div class="field"><label>هل هناك أي شيء مهم لم يُذكر تريد إضافته؟</label><textarea name="معلومات_إضافية" placeholder=""></textarea></div>
+  <hr class="divider-line">
+  <div class="field"><label>🧬 هل في أمراض قلب أو سكري في العائلة؟</label><input type="text" name="أمراض_القلب_والسكري_العائلية" placeholder=""></div>
+  <div class="field">
+    <label>هل الأب أو الأم يعانون من السمنة؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'سمنة_الوالدين','نعم أحدهما')">نعم أحدهما</div>
+      <div class="chip" onclick="pick(this,'سمنة_الوالدين','كلاهما')">كلاهما</div>
+      <div class="chip" onclick="pick(this,'سمنة_الوالدين','لا')">لا</div>
+    </div>
+  </div>
+  <div class="field"><label>رقم الواتساب للتواصل <span class="req">*</span></label><input type="tel" name="رقم_الواتساب" placeholder="0555XXXXXX"></div>
+  <div class="note-box"><strong>📸 بعد الإرسال:</strong> أرسل صور الجسم (أمام/جانب/خلف) وصور الجيم وتقارير التحاليل عبر الإنستغرام <strong>@coach__anis</strong></div>
+  <div class="nav-btns">
+    <button class="btn-prev" onclick="go(12,11)">→</button>
+    <button class="btn-next" id="btnSub" onclick="submitForm()">إرسال الاستبيان ✦</button>
+  </div>
+</div>
 
-// ─── NAV ───
-let currentStep = 1;
+<!-- THANK YOU -->
+<div class="thankyou" id="thankyou">
+  <div class="ty-card">
+    <span class="ty-icon">🏆</span>
+    <div class="ty-title">شكراً <span>لك!</span></div>
+    <div class="ty-divider"></div>
+    <div class="ty-sub">وصل استبيانك بنجاح ✅<br>سيتواصل معك <strong>Coach Anis</strong> خلال <strong style="color:var(--gold)">24 ساعة</strong><br><br>في الوقت الحالي تابعني على الإنستغرام<br>وأرسل صور جسمك وصور الجيم</div>
+    <a href="https://instagram.com/coach__anis" class="btn-ig" target="_blank">📸 @coach__anis على الإنستغرام</a>
+    <div class="ty-handle">COACH ANIS · 2025 · SCIENCE · DISCIPLINE · RESULTS</div>
+  </div>
+</div>
 
-function nextStep(from) {
-  collectStep(from);
-  if (!validateStep(from)) return;
-  document.getElementById(`step${from}`).classList.remove('active');
-  currentStep = from + 1;
-  document.getElementById(`step${currentStep}`).classList.add('active');
-  updateDots(currentStep);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function prevStep(from) {
-  document.getElementById(`step${from}`).classList.remove('active');
-  currentStep = from - 1;
-  document.getElementById(`step${currentStep}`).classList.add('active');
-  updateDots(currentStep);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// ─── SUBMIT ───
-function submitForm() {
-  collectStep(5);
-  if (!formData.f_plan) { alert('يرجى اختيار الباقة'); return; }
-
-  // Fill hidden form fields
-  document.getElementById('hf_name').value         = formData.f_name || '';
-  document.getElementById('hf_age').value          = formData.f_age || '';
-  document.getElementById('hf_phone').value        = formData.f_phone || '';
-  document.getElementById('hf_gender').value       = formData.f_gender || '';
-  document.getElementById('hf_weight').value       = (formData.f_weight || '') + 'kg';
-  document.getElementById('hf_height').value       = (formData.f_height || '') + 'cm';
-  document.getElementById('hf_goal').value         = formData.f_goal || '';
-  document.getElementById('hf_level').value        = formData.f_level || '';
-  document.getElementById('hf_days').value         = (formData.f_days || '') + ' أيام/أسبوع';
-  document.getElementById('hf_diet').value         = formData.f_diet || 'لم يحدد';
-  document.getElementById('hf_supps').value        = formData.f_supps || 'لا شيء';
-  document.getElementById('hf_restrictions').value = formData.f_restrictions || 'لا يوجد';
-  document.getElementById('hf_injuries').value     = formData.f_injuries || 'لا يوجد';
-  document.getElementById('hf_lifestyle').value    = formData.f_lifestyle || 'لم يحدد';
-  document.getElementById('hf_sleep').value        = formData.f_sleep ? formData.f_sleep + ' ساعات' : 'لم يحدد';
-  document.getElementById('hf_plan').value         = formData.f_plan || '';
-  document.getElementById('hf_commit').value       = (formData.f_commit || '') + '/10';
-  document.getElementById('hf_expect').value       = formData.f_expect || '—';
-  document.getElementById('hf_notes').value        = formData.f_notes || 'لا يوجد';
-  document.getElementById('hf_subject').value      = 'تقييم عميل جديد: ' + formData.f_name + ' — ' + formData.f_plan;
-
-  // Submit the real HTML form
-  document.getElementById('formspreeForm').submit();
-}
-</script>
+</div><!-- form-wrap -->
 
 <!-- HIDDEN FORMSPREE FORM -->
-<form id="formspreeForm" action="https://formspree.io/f/maqlwbdy" method="POST" style="display:none">
-  <input type="hidden" id="hf_name"         name="الاسم">
-  <input type="hidden" id="hf_age"          name="العمر">
-  <input type="hidden" id="hf_phone"        name="الواتساب">
-  <input type="hidden" id="hf_gender"       name="الجنس">
-  <input type="hidden" id="hf_weight"       name="الوزن">
-  <input type="hidden" id="hf_height"       name="الطول">
-  <input type="hidden" id="hf_goal"         name="الهدف">
-  <input type="hidden" id="hf_level"        name="المستوى">
-  <input type="hidden" id="hf_days"         name="أيام_التدريب">
-  <input type="hidden" id="hf_diet"         name="النظام_الغذائي">
-  <input type="hidden" id="hf_supps"        name="المكملات">
-  <input type="hidden" id="hf_restrictions" name="الممنوعات">
-  <input type="hidden" id="hf_injuries"     name="الإصابات">
-  <input type="hidden" id="hf_lifestyle"    name="نمط_الحياة">
-  <input type="hidden" id="hf_sleep"        name="النوم">
-  <input type="hidden" id="hf_plan"         name="الباقة">
-  <input type="hidden" id="hf_commit"       name="الجدية">
-  <input type="hidden" id="hf_expect"       name="التوقعات">
-  <input type="hidden" id="hf_notes"        name="ملاحظات">
-  <input type="hidden" id="hf_subject"      name="_subject">
-  <input type="hidden"                       name="_next" value="https://anisbitam21-png.github.io/ASSESSMENT/thanks.html">
-</form>
+<form id="fsForm" action="https://formspree.io/f/maqlwbdy" method="POST" style="display:none"></form>
 
+<script>
+const TITLES=['المعلومات الشخصية','الهدف','التاريخ التدريبي','الوضع الحالي','تفضيلات التمارين','الملف الصحي','الهرمونات والتحاليل','التغذية','النوم والتعافي','المكملات','النفسي والقياسات','التوقعات والإنهاء'];
+let cur=1, picks={};
+
+function pick(el,name,val){
+  // single select per group
+  el.closest('.chips').querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  picks[name]=val;
+}
+
+function go(from,to){
+  document.getElementById('sec'+from).classList.remove('active');
+  cur=to;
+  document.getElementById('sec'+to).classList.add('active');
+  const pct=Math.round((cur/12)*100);
+  document.getElementById('pFill').style.width=pct+'%';
+  document.getElementById('pNum').textContent=cur;
+  document.getElementById('pTitle').textContent=TITLES[cur-1];
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function submitForm(){
+  const btn=document.getElementById('btnSub');
+  btn.textContent='⏳ جاري الإرسال...';
+  btn.disabled=true;
+
+  const form=document.getElementById('fsForm');
+  form.innerHTML='';
+
+  // All inputs/textareas/selects with name
+  document.querySelectorAll('.section-card [name]').forEach(el=>{
+    const v=el.value.trim();
+    if(v){
+      const h=document.createElement('input');
+      h.type='hidden'; h.name=el.name; h.value=v;
+      form.appendChild(h);
+    }
+  });
+
+  // Chip picks
+  Object.entries(picks).forEach(([n,v])=>{
+    const h=document.createElement('input');
+    h.type='hidden'; h.name=n; h.value=v;
+    form.appendChild(h);
+  });
+
+  // Subject
+  const nameVal=document.getElementById('i_name')?.value||'عميل';
+  const h=document.createElement('input');
+  h.type='hidden'; h.name='_subject'; h.value='استبيان جديد: '+nameVal+' — Coach Anis';
+  form.appendChild(h);
+
+  form.submit();
+
+  setTimeout(()=>{
+    document.getElementById('sec12').classList.remove('active');
+    document.querySelector('.progress-wrap').style.display='none';
+    document.getElementById('thankyou').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  },600);
+}
+</script>
 </body>
 </html>
