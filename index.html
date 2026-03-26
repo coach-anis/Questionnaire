@@ -21,6 +21,11 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .header h1 span{color:var(--gold);}
 .header p{font-size:13px;color:var(--dim);max-width:380px;margin:0 auto;line-height:1.7;}
 
+/* AUTOSAVE BADGE */
+.save-badge{position:fixed;top:12px;left:12px;z-index:100;background:rgba(45,198,83,0.12);border:1px solid rgba(45,198,83,0.3);border-radius:20px;padding:5px 11px;font-size:11px;color:var(--green);display:flex;align-items:center;gap:5px;opacity:0;transition:opacity .4s;}
+.save-badge.show{opacity:1;}
+.save-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
 
 /* PROGRESS */
 .progress-wrap{max-width:580px;margin:0 auto 18px;padding:0 20px;position:relative;z-index:1;}
@@ -46,10 +51,13 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .field{margin-bottom:14px;}
 .field label{display:block;font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.5;}
 .field label .req{color:var(--red);}
-.field input[type="text"],.field input[type="number"],.field input[type="tel"],.field textarea,.field select{width:100%;background:var(--dark3);border:1px solid rgba(255,255,255,.07);border-radius:9px;padding:10px 13px;color:var(--text);font-family:'Cairo',sans-serif;font-size:13px;transition:border-color .2s;-webkit-appearance:none;}
+.field input[type="text"],.field input[type="number"],.field input[type="tel"],.field textarea,.field select{width:100%;background:var(--dark3);border:1px solid rgba(255,255,255,.07);border-radius:9px;padding:10px 13px;color:var(--text);font-family:'Cairo',sans-serif;font-size:13px;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none;}
 .field textarea{resize:vertical;min-height:68px;line-height:1.6;}
 .field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:rgba(201,168,76,.5);background:rgba(201,168,76,.03);}
 .field input::placeholder,.field textarea::placeholder{color:var(--dim2);font-size:12px;}
+.field input.invalid,.field textarea.invalid,.field select.invalid{border-color:var(--red) !important;box-shadow:0 0 0 2px rgba(230,57,70,0.15);}
+.field .err-msg{color:var(--red);font-size:11px;margin-top:4px;display:none;}
+.field.has-err .err-msg{display:block;}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
 
@@ -58,6 +66,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .chip{padding:7px 13px;border-radius:18px;border:1px solid rgba(255,255,255,.07);background:var(--dark3);font-family:'Cairo',sans-serif;font-size:12px;font-weight:600;color:var(--dim);cursor:pointer;transition:all .2s;user-select:none;}
 .chip:hover{border-color:var(--gold);color:var(--text);}
 .chip.on{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08);}
+.chips-wrap.invalid-chips .chips{box-shadow:0 0 0 2px rgba(230,57,70,0.25);border-radius:10px;}
 
 /* NOTE */
 .note-box{background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.18);border-right:3px solid var(--gold);border-radius:8px;padding:10px 13px;font-size:11px;color:var(--dim);line-height:1.7;margin-bottom:13px;}
@@ -71,6 +80,10 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .btn-next:disabled{opacity:.5;cursor:default;transform:none;box-shadow:none;}
 .btn-prev{width:44px;height:44px;background:transparent;border:1px solid var(--border);border-radius:10px;color:var(--dim);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
 .btn-prev:hover{border-color:var(--gold);color:var(--text);}
+
+/* ERROR TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:rgba(230,57,70,0.95);color:#fff;padding:11px 20px;border-radius:10px;font-size:13px;font-weight:700;z-index:1000;transition:transform .3s ease;pointer-events:none;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
 
 /* THANK YOU */
 .thankyou{display:none;text-align:center;padding:48px 20px;animation:slideIn .4s ease;position:relative;z-index:1;}
@@ -87,11 +100,20 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .btn-ig:hover{box-shadow:0 8px 24px rgba(201,168,76,.4);transform:translateY(-2px);}
 .ty-handle{font-family:'Bebas Neue',sans-serif;letter-spacing:3px;font-size:10px;color:var(--dim);margin-top:18px;opacity:.4;}
 
+/* SEND ERROR */
+.send-error{background:rgba(230,57,70,0.1);border:1px solid rgba(230,57,70,0.3);border-radius:10px;padding:12px 16px;font-size:13px;color:var(--red);text-align:center;margin-top:10px;display:none;}
+
 @media(max-width:400px){.grid2{grid-template-columns:1fr;}.grid3{grid-template-columns:1fr 1fr;}}
 </style>
 </head>
 <body>
 <div class="bg-glow"></div>
+
+<!-- AUTO-SAVE BADGE -->
+<div class="save-badge" id="saveBadge"><span class="save-dot"></span> تم الحفظ تلقائياً</div>
+
+<!-- ERROR TOAST -->
+<div class="toast" id="toast"></div>
 
 <div class="header">
   <div class="header-line"></div>
@@ -100,10 +122,9 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   <p>أجب بصدق وتفصيل — كلما كانت المعلومات أدق كان البرنامج أقوى</p>
 </div>
 
-
 <!-- PROGRESS -->
 <div class="progress-wrap">
-  <div class="progress-bar-outer"><div class="progress-bar-fill" id="pFill" style="width:8%"></div></div>
+  <div class="progress-bar-outer"><div class="progress-bar-fill" id="pFill" style="width:0%"></div></div>
   <div class="progress-info"><span>القسم <b id="pNum">1</b> من 12</span><span id="pTitle">المعلومات الشخصية</span></div>
 </div>
 
@@ -113,9 +134,9 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 <div class="section-card active" id="sec1">
   <div class="sec-head"><div class="sec-icon">👤</div><div><div class="sec-num">SECTION 01</div><div class="sec-title">المعلومات <span>الشخصية</span></div></div></div>
   <div class="grid3">
-    <div class="field"><label>الاسم الكامل <span class="req">*</span></label><input type="text" id="i_name" name="الاسم_الكامل" placeholder="اسمك الكامل"></div>
-    <div class="field"><label>العمر <span class="req">*</span></label><input type="number" name="العمر" placeholder="25"></div>
-    <div class="field"><label>الجنس <span class="req">*</span></label><select name="الجنس"><option value="">اختر</option><option>ذكر</option><option>أنثى</option></select></div>
+    <div class="field" id="f_name"><label>الاسم الكامل <span class="req">*</span></label><input type="text" id="i_name" name="الاسم_الكامل" placeholder="اسمك الكامل"><span class="err-msg">هذا الحقل مطلوب</span></div>
+    <div class="field" id="f_age"><label>العمر <span class="req">*</span></label><input type="number" name="العمر" placeholder="25"><span class="err-msg">هذا الحقل مطلوب</span></div>
+    <div class="field" id="f_gender"><label>الجنس <span class="req">*</span></label><select name="الجنس"><option value="">اختر</option><option>ذكر</option><option>أنثى</option></select><span class="err-msg">الرجاء الاختيار</span></div>
   </div>
   <div class="grid3">
     <div class="field"><label>الطول (سم)</label><input type="number" name="الطول_سم" placeholder="175"></div>
@@ -137,11 +158,14 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   <div class="sec-head"><div class="sec-icon">🎯</div><div><div class="sec-num">SECTION 02</div><div class="sec-title">الهدف <span>Goal</span></div></div></div>
   <div class="field">
     <label>ما هدفك الرئيسي؟ <span class="req">*</span></label>
-    <div class="chips">
-      <div class="chip" onclick="pick(this,'الهدف_الرئيسي','تضخيم وبناء عضل')">تضخيم وبناء عضل</div>
-      <div class="chip" onclick="pick(this,'الهدف_الرئيسي','تنشيف وحرق دهون')">تنشيف وحرق دهون</div>
-      <div class="chip" onclick="pick(this,'الهدف_الرئيسي','إعادة تركيب الجسم')">إعادة تركيب الجسم</div>
-      <div class="chip" onclick="pick(this,'الهدف_الرئيسي','زيادة القوة')">زيادة القوة</div>
+    <div class="chips-wrap" id="cw_goal" data-pick="الهدف_الرئيسي" data-req="true">
+      <div class="chips">
+        <div class="chip" onclick="pick(this,'الهدف_الرئيسي','تضخيم وبناء عضل')">تضخيم وبناء عضل</div>
+        <div class="chip" onclick="pick(this,'الهدف_الرئيسي','تنشيف وحرق دهون')">تنشيف وحرق دهون</div>
+        <div class="chip" onclick="pick(this,'الهدف_الرئيسي','إعادة تركيب الجسم')">إعادة تركيب الجسم</div>
+        <div class="chip" onclick="pick(this,'الهدف_الرئيسي','زيادة القوة')">زيادة القوة</div>
+      </div>
+      <span class="err-msg" style="display:none;color:var(--red);font-size:11px;margin-top:4px;">الرجاء اختيار هدف</span>
     </div>
   </div>
   <div class="field"><label>لماذا هذا الهدف تحديداً؟ ما الدافع الحقيقي؟</label><textarea name="الدافع_الحقيقي" placeholder=""></textarea></div>
@@ -336,8 +360,9 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <div class="chip" onclick="pick(this,'سمنة_الوالدين','لا')">لا</div>
     </div>
   </div>
-  <div class="field"><label>رقم الواتساب للتواصل <span class="req">*</span></label><input type="tel" name="رقم_الواتساب" placeholder="0555XXXXXX"></div>
+  <div class="field" id="f_wa"><label>رقم الواتساب للتواصل <span class="req">*</span></label><input type="tel" name="رقم_الواتساب" id="i_wa" placeholder="0555XXXXXX"><span class="err-msg">رقم الواتساب مطلوب</span></div>
   <div class="note-box"><strong>📸 بعد الإرسال:</strong> أرسل صور الجسم (أمام/جانب/خلف) وصور الجيم وتقارير التحاليل عبر الإنستغرام <strong>@coach__anis</strong></div>
+  <div class="send-error" id="sendErr">⚠️ حدث خطأ أثناء الإرسال. تحقق من اتصالك وحاول مجدداً.</div>
   <div class="nav-btns">
     <button class="btn-prev" onclick="go(12,11)">→</button>
     <button class="btn-next" id="btnSub" onclick="submitForm()">إرسال الاستبيان ✦</button>
@@ -358,71 +383,225 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 </div><!-- form-wrap -->
 
-<!-- HIDDEN FORMSPREE FORM -->
-<form id="fsForm" action="https://formspree.io/f/maqlwbdy" method="POST" style="display:none"></form>
-
 <script>
 const TITLES=['المعلومات الشخصية','الهدف','التاريخ التدريبي','الوضع الحالي','تفضيلات التمارين','الملف الصحي','الهرمونات والتحاليل','التغذية','النوم والتعافي','المكملات','النفسي والقياسات','التوقعات والإنهاء'];
-let cur=1, picks={};
+const TOTAL = 12;
+let cur = 1;
+let picks = {};
+let saveTimer = null;
 
-function pick(el,name,val){
-  // single select per group
-  el.closest('.chips').querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
-  el.classList.add('on');
-  picks[name]=val;
+/* ─── AUTO-SAVE ─── */
+const LS_KEY = 'coach_anis_form';
+
+function saveToStorage() {
+  const data = { cur, picks, fields: {} };
+  document.querySelectorAll('.section-card [name]').forEach(el => {
+    if (el.value.trim()) data.fields[el.name] = el.value;
+  });
+  try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e){}
+  const badge = document.getElementById('saveBadge');
+  badge.classList.add('show');
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => badge.classList.remove('show'), 2000);
 }
 
-function go(from,to){
-  document.getElementById('sec'+from).classList.remove('active');
-  cur=to;
-  document.getElementById('sec'+to).classList.add('active');
-  const pct=Math.round((cur/12)*100);
-  document.getElementById('pFill').style.width=pct+'%';
-  document.getElementById('pNum').textContent=cur;
-  document.getElementById('pTitle').textContent=TITLES[cur-1];
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function submitForm(){
-  const btn=document.getElementById('btnSub');
-  btn.textContent='⏳ جاري الإرسال...';
-  btn.disabled=true;
-
-  const form=document.getElementById('fsForm');
-  form.innerHTML='';
-
-  // All inputs/textareas/selects with name
-  document.querySelectorAll('.section-card [name]').forEach(el=>{
-    const v=el.value.trim();
-    if(v){
-      const h=document.createElement('input');
-      h.type='hidden'; h.name=el.name; h.value=v;
-      form.appendChild(h);
+function loadFromStorage() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    // Restore field values
+    if (data.fields) {
+      Object.entries(data.fields).forEach(([name, val]) => {
+        const el = document.querySelector(`[name="${name}"]`);
+        if (el) el.value = val;
+      });
     }
-  });
-
-  // Chip picks
-  Object.entries(picks).forEach(([n,v])=>{
-    const h=document.createElement('input');
-    h.type='hidden'; h.name=n; h.value=v;
-    form.appendChild(h);
-  });
-
-  // Subject
-  const nameVal=document.getElementById('i_name')?.value||'عميل';
-  const h=document.createElement('input');
-  h.type='hidden'; h.name='_subject'; h.value='استبيان جديد: '+nameVal+' — Coach Anis';
-  form.appendChild(h);
-
-  form.submit();
-
-  setTimeout(()=>{
-    document.getElementById('sec12').classList.remove('active');
-    document.querySelector('.progress-wrap').style.display='none';
-    document.getElementById('thankyou').style.display='block';
-    window.scrollTo({top:0,behavior:'smooth'});
-  },600);
+    // Restore picks (chips)
+    if (data.picks) {
+      picks = data.picks;
+      Object.entries(picks).forEach(([name, val]) => {
+        document.querySelectorAll(`.chip`).forEach(chip => {
+          if (chip.getAttribute('onclick') && chip.getAttribute('onclick').includes(`'${name}'`) && chip.getAttribute('onclick').includes(`'${val}'`)) {
+            chip.classList.add('on');
+          }
+        });
+      });
+    }
+  } catch(e){}
 }
+
+// Attach auto-save listeners
+function attachSaveListeners() {
+  document.querySelectorAll('.section-card input, .section-card textarea, .section-card select').forEach(el => {
+    el.addEventListener('input', saveToStorage);
+    el.addEventListener('change', saveToStorage);
+  });
+}
+
+/* ─── PICK (CHIPS) ─── */
+function pick(el, name, val) {
+  el.closest('.chips').querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+  picks[name] = val;
+  // Clear invalid state on chips-wrap if present
+  const cw = el.closest('.chips-wrap');
+  if (cw) {
+    cw.classList.remove('invalid-chips');
+    const em = cw.querySelector('.err-msg');
+    if (em) em.style.display = 'none';
+  }
+  saveToStorage();
+}
+
+/* ─── TOAST ─── */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+/* ─── VALIDATION ─── */
+// Returns true if section is valid
+function validateSection(secNum) {
+  let valid = true;
+
+  if (secNum === 1) {
+    // Name
+    const name = document.getElementById('i_name');
+    const fName = document.getElementById('f_name');
+    if (!name.value.trim()) {
+      name.classList.add('invalid'); fName.classList.add('has-err'); valid = false;
+    } else {
+      name.classList.remove('invalid'); fName.classList.remove('has-err');
+    }
+    // Age
+    const age = document.querySelector('#sec1 [name="العمر"]');
+    const fAge = document.getElementById('f_age');
+    if (!age.value.trim()) {
+      age.classList.add('invalid'); fAge.classList.add('has-err'); valid = false;
+    } else {
+      age.classList.remove('invalid'); fAge.classList.remove('has-err');
+    }
+    // Gender
+    const gender = document.querySelector('#sec1 [name="الجنس"]');
+    const fGender = document.getElementById('f_gender');
+    if (!gender.value) {
+      gender.classList.add('invalid'); fGender.classList.add('has-err'); valid = false;
+    } else {
+      gender.classList.remove('invalid'); fGender.classList.remove('has-err');
+    }
+  }
+
+  if (secNum === 2) {
+    const cw = document.getElementById('cw_goal');
+    if (!picks['الهدف_الرئيسي']) {
+      cw.classList.add('invalid-chips');
+      cw.querySelector('.err-msg').style.display = 'block';
+      valid = false;
+    } else {
+      cw.classList.remove('invalid-chips');
+      cw.querySelector('.err-msg').style.display = 'none';
+    }
+  }
+
+  if (secNum === 12) {
+    const wa = document.getElementById('i_wa');
+    const fWa = document.getElementById('f_wa');
+    if (!wa.value.trim()) {
+      wa.classList.add('invalid'); fWa.classList.add('has-err'); valid = false;
+    } else {
+      wa.classList.remove('invalid'); fWa.classList.remove('has-err');
+    }
+  }
+
+  return valid;
+}
+
+/* ─── NAVIGATION ─── */
+function go(from, to) {
+  // Only validate when moving forward
+  if (to > from) {
+    if (!validateSection(from)) {
+      showToast('⚠️ الرجاء تعبئة الحقول الإلزامية');
+      return;
+    }
+  }
+  document.getElementById('sec' + from).classList.remove('active');
+  cur = to;
+  document.getElementById('sec' + to).classList.add('active');
+  const pct = Math.round((cur / TOTAL) * 100);
+  document.getElementById('pFill').style.width = pct + '%';
+  document.getElementById('pNum').textContent = cur;
+  document.getElementById('pTitle').textContent = TITLES[cur - 1];
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  saveToStorage();
+}
+
+/* ─── SUBMIT via FETCH (not form.submit) ─── */
+async function submitForm() {
+  if (!validateSection(12)) {
+    showToast('⚠️ الرجاء إدخال رقم الواتساب');
+    return;
+  }
+
+  const btn = document.getElementById('btnSub');
+  const errBox = document.getElementById('sendErr');
+  btn.textContent = '⏳ جاري الإرسال...';
+  btn.disabled = true;
+  errBox.style.display = 'none';
+
+  // Build FormData
+  const fd = new FormData();
+  document.querySelectorAll('.section-card [name]').forEach(el => {
+    const v = el.value.trim();
+    if (v) fd.append(el.name, v);
+  });
+  Object.entries(picks).forEach(([n, v]) => fd.append(n, v));
+  const nameVal = document.getElementById('i_name')?.value || 'عميل';
+  fd.append('_subject', 'استبيان جديد: ' + nameVal + ' — Coach Anis');
+
+  try {
+    const res = await fetch('https://formspree.io/f/maqlwbdy', {
+      method: 'POST',
+      body: fd,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) {
+      // Clear saved data on success
+      try { localStorage.removeItem(LS_KEY); } catch(e){}
+      document.getElementById('sec12').classList.remove('active');
+      document.querySelector('.progress-wrap').style.display = 'none';
+      document.getElementById('thankyou').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      throw new Error('Server error ' + res.status);
+    }
+  } catch(err) {
+    btn.textContent = 'إرسال الاستبيان ✦';
+    btn.disabled = false;
+    errBox.style.display = 'block';
+  }
+}
+
+/* ─── INIT ─── */
+document.addEventListener('DOMContentLoaded', () => {
+  loadFromStorage();
+  attachSaveListeners();
+  // Remove invalid class on user interaction
+  document.querySelectorAll('.section-card input, .section-card select, .section-card textarea').forEach(el => {
+    el.addEventListener('input', () => {
+      el.classList.remove('invalid');
+      el.closest('.field')?.classList.remove('has-err');
+    });
+    el.addEventListener('change', () => {
+      el.classList.remove('invalid');
+      el.closest('.field')?.classList.remove('has-err');
+    });
+  });
+});
 </script>
 </body>
 </html>
