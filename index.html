@@ -44,6 +44,11 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 /* PROGRESS */
 .progress-wrap{max-width:580px;margin:0 auto 18px;padding:0 20px;position:relative;z-index:1;}
+/* Step dots */
+.step-dots{display:flex;justify-content:center;gap:5px;margin-bottom:10px;}
+.step-dot{width:20px;height:4px;border-radius:2px;background:var(--dim2);transition:background .3s,width .3s;}
+.step-dot.done{background:rgba(201,168,76,.45);}
+.step-dot.active{background:var(--gold);width:28px;}
 .progress-bar-outer{background:var(--dark3);border:1px solid var(--border);border-radius:2px;height:3px;margin-bottom:7px;overflow:hidden;}
 .progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));transition:width .4s ease;box-shadow:0 0 8px rgba(201,168,76,.5);}
 .progress-info{display:flex;justify-content:space-between;font-size:11px;color:var(--dim);}
@@ -83,6 +88,12 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .chip.on{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08);}
 .chips-wrap.invalid-chips .chips{box-shadow:0 0 0 2px rgba(230,57,70,0.25);border-radius:10px;}
 
+/* BMI BOX */
+.bmi-box{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:9px;padding:9px 14px;font-size:12px;color:var(--dim);margin-top:6px;display:none;align-items:center;gap:8px;}
+.bmi-box.show{display:flex;}
+.bmi-val{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--gold);line-height:1;}
+.bmi-label{font-size:11px;font-weight:700;}
+
 /* NOTE */
 .note-box{background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.18);border-right:3px solid var(--gold);border-radius:8px;padding:10px 13px;font-size:11px;color:var(--dim);line-height:1.7;margin-bottom:13px;}
 .note-box strong{color:var(--gold);}
@@ -113,6 +124,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .ty-sub strong{color:var(--text);}
 .btn-ig{display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--dark);padding:13px 24px;border-radius:10px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:900;text-decoration:none;transition:all .25s;margin-bottom:8px;}
 .btn-ig:hover{box-shadow:0 8px 24px rgba(201,168,76,.4);transform:translateY(-2px);}
+.btn-reset{display:flex;align-items:center;justify-content:center;gap:8px;background:transparent;border:1px solid var(--border);color:var(--dim);padding:11px 24px;border-radius:10px;font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .25s;margin-top:10px;width:100%;}
+.btn-reset:hover{border-color:var(--gold);color:var(--text);}
 .ty-handle{font-family:'Bebas Neue',sans-serif;letter-spacing:3px;font-size:10px;color:var(--dim);margin-top:18px;opacity:.4;}
 
 /* SEND ERROR */
@@ -139,36 +152,55 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 <!-- PROGRESS -->
 <div class="progress-wrap">
+  <!-- Step dots indicator -->
+  <div class="step-dots" id="stepDots"></div>
   <div class="progress-bar-outer"><div class="progress-bar-fill" id="pFill" style="width:0%"></div></div>
   <div class="progress-info"><span>القسم <b id="pNum">1</b> من 12</span><span id="pTitle">المعلومات الشخصية</span></div>
 </div>
 
 <div class="form-wrap">
 
-<!-- SEC 1 -->
+<!-- SEC 1: المعلومات الشخصية -->
 <div class="section-card active" id="sec1">
   <div class="sec-head"><div class="sec-icon">👤</div><div><div class="sec-num">SECTION 01</div><div class="sec-title">المعلومات <span>الشخصية</span></div></div></div>
   <div class="grid3">
-    <div class="field" id="f_name"><label>الاسم الكامل <span class="req">*</span></label><input type="text" id="i_name" name="الاسم_الكامل" placeholder="اسمك الكامل"><span class="err-msg">هذا الحقل مطلوب</span></div>
-    <div class="field" id="f_age"><label>العمر <span class="req">*</span></label><input type="number" name="العمر" placeholder="25"><span class="err-msg">هذا الحقل مطلوب</span></div>
+    <div class="field" id="f_name"><label>الاسم الكامل <span class="req">*</span></label><input type="text" id="i_name" name="الاسم_الكامل" placeholder="مثال: أحمد بن علي"><span class="err-msg">هذا الحقل مطلوب</span></div>
+    <div class="field" id="f_age"><label>العمر <span class="req">*</span></label><input type="number" name="العمر" placeholder="25" min="14" max="70"><span class="err-msg">هذا الحقل مطلوب</span></div>
     <div class="field" id="f_gender"><label>الجنس <span class="req">*</span></label><select name="الجنس"><option value="">اختر</option><option>ذكر</option><option>أنثى</option></select><span class="err-msg">الرجاء الاختيار</span></div>
   </div>
   <div class="grid3">
-    <div class="field"><label>الطول (سم)</label><input type="number" name="الطول_سم" placeholder="175"></div>
-    <div class="field"><label>الوزن الحالي (كغ)</label><input type="number" name="الوزن_كغ" placeholder="80"></div>
-    <div class="field"><label>الولاية</label><input type="text" name="الولاية" placeholder="باتنة"></div>
+    <div class="field"><label>الطول (سم)</label><input type="number" id="i_height" name="الطول_سم" placeholder="175" min="140" max="220"></div>
+    <div class="field"><label>الوزن الحالي (كغ)</label><input type="number" id="i_weight" name="الوزن_كغ" placeholder="80" min="40" max="250"></div>
+    <div class="field"><label>الولاية</label><input type="text" name="الولاية" placeholder="مثال: الجزائر العاصمة"></div>
   </div>
-  <div class="field"><label>المهنة وطبيعة العمل</label><input type="text" name="المهنة" placeholder=""></div>
-  <div class="field"><label>كم ساعة تجلس أو تقف في العمل؟</label><input type="text" name="ساعات_العمل_جالس_واقف" placeholder=""></div>
-  <div class="grid2">
-    <div class="field"><label>كم ساعة تنام يومياً؟</label><input type="text" name="ساعات_النوم" placeholder=""></div>
-    <div class="field"><label>كيف جودة نومك؟</label><input type="text" name="جودة_النوم" placeholder=""></div>
+  <!-- BMI auto-calc -->
+  <div class="bmi-box" id="bmiBox">
+    <div><div class="bmi-val" id="bmiVal">--</div><div style="font-size:10px;color:var(--dim)">BMI</div></div>
+    <div><div class="bmi-label" id="bmiLabel">--</div><div style="font-size:10px;color:var(--dim);margin-top:2px">مؤشر كتلة الجسم</div></div>
   </div>
-  <div class="field"><label>مستوى التوتر في حياتك اليومية؟</label><input type="text" name="مستوى_التوتر" placeholder=""></div>
+  <div class="field"><label>المهنة وطبيعة العمل</label><input type="text" name="المهنة" placeholder="مثال: موظف إداري — جالس أغلب اليوم"></div>
+  <div class="field"><label>كم ساعة تجلس أو تقف في العمل؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'ساعات_العمل_جالس_واقف','أقل من 4 ساعات')">أقل من 4 س</div>
+      <div class="chip" onclick="pick(this,'ساعات_العمل_جالس_واقف','4-6 ساعات')">4–6 س</div>
+      <div class="chip" onclick="pick(this,'ساعات_العمل_جالس_واقف','6-8 ساعات')">6–8 س</div>
+      <div class="chip" onclick="pick(this,'ساعات_العمل_جالس_واقف','أكثر من 8 ساعات')">+8 س</div>
+    </div>
+  </div>
+  <!-- كيف وصلت إلينا -->
+  <div class="field">
+    <label>كيف وصلت إلينا؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'مصدر_الوصول','إنستغرام')">إنستغرام</div>
+      <div class="chip" onclick="pick(this,'مصدر_الوصول','إحالة صديق')">إحالة صديق</div>
+      <div class="chip" onclick="pick(this,'مصدر_الوصول','بحث Google')">Google</div>
+      <div class="chip" onclick="pick(this,'مصدر_الوصول','أخرى')">أخرى</div>
+    </div>
+  </div>
   <div class="nav-btns"><button class="btn-next" onclick="go(1,2)">التالي ←</button></div>
 </div>
 
-<!-- SEC 2 -->
+<!-- SEC 2: الهدف -->
 <div class="section-card" id="sec2">
   <div class="sec-head"><div class="sec-icon">🎯</div><div><div class="sec-num">SECTION 02</div><div class="sec-title">الهدف <span>Goal</span></div></div></div>
   <div class="field">
@@ -183,48 +215,113 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <span class="err-msg" style="display:none;color:var(--red);font-size:11px;margin-top:4px;">الرجاء اختيار هدف</span>
     </div>
   </div>
-  <div class="field"><label>لماذا هذا الهدف تحديداً؟ ما الدافع الحقيقي؟</label><textarea name="الدافع_الحقيقي" placeholder=""></textarea></div>
-  <div class="field"><label>في كم وقت تريد تحقيق هدفك؟</label><input type="text" name="الوقت_المطلوب" placeholder=""></div>
-  <div class="field"><label>هل سبق وحققت هذا الهدف؟ إذا لا — ما الذي أوقفك؟</label><textarea name="هل_حققت_الهدف_سابقاً" placeholder=""></textarea></div>
-  <div class="field"><label>ما تعريفك للنجاح بعد 3 أشهر؟</label><textarea name="تعريف_النجاح_3_أشهر" placeholder=""></textarea></div>
+  <div class="field"><label>لماذا هذا الهدف تحديداً؟ ما الدافع الحقيقي؟</label><textarea name="الدافع_الحقيقي" placeholder="مثال: أريد أشعر بالثقة في نفسي، صحتي بدأت تتراجع..."></textarea></div>
+  <div class="field"><label>في كم وقت تريد تحقيق هدفك؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'الوقت_المطلوب','3 أشهر')">3 أشهر</div>
+      <div class="chip" onclick="pick(this,'الوقت_المطلوب','6 أشهر')">6 أشهر</div>
+      <div class="chip" onclick="pick(this,'الوقت_المطلوب','سنة')">سنة</div>
+      <div class="chip" onclick="pick(this,'الوقت_المطلوب','بلا توقيت محدد')">بلا توقيت</div>
+    </div>
+  </div>
+  <div class="field"><label>هل سبق وحققت هذا الهدف؟ إذا لا — ما الذي أوقفك؟</label><textarea name="هل_حققت_الهدف_سابقاً" placeholder="مثال: وصلت للهدف لكن رجعت بسبب الإصابة / لم أحققه بسبب عدم الانتظام..."></textarea></div>
+  <div class="field"><label>ما تعريفك للنجاح بعد 3 أشهر؟</label><textarea name="تعريف_النجاح_3_أشهر" placeholder="مثال: أفقد 8 كغ وأشعر بطاقة أكثر في الصباح..."></textarea></div>
   <div class="nav-btns"><button class="btn-prev" onclick="go(2,1)">→</button><button class="btn-next" onclick="go(2,3)">التالي ←</button></div>
 </div>
 
-<!-- SEC 3 -->
+<!-- SEC 3: التاريخ التدريبي -->
 <div class="section-card" id="sec3">
   <div class="sec-head"><div class="sec-icon">🏋️</div><div><div class="sec-num">SECTION 03</div><div class="sec-title">التاريخ <span>التدريبي</span></div></div></div>
-  <div class="field"><label>كم سنة تتدرب — وكيف تصف مستواك الحالي؟</label><textarea name="سنوات_التدريب_والمستوى" placeholder=""></textarea></div>
-  <div class="field"><label>ما البرامج التي اتبعتها سابقاً وما نتائجها؟</label><textarea name="البرامج_السابقة_ونتائجها" placeholder=""></textarea></div>
-  <div class="field"><label>هل تدربت مع مدرب من قبل؟ وكيف كانت التجربة؟</label><textarea name="تجربة_المدرب_السابق" placeholder=""></textarea></div>
-  <div class="field"><label>ما المناطق العضلية الضعيفة التي تريد تطويرها؟</label><textarea name="المناطق_العضلية_الضعيفة" placeholder=""></textarea></div>
+  <div class="field">
+    <label>كم سنة تتدرب؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'سنوات_التدريب','أقل من سنة')">أقل من سنة</div>
+      <div class="chip" onclick="pick(this,'سنوات_التدريب','1-2 سنة')">1–2 سنة</div>
+      <div class="chip" onclick="pick(this,'سنوات_التدريب','2-4 سنوات')">2–4 سنوات</div>
+      <div class="chip" onclick="pick(this,'سنوات_التدريب','أكثر من 4 سنوات')">+4 سنوات</div>
+    </div>
+  </div>
+  <div class="field">
+    <label>كيف تصف مستواك الحالي؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'المستوى_الحالي','مبتدئ')">مبتدئ</div>
+      <div class="chip" onclick="pick(this,'المستوى_الحالي','متوسط')">متوسط</div>
+      <div class="chip" onclick="pick(this,'المستوى_الحالي','متقدم')">متقدم</div>
+    </div>
+  </div>
+  <div class="field"><label>ما البرامج التي اتبعتها سابقاً وما نتائجها؟</label><textarea name="البرامج_السابقة_ونتائجها" placeholder="مثال: اتبعت PPL لمدة 6 أشهر، اكتسبت عضل لكن توقفت بسبب انشغال..."></textarea></div>
+  <div class="field"><label>هل تدربت مع مدرب من قبل؟ وكيف كانت التجربة؟</label><textarea name="تجربة_المدرب_السابق" placeholder="مثال: نعم، لمدة 3 أشهر، كانت التجربة جيدة لكن البرنامج لم يكن مخصصاً..."></textarea></div>
+  <div class="field"><label>ما المناطق العضلية الضعيفة التي تريد تطويرها؟</label><textarea name="المناطق_العضلية_الضعيفة" placeholder="مثال: الظهر، الكتف الخلفي، الساقين..."></textarea></div>
   <div class="nav-btns"><button class="btn-prev" onclick="go(3,2)">→</button><button class="btn-next" onclick="go(3,4)">التالي ←</button></div>
 </div>
 
-<!-- SEC 4 -->
+<!-- SEC 4: الوضع التدريبي الحالي -->
 <div class="section-card" id="sec4">
   <div class="sec-head"><div class="sec-icon">💪</div><div><div class="sec-num">SECTION 04</div><div class="sec-title">الوضع التدريبي <span>الحالي</span></div></div></div>
-  <div class="grid2">
-    <div class="field"><label>كم يوماً تتدرب في الأسبوع؟</label><input type="text" name="أيام_التدريب_الأسبوعية" placeholder=""></div>
-    <div class="field"><label>كم مدة الجلسة؟</label><input type="text" name="مدة_الجلسة" placeholder=""></div>
+  <div class="field">
+    <label>كم يوماً تتدرب في الأسبوع حالياً؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'أيام_التدريب_الأسبوعية','يوم أو يومان')">1–2 أيام</div>
+      <div class="chip" onclick="pick(this,'أيام_التدريب_الأسبوعية','3 أيام')">3 أيام</div>
+      <div class="chip" onclick="pick(this,'أيام_التدريب_الأسبوعية','4 أيام')">4 أيام</div>
+      <div class="chip" onclick="pick(this,'أيام_التدريب_الأسبوعية','5 أيام أو أكثر')">5+ أيام</div>
+      <div class="chip" onclick="pick(this,'أيام_التدريب_الأسبوعية','غير منتظم')">غير منتظم</div>
+    </div>
+  </div>
+  <div class="field">
+    <label>كم مدة الجلسة الواحدة؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'مدة_الجلسة','أقل من 45 دقيقة')">أقل من 45 د</div>
+      <div class="chip" onclick="pick(this,'مدة_الجلسة','45-60 دقيقة')">45–60 د</div>
+      <div class="chip" onclick="pick(this,'مدة_الجلسة','60-90 دقيقة')">60–90 د</div>
+      <div class="chip" onclick="pick(this,'مدة_الجلسة','أكثر من 90 دقيقة')">+90 د</div>
+    </div>
   </div>
   <div class="grid2">
-    <div class="field"><label>أين تتدرب؟</label><input type="text" name="مكان_التدريب" placeholder=""></div>
-    <div class="field"><label>في أي وقت؟</label><input type="text" name="وقت_التدريب" placeholder=""></div>
+    <div class="field"><label>أين تتدرب؟</label>
+      <div class="chips" style="flex-direction:column;gap:5px;">
+        <div class="chip" onclick="pick(this,'مكان_التدريب','جيم')">جيم</div>
+        <div class="chip" onclick="pick(this,'مكان_التدريب','في البيت')">في البيت</div>
+        <div class="chip" onclick="pick(this,'مكان_التدريب','الاثنين')">الاثنين</div>
+      </div>
+    </div>
+    <div class="field"><label>في أي وقت تتدرب؟</label>
+      <div class="chips" style="flex-direction:column;gap:5px;">
+        <div class="chip" onclick="pick(this,'وقت_التدريب','صباحاً')">صباحاً</div>
+        <div class="chip" onclick="pick(this,'وقت_التدريب','ظهراً')">ظهراً</div>
+        <div class="chip" onclick="pick(this,'وقت_التدريب','مساءً')">مساءً</div>
+        <div class="chip" onclick="pick(this,'وقت_التدريب','ليلاً')">ليلاً</div>
+      </div>
+    </div>
   </div>
   <div class="note-box"><strong>📸 بعد الإرسال:</strong> أرسل صور الجيم عبر الإنستغرام — المنطقة العامة، الأثقال الحرة، الأجهزة، الكارديو</div>
-  <div class="field"><label>هل لديك إصابات أو آلام مزمنة تؤثر على التمرين؟</label><textarea name="الإصابات_والآلام" placeholder=""></textarea></div>
-  <div class="field"><label>هل تلاحظ تعباً مبكراً أو ضيق تنفس أثناء التمرين؟</label><input type="text" name="التعب_المبكر_وضيق_التنفس" placeholder=""></div>
-  <div class="field"><label>كم ترغب أن تكون أيام التدريب في البرنامج؟</label><input type="text" name="الأيام_المرغوبة_في_البرنامج" placeholder=""></div>
+  <div class="field"><label>هل لديك إصابات أو آلام مزمنة تؤثر على التمرين؟</label><textarea name="الإصابات_والآلام" placeholder="مثال: ألم في الركبة اليسرى عند القرفصاء، ألم أسفل الظهر..."></textarea></div>
+  <div class="field"><label>هل تلاحظ تعباً مبكراً أو ضيق تنفس أثناء التمرين؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'التعب_المبكر','لا، لياقتي جيدة')">لا، لياقتي جيدة</div>
+      <div class="chip" onclick="pick(this,'التعب_المبكر','أحياناً')">أحياناً</div>
+      <div class="chip" onclick="pick(this,'التعب_المبكر','نعم بشكل متكرر')">نعم بشكل متكرر</div>
+    </div>
+  </div>
+  <div class="field">
+    <label>كم تريد أن تكون أيام التدريب في البرنامج الجديد؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'الأيام_المرغوبة_في_البرنامج','3 أيام')">3 أيام</div>
+      <div class="chip" onclick="pick(this,'الأيام_المرغوبة_في_البرنامج','4 أيام')">4 أيام</div>
+      <div class="chip" onclick="pick(this,'الأيام_المرغوبة_في_البرنامج','5 أيام')">5 أيام</div>
+      <div class="chip" onclick="pick(this,'الأيام_المرغوبة_في_البرنامج','6 أيام')">6 أيام</div>
+    </div>
+  </div>
   <div class="nav-btns"><button class="btn-prev" onclick="go(4,3)">→</button><button class="btn-next" onclick="go(4,5)">التالي ←</button></div>
 </div>
 
-<!-- SEC 5 -->
+<!-- SEC 5: تفضيلات التمارين -->
 <div class="section-card" id="sec5">
   <div class="sec-head"><div class="sec-icon">❤️‍🔥</div><div><div class="sec-num">SECTION 05</div><div class="sec-title">تفضيلات <span>التمارين</span></div></div></div>
-  <div class="field"><label>ما التمارين التي تحبها وتستمتع بأدائها؟</label><textarea name="التمارين_المحبوبة" placeholder=""></textarea></div>
-  <div class="field"><label>ما التمارين التي تكرهها أو تتجنبها؟ ولماذا؟</label><textarea name="التمارين_المكروهة_وسببها" placeholder=""></textarea></div>
-  <div class="field"><label>ما التمارين التي تحس فيها بالعضلة بشكل جيد؟</label><textarea name="تمارين_الإحساس_الجيد" placeholder=""></textarea></div>
-  <div class="field"><label>ما التمارين التي تجد صعوبة في أدائها التقني؟</label><textarea name="التمارين_صعبة_التقنية" placeholder=""></textarea></div>
+  <div class="field"><label>ما التمارين التي تحبها وتستمتع بأدائها؟</label><textarea name="التمارين_المحبوبة" placeholder="مثال: السكوات، بنش بريس، ديدليفت..."></textarea></div>
+  <div class="field"><label>ما التمارين التي تكرهها أو تتجنبها؟ ولماذا؟</label><textarea name="التمارين_المكروهة_وسببها" placeholder="مثال: أتجنب اللانج لأنه يؤلم ركبتي..."></textarea></div>
+  <div class="field"><label>ما التمارين التي تحس فيها بالعضلة بشكل جيد؟</label><textarea name="تمارين_الإحساس_الجيد" placeholder="مثال: كيبل فلاي للصدر، هامر كيرل للذراع..."></textarea></div>
+  <div class="field"><label>ما التمارين التي تجد صعوبة في أدائها التقني؟</label><textarea name="التمارين_صعبة_التقنية" placeholder="مثال: الديدليفت، السكوات العميق..."></textarea></div>
   <div class="field">
     <label>تفضّل الأوزان الحرة أم الأجهزة؟</label>
     <div class="chips">
@@ -232,33 +329,56 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <div class="chip" onclick="pick(this,'تفضيل_المعدات','أجهزة')">أجهزة</div>
       <div class="chip" onclick="pick(this,'تفضيل_المعدات','كلاهما')">كلاهما</div>
     </div>
-    <textarea name="سبب_تفضيل_المعدات" placeholder="السبب..." style="margin-top:8px"></textarea>
+    <textarea name="سبب_تفضيل_المعدات" placeholder="السبب إن أردت التوضيح..." style="margin-top:8px"></textarea>
   </div>
-  <div class="field"><label>كيف تشعر بعد انتهاء التمرين؟</label><textarea name="الشعور_بعد_التمرين" placeholder=""></textarea></div>
+  <div class="field"><label>كيف تشعر بعد انتهاء التمرين؟</label><textarea name="الشعور_بعد_التمرين" placeholder="مثال: أشعر بنشاط وطاقة / أشعر بإرهاق شديد / لا أشعر بشيء..."></textarea></div>
   <div class="nav-btns"><button class="btn-prev" onclick="go(5,4)">→</button><button class="btn-next" onclick="go(5,6)">التالي ←</button></div>
 </div>
 
-<!-- SEC 6 -->
+<!-- SEC 6: الملف الصحي -->
 <div class="section-card" id="sec6">
   <div class="sec-head"><div class="sec-icon">🩺</div><div><div class="sec-num">SECTION 06</div><div class="sec-title">الملف <span>الصحي</span></div></div></div>
   <div class="note-box">⚠️ <strong>هذا القسم سري تماماً</strong> — الإجابة الصادقة تحميك وتجعل البرنامج أكثر أماناً</div>
-  <div class="field"><label>هل تعاني من أي مرض مزمن مشخّص؟</label><input type="text" name="أمراض_مزمنة" placeholder=""></div>
-  <div class="field"><label>هل لديك مشاكل في الغدة الدرقية؟</label><input type="text" name="مشاكل_الغدة_الدرقية" placeholder=""></div>
-  <div class="field"><label>هل تأخذ أي أدوية بشكل منتظم؟</label><input type="text" name="الأدوية_المنتظمة" placeholder=""></div>
-  <div class="field"><label>هل خضعت لعمليات جراحية كبيرة؟</label><input type="text" name="العمليات_الجراحية" placeholder=""></div>
-  <div class="field"><label>هل لديك حساسية من أطعمة أو مكملات؟</label><input type="text" name="الحساسية_الغذائية" placeholder=""></div>
-  <div class="field"><label>هل تعاني من مشاكل في الجهاز الهضمي؟</label><input type="text" name="مشاكل_الجهاز_الهضمي" placeholder=""></div>
-  <div class="field"><label>للنساء فقط — هل لديك مشاكل هرمونية؟</label><input type="text" name="مشاكل_هرمونية_نساء" placeholder=""></div>
+  <div class="field"><label>هل تعاني من أي مرض مزمن مشخّص؟</label><input type="text" name="أمراض_مزمنة" placeholder="مثال: سكري، ضغط دم، لا يوجد..."></div>
+  <div class="field"><label>هل لديك مشاكل في الغدة الدرقية؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'مشاكل_الغدة_الدرقية','نعم — خمول')">نعم — خمول</div>
+      <div class="chip" onclick="pick(this,'مشاكل_الغدة_الدرقية','نعم — فرط نشاط')">نعم — فرط نشاط</div>
+      <div class="chip" onclick="pick(this,'مشاكل_الغدة_الدرقية','لا')">لا</div>
+    </div>
+  </div>
+  <div class="field"><label>هل تأخذ أي أدوية بشكل منتظم؟</label><input type="text" name="الأدوية_المنتظمة" placeholder="مثال: لا / نعم: ميتفورمين 500 ملغ..."></div>
+  <div class="field"><label>هل خضعت لعمليات جراحية كبيرة؟</label><input type="text" name="العمليات_الجراحية" placeholder="مثال: لا / نعم: استئصال الزائدة 2019..."></div>
+  <div class="field"><label>هل لديك حساسية من أطعمة أو مكملات؟</label><input type="text" name="الحساسية_الغذائية" placeholder="مثال: لا / نعم: حليب، مكسرات..."></div>
+  <div class="field"><label>هل تعاني من مشاكل في الجهاز الهضمي؟</label><input type="text" name="مشاكل_الجهاز_الهضمي" placeholder="مثال: لا / نعم: انتفاخ متكرر، متهيج القولون..."></div>
+  <div class="field"><label>للنساء فقط — هل لديك مشاكل هرمونية؟</label><input type="text" name="مشاكل_هرمونية_نساء" placeholder="مثال: PCOS، عدم انتظام الدورة..."></div>
+  <!-- نقلنا أمراض القلب والسكري العائلية من sec12 لهنا -->
+  <hr class="divider-line">
+  <div class="field"><label>🧬 هل في أمراض قلب أو سكري في العائلة؟</label><input type="text" name="أمراض_القلب_والسكري_العائلية" placeholder="مثال: الأب مصاب بضغط الدم / لا يوجد..."></div>
+  <div class="field">
+    <label>هل الأب أو الأم يعانون من السمنة؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'سمنة_الوالدين','نعم أحدهما')">نعم أحدهما</div>
+      <div class="chip" onclick="pick(this,'سمنة_الوالدين','كلاهما')">كلاهما</div>
+      <div class="chip" onclick="pick(this,'سمنة_الوالدين','لا')">لا</div>
+    </div>
+  </div>
   <div class="nav-btns"><button class="btn-prev" onclick="go(6,5)">→</button><button class="btn-next" onclick="go(6,7)">التالي ←</button></div>
 </div>
 
-<!-- SEC 7 -->
+<!-- SEC 7: الهرمونات والتحاليل -->
 <div class="section-card" id="sec7">
   <div class="sec-head"><div class="sec-icon">🧬</div><div><div class="sec-num">SECTION 07</div><div class="sec-title">الهرمونات <span>والتحاليل</span></div></div></div>
-  <div class="note-box"><strong>اختياري — لكن مهم جداً</strong></div>
-  <div class="field"><label>هل أجريت تحليلاً هرمونياً سابقاً؟ ما النتائج؟</label><textarea name="التحليل_الهرموني_ونتائجه" placeholder=""></textarea></div>
-  <div class="field"><label>هل تعاني من أعراض نقص التستوستيرون؟</label><textarea name="أعراض_نقص_التستوستيرون" placeholder=""></textarea></div>
-  <div class="field"><label>هل سبق أن استخدمت هرمونات خارجية؟</label><input type="text" name="استخدام_هرمونات_خارجية" placeholder=""></div>
+  <div class="note-box"><strong>اختياري — لكن مهم جداً</strong> — كلما أعطيت معلومات أكثر كان البرنامج أدق</div>
+  <div class="field"><label>هل أجريت تحليلاً هرمونياً سابقاً؟ ما النتائج؟</label><textarea name="التحليل_الهرموني_ونتائجه" placeholder="مثال: نعم، التستوستيرون كان 350 ng/dL..."></textarea></div>
+  <div class="field"><label>هل تعاني من أعراض نقص التستوستيرون؟</label><textarea name="أعراض_نقص_التستوستيرون" placeholder="مثال: تعب مزمن، قلة التركيز، ضعف الرغبة، بطء الاستشفاء..."></textarea></div>
+  <div class="field"><label>هل سبق أن استخدمت هرمونات خارجية؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'استخدام_هرمونات_خارجية','نعم — حالياً')">نعم — حالياً</div>
+      <div class="chip" onclick="pick(this,'استخدام_هرمونات_خارجية','نعم — سابقاً')">نعم — سابقاً</div>
+      <div class="chip" onclick="pick(this,'استخدام_هرمونات_خارجية','لا')">لا</div>
+    </div>
+  </div>
   <div class="field">
     <label>هل أجريت تحاليل دم مؤخراً (خلال 6 أشهر)؟</label>
     <div class="chips">
@@ -266,29 +386,70 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <div class="chip" onclick="pick(this,'تحاليل_دم_حديثة','لا')">لا</div>
     </div>
   </div>
-  <div class="field"><label>إذا تعرف القيم، اذكرها:</label><textarea name="قيم_التحاليل" placeholder=""></textarea></div>
+  <div class="field"><label>إذا تعرف القيم، اذكرها:</label><textarea name="قيم_التحاليل" placeholder="مثال: هيموغلوبين: 14  |  فيتامين D: 20  |  تستوستيرون: 400..."></textarea></div>
   <div class="nav-btns"><button class="btn-prev" onclick="go(7,6)">→</button><button class="btn-next" onclick="go(7,8)">التالي ←</button></div>
 </div>
 
-<!-- SEC 8 -->
+<!-- SEC 8: التغذية ونمط الحياة -->
 <div class="section-card" id="sec8">
   <div class="sec-head"><div class="sec-icon">🍽️</div><div><div class="sec-num">SECTION 08</div><div class="sec-title">التغذية <span>ونمط الحياة</span></div></div></div>
   <div class="grid2">
-    <div class="field"><label>كم وجبة تأكل يومياً؟</label><input type="text" name="عدد_الوجبات" placeholder=""></div>
-    <div class="field"><label>كم لتر ماء تشرب؟</label><input type="text" name="كمية_الماء_اليومية" placeholder=""></div>
+    <div class="field">
+      <label>كم وجبة تأكل يومياً؟</label>
+      <div class="chips" style="flex-direction:column;gap:5px;">
+        <div class="chip" onclick="pick(this,'عدد_الوجبات','1-2 وجبات')">1–2 وجبات</div>
+        <div class="chip" onclick="pick(this,'عدد_الوجبات','3 وجبات')">3 وجبات</div>
+        <div class="chip" onclick="pick(this,'عدد_الوجبات','4-5 وجبات')">4–5 وجبات</div>
+      </div>
+    </div>
+    <div class="field">
+      <label>كم لتر ماء تشرب يومياً؟</label>
+      <div class="chips" style="flex-direction:column;gap:5px;">
+        <div class="chip" onclick="pick(this,'كمية_الماء_اليومية','أقل من 1.5 لتر')">أقل من 1.5L</div>
+        <div class="chip" onclick="pick(this,'كمية_الماء_اليومية','1.5-2 لتر')">1.5–2L</div>
+        <div class="chip" onclick="pick(this,'كمية_الماء_اليومية','2-3 لتر')">2–3L</div>
+        <div class="chip" onclick="pick(this,'كمية_الماء_اليومية','أكثر من 3 لتر')">+3L</div>
+      </div>
+    </div>
   </div>
-  <div class="field"><label>كيف يبدو نظامك الغذائي اليومي؟ اذكر وجباتك</label><textarea name="النظام_الغذائي_اليومي" placeholder=""></textarea></div>
-  <div class="field"><label>هل تحسب السعرات أو البروتين؟</label><input type="text" name="حساب_السعرات_والبروتين" placeholder=""></div>
-  <div class="field"><label>ما الأطعمة التي لا تأكلها أو تكرهها؟</label><input type="text" name="الأطعمة_المكروهة" placeholder=""></div>
-  <div class="field"><label>هل تأكل خارج البيت بكثرة — وما ميزانيتك للأكل؟</label><input type="text" name="الأكل_خارج_والميزانية" placeholder=""></div>
-  <div class="field"><label>هل تدخن أو تشرب كحول؟</label><input type="text" name="التدخين_والكحول" placeholder=""></div>
+  <div class="field"><label>كيف يبدو نظامك الغذائي اليومي؟ اذكر وجباتك</label><textarea name="النظام_الغذائي_اليومي" placeholder="مثال:&#10;الفطور: بيض + خبز&#10;الغداء: دجاج + أرز&#10;العشاء: جبن + خضار"></textarea></div>
+  <div class="field"><label>هل تحسب السعرات أو البروتين؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'حساب_السعرات_والبروتين','نعم — بانتظام')">نعم بانتظام</div>
+      <div class="chip" onclick="pick(this,'حساب_السعرات_والبروتين','أحياناً')">أحياناً</div>
+      <div class="chip" onclick="pick(this,'حساب_السعرات_والبروتين','لا')">لا</div>
+    </div>
+  </div>
+  <div class="field"><label>ما الأطعمة التي لا تأكلها أو تكرهها؟</label><input type="text" name="الأطعمة_المكروهة" placeholder="مثال: لا أحب السمك، لا آكل الكبدة..."></div>
+  <div class="field"><label>هل تأكل خارج البيت بكثرة — وما ميزانيتك للأكل؟</label><input type="text" name="الأكل_خارج_والميزانية" placeholder="مثال: مرتين أسبوعياً، ميزانية ~3000 دج/يوم"></div>
+  <div class="field"><label>هل تدخن؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'التدخين','لا')">لا</div>
+      <div class="chip" onclick="pick(this,'التدخين','نعم — أقل من علبة')">أقل من علبة/يوم</div>
+      <div class="chip" onclick="pick(this,'التدخين','نعم — علبة أو أكثر')">علبة أو أكثر</div>
+      <div class="chip" onclick="pick(this,'التدخين','سابقاً وتوقفت')">توقفت</div>
+    </div>
+  </div>
   <div class="grid2">
-    <div class="field"><label>كم مرة تأكل السمك في الأسبوع؟</label><input type="text" name="استهلاك_السمك_أسبوعياً" placeholder=""></div>
-    <div class="field"><label>كم بيضة تأكل في اليوم؟</label><input type="text" name="عدد_البيض_اليومي" placeholder=""></div>
+    <div class="field"><label>كم مرة تأكل السمك في الأسبوع؟</label>
+      <div class="chips" style="flex-direction:column;gap:5px;">
+        <div class="chip" onclick="pick(this,'استهلاك_السمك_أسبوعياً','نادراً أو لا')">نادراً / لا</div>
+        <div class="chip" onclick="pick(this,'استهلاك_السمك_أسبوعياً','مرة واحدة')">مرة/أسبوع</div>
+        <div class="chip" onclick="pick(this,'استهلاك_السمك_أسبوعياً','مرتان أو أكثر')">مرتان+</div>
+      </div>
+    </div>
+    <div class="field"><label>كم بيضة تأكل في اليوم؟</label>
+      <div class="chips" style="flex-direction:column;gap:5px;">
+        <div class="chip" onclick="pick(this,'عدد_البيض_اليومي','لا آكل بيض')">لا آكل</div>
+        <div class="chip" onclick="pick(this,'عدد_البيض_اليومي','1-2 بيضة')">1–2</div>
+        <div class="chip" onclick="pick(this,'عدد_البيض_اليومي','3-4 بيضات')">3–4</div>
+        <div class="chip" onclick="pick(this,'عدد_البيض_اليومي','5 أو أكثر')">5+</div>
+      </div>
+    </div>
   </div>
-  <div class="field"><label>ما مصادر البروتين اليومية وكم تأكل منها؟</label><textarea name="مصادر_البروتين_اليومية" placeholder=""></textarea></div>
+  <div class="field"><label>ما مصادر البروتين اليومية وكم تأكل منها؟</label><textarea name="مصادر_البروتين_اليومية" placeholder="مثال: دجاج 200غ + بيض 3 + جبن + تونة..."></textarea></div>
   <div class="field">
-    <label>تطبخ بالزيت العادية أم زيت الزيتون؟</label>
+    <label>تطبخ بأي نوع زيت؟</label>
     <div class="chips">
       <div class="chip" onclick="pick(this,'نوع_الزيت','زيت عادي')">زيت عادي</div>
       <div class="chip" onclick="pick(this,'نوع_الزيت','زيت زيتون')">زيت زيتون</div>
@@ -313,35 +474,96 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   <div class="nav-btns"><button class="btn-prev" onclick="go(8,7)">→</button><button class="btn-next" onclick="go(8,9)">التالي ←</button></div>
 </div>
 
-<!-- SEC 9 -->
+<!-- SEC 9: النوم والتعافي (موسّع — بعد حذف التكرار من sec1) -->
 <div class="section-card" id="sec9">
   <div class="sec-head"><div class="sec-icon">😴</div><div><div class="sec-num">SECTION 09</div><div class="sec-title">النوم <span>والتعافي</span></div></div></div>
-  <div class="field"><label>كم ساعة تنام — وكيف جودة نومك؟</label><textarea name="النوم_وجودته" placeholder=""></textarea></div>
-  <div class="field"><label>هل تعاني من شخير شديد أو انقطاع التنفس أثناء النوم؟</label><input type="text" name="الشخير_وانقطاع_التنفس" placeholder=""></div>
+  <div class="field">
+    <label>كم ساعة تنام يومياً؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'ساعات_النوم','أقل من 5 ساعات')">أقل من 5</div>
+      <div class="chip" onclick="pick(this,'ساعات_النوم','5-6 ساعات')">5–6 س</div>
+      <div class="chip" onclick="pick(this,'ساعات_النوم','7-8 ساعات')">7–8 س</div>
+      <div class="chip" onclick="pick(this,'ساعات_النوم','أكثر من 8 ساعات')">+8 س</div>
+    </div>
+  </div>
+  <div class="field">
+    <label>كيف جودة نومك؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'جودة_النوم','ممتازة — أستيقظ نشيطاً')">ممتازة</div>
+      <div class="chip" onclick="pick(this,'جودة_النوم','جيدة')">جيدة</div>
+      <div class="chip" onclick="pick(this,'جودة_النوم','سيئة — أستيقظ متعباً')">سيئة</div>
+      <div class="chip" onclick="pick(this,'جودة_النوم','أرق متكرر')">أرق متكرر</div>
+    </div>
+  </div>
+  <div class="field">
+    <label>مستوى التوتر في حياتك اليومية؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'مستوى_التوتر','منخفض — هادئ')">منخفض</div>
+      <div class="chip" onclick="pick(this,'مستوى_التوتر','متوسط')">متوسط</div>
+      <div class="chip" onclick="pick(this,'مستوى_التوتر','مرتفع')">مرتفع</div>
+      <div class="chip" onclick="pick(this,'مستوى_التوتر','شديد جداً')">شديد جداً</div>
+    </div>
+  </div>
+  <div class="field"><label>هل تعاني من شخير شديد أو انقطاع التنفس أثناء النوم؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'الشخير_وانقطاع_التنفس','لا')">لا</div>
+      <div class="chip" onclick="pick(this,'الشخير_وانقطاع_التنفس','شخير فقط')">شخير فقط</div>
+      <div class="chip" onclick="pick(this,'الشخير_وانقطاع_التنفس','نعم انقطاع تنفس مشخص')">انقطاع تنفس مشخص</div>
+    </div>
+  </div>
+  <div class="field">
+    <label>هل تمارس تمديد أو موبيليتي بعد التمرين؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'التمديد_والموبيليتي','نعم دائماً')">نعم دائماً</div>
+      <div class="chip" onclick="pick(this,'التمديد_والموبيليتي','أحياناً')">أحياناً</div>
+      <div class="chip" onclick="pick(this,'التمديد_والموبيليتي','لا أبداً')">لا أبداً</div>
+    </div>
+  </div>
+  <div class="field">
+    <label>كم يوم راحة تأخذ بين جلسات التدريب نفس العضلة؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'أيام_الراحة_بين_الجلسات','يوم واحد')">يوم واحد</div>
+      <div class="chip" onclick="pick(this,'أيام_الراحة_بين_الجلسات','يومان')">يومان</div>
+      <div class="chip" onclick="pick(this,'أيام_الراحة_بين_الجلسات','3 أيام أو أكثر')">3 أيام+</div>
+      <div class="chip" onclick="pick(this,'أيام_الراحة_بين_الجلسات','لا أعرف')">لا أعرف</div>
+    </div>
+  </div>
   <div class="nav-btns"><button class="btn-prev" onclick="go(9,8)">→</button><button class="btn-next" onclick="go(9,10)">التالي ←</button></div>
 </div>
 
-<!-- SEC 10 -->
+<!-- SEC 10: المكملات الغذائية -->
 <div class="section-card" id="sec10">
   <div class="sec-head"><div class="sec-icon">💊</div><div><div class="sec-num">SECTION 10</div><div class="sec-title">المكملات <span>الغذائية</span></div></div></div>
-  <div class="field"><label>ما المكملات التي تستخدمها حالياً مع الجرعة؟</label><textarea name="المكملات_الحالية_والجرعة" placeholder=""></textarea></div>
-  <div class="field"><label>ما المكملات التي جربتها سابقاً وما نتيجتها؟</label><textarea name="المكملات_السابقة_ونتائجها" placeholder=""></textarea></div>
+  <div class="field"><label>ما المكملات التي تستخدمها حالياً مع الجرعة؟</label><textarea name="المكملات_الحالية_والجرعة" placeholder="مثال: كرياتين 5غ/يوم، واي بروتين سيرفيتشن بعد التمرين، فيتامين D3 2000IU..."></textarea></div>
+  <div class="field"><label>ما المكملات التي جربتها سابقاً وما نتيجتها؟</label><textarea name="المكملات_السابقة_ونتائجها" placeholder="مثال: جربت البري وركاوت — أعطاني طاقة جيدة / جربت BCAA — ما لاحظت فرقاً..."></textarea></div>
   <div class="grid2">
-    <div class="field"><label>كيف تحملك للكافيين؟</label><input type="text" name="تحمل_الكافيين" placeholder=""></div>
-    <div class="field"><label>هل الواي بروتين يسبب مشاكل هضمية؟</label><input type="text" name="مشاكل_هضمية_من_الواي" placeholder=""></div>
+    <div class="field"><label>كيف تحملك للكافيين؟</label>
+      <div class="chips" style="flex-direction:column;gap:5px;">
+        <div class="chip" onclick="pick(this,'تحمل_الكافيين','ضعيف — يسبب قلق')">ضعيف</div>
+        <div class="chip" onclick="pick(this,'تحمل_الكافيين','متوسط')">متوسط</div>
+        <div class="chip" onclick="pick(this,'تحمل_الكافيين','عالي — لا أحس بأثره')">عالي</div>
+      </div>
+    </div>
+    <div class="field"><label>هل الواي بروتين يسبب مشاكل هضمية؟</label>
+      <div class="chips" style="flex-direction:column;gap:5px;">
+        <div class="chip" onclick="pick(this,'مشاكل_هضمية_من_الواي','نعم')">نعم</div>
+        <div class="chip" onclick="pick(this,'مشاكل_هضمية_من_الواي','لا')">لا</div>
+        <div class="chip" onclick="pick(this,'مشاكل_هضمية_من_الواي','لم أجربه')">لم أجربه</div>
+      </div>
+    </div>
   </div>
-  <div class="field"><label>كم ميزانيتك الشهرية للمكملات؟</label><input type="text" name="ميزانية_المكملات_الشهرية" placeholder=""></div>
+  <div class="field"><label>كم ميزانيتك الشهرية للمكملات؟</label><input type="text" name="ميزانية_المكملات_الشهرية" placeholder="مثال: 3000–5000 دج / لا ميزانية محددة..."></div>
   <div class="nav-btns"><button class="btn-prev" onclick="go(10,9)">→</button><button class="btn-next" onclick="go(10,11)">التالي ←</button></div>
 </div>
 
-<!-- SEC 11 -->
+<!-- SEC 11: النفسي والقياسات -->
 <div class="section-card" id="sec11">
   <div class="sec-head"><div class="sec-icon">🧠</div><div><div class="sec-num">SECTION 11</div><div class="sec-title">النفسي <span>والقياسات</span></div></div></div>
-  <div class="field"><label>هل مررت بفترات توقف متكررة؟ ما السبب؟</label><textarea name="فترات_التوقف_وسببها" placeholder=""></textarea></div>
-  <div class="field"><label>ما أكثر شيء يحبطك في التدريب والتغذية؟</label><textarea name="أسباب_الإحباط" placeholder=""></textarea></div>
+  <div class="field"><label>هل مررت بفترات توقف متكررة؟ ما السبب؟</label><textarea name="فترات_التوقف_وسببها" placeholder="مثال: نعم، أتوقف كل 2-3 أشهر بسبب الانشغال بالعمل..."></textarea></div>
+  <div class="field"><label>ما أكثر شيء يحبطك في التدريب والتغذية؟</label><textarea name="أسباب_الإحباط" placeholder="مثال: بطء النتائج، صعوبة الالتزام بالحمية في المناسبات..."></textarea></div>
   <hr class="divider-line">
-  <div class="field"><label>📏 محيط الصدر / الخصر / الذراع / الفخذ (سم)</label><textarea name="القياسات_الجسمية" placeholder="الصدر:   | الخصر:   | الذراع:   | الفخذ:" style="min-height:50px"></textarea></div>
-  <div class="field"><label>💪 مستوى القوة الحالي</label><textarea name="مستوى_القوة_الحالي" placeholder="سكوات:   | ديدليفت:   | بنش:   | أوفرهيد:   | Pull Up: تكرار" style="min-height:60px"></textarea></div>
+  <div class="field"><label>📏 محيط الجسم (سم) — اختياري</label><textarea name="القياسات_الجسمية" placeholder="الصدر:      | الخصر:      | الذراع:     | الفخذ:" style="min-height:50px"></textarea></div>
+  <div class="field"><label>💪 مستوى القوة الحالي — اختياري</label><textarea name="مستوى_القوة_الحالي" placeholder="سكوات:      | ديدليفت:    | بنش:        | أوفرهيد:    | Pull Up: __ تكرار" style="min-height:60px"></textarea></div>
   <div class="field">
     <label>هل عندك ميزان في البيت؟</label>
     <div class="chips">
@@ -352,10 +574,10 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   <div class="nav-btns"><button class="btn-prev" onclick="go(11,10)">→</button><button class="btn-next" onclick="go(11,12)">التالي ←</button></div>
 </div>
 
-<!-- SEC 12 -->
+<!-- SEC 12: التوقعات والإنهاء -->
 <div class="section-card" id="sec12">
   <div class="sec-head"><div class="sec-icon">🤝</div><div><div class="sec-num">SECTION 12</div><div class="sec-title">التوقعات <span>والإنهاء</span></div></div></div>
-  <div class="field"><label>ما الذي تتوقعه من المدرب تحديداً؟</label><textarea name="التوقعات_من_المدرب" placeholder=""></textarea></div>
+  <div class="field"><label>ما الذي تتوقعه من المدرب تحديداً؟</label><textarea name="التوقعات_من_المدرب" placeholder="مثال: متابعة أسبوعية، تعديل البرنامج كل شهر، إجابة على أسئلتي..."></textarea></div>
   <div class="field">
     <label>تفضّل شرح الأسباب أم التنفيذ المباشر؟</label>
     <div class="chips">
@@ -364,18 +586,13 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <div class="chip" onclick="pick(this,'أسلوب_التواصل','كلاهما')">كلاهما</div>
     </div>
   </div>
-  <div class="field"><label>هل هناك أي شيء مهم لم يُذكر تريد إضافته؟</label><textarea name="معلومات_إضافية" placeholder=""></textarea></div>
+  <div class="field"><label>هل هناك أي شيء مهم لم يُذكر تريد إضافته؟</label><textarea name="معلومات_إضافية" placeholder="أي معلومة تراها مهمة لمساعدتك بشكل أفضل..."></textarea></div>
   <hr class="divider-line">
-  <div class="field"><label>🧬 هل في أمراض قلب أو سكري في العائلة؟</label><input type="text" name="أمراض_القلب_والسكري_العائلية" placeholder=""></div>
-  <div class="field">
-    <label>هل الأب أو الأم يعانون من السمنة؟</label>
-    <div class="chips">
-      <div class="chip" onclick="pick(this,'سمنة_الوالدين','نعم أحدهما')">نعم أحدهما</div>
-      <div class="chip" onclick="pick(this,'سمنة_الوالدين','كلاهما')">كلاهما</div>
-      <div class="chip" onclick="pick(this,'سمنة_الوالدين','لا')">لا</div>
-    </div>
+  <div class="field" id="f_wa">
+    <label>رقم الواتساب للتواصل <span class="req">*</span></label>
+    <input type="tel" name="رقم_الواتساب" id="i_wa" placeholder="مثال: 0555123456">
+    <span class="err-msg" id="wa_err_msg">رقم الواتساب مطلوب (9 أرقام على الأقل)</span>
   </div>
-  <div class="field" id="f_wa"><label>رقم الواتساب للتواصل <span class="req">*</span></label><input type="tel" name="رقم_الواتساب" id="i_wa" placeholder="0555XXXXXX"><span class="err-msg">رقم الواتساب مطلوب</span></div>
   <div class="note-box"><strong>📸 بعد الإرسال:</strong> أرسل صور الجسم (أمام/جانب/خلف) وصور الجيم وتقارير التحاليل عبر الإنستغرام <strong>@coach__anis</strong></div>
   <div class="send-error" id="sendErr">⚠️ حدث خطأ أثناء الإرسال. تحقق من اتصالك وحاول مجدداً.</div>
   <div class="nav-btns">
@@ -388,11 +605,12 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 <div class="thankyou" id="thankyou">
   <div class="ty-card">
     <span class="ty-icon">🏆</span>
-    <div class="ty-title">شكراً <span>لك!</span></div>
+    <div class="ty-title">شكراً <span id="ty_name">لك!</span></div>
     <div class="ty-divider"></div>
     <div class="ty-sub">وصل استبيانك بنجاح ✅<br>سيتواصل معك <strong>Coach Anis</strong> خلال <strong style="color:var(--gold)">24 ساعة</strong><br><br>في الوقت الحالي تابعني على الإنستغرام<br>وأرسل صور جسمك وصور الجيم</div>
     <a href="https://instagram.com/coach__anis" class="btn-ig" target="_blank">📸 @coach__anis على الإنستغرام</a>
-    <div class="ty-handle">COACH ANIS · 2025 · SCIENCE · DISCIPLINE · RESULTS</div>
+    <button class="btn-reset" onclick="resetForm()">↺ إرسال استبيان جديد</button>
+    <div class="ty-handle">COACH ANIS · 2026 · SCIENCE · DISCIPLINE · RESULTS</div>
   </div>
 </div>
 
@@ -404,6 +622,46 @@ const TOTAL = 12;
 let cur = 1;
 let picks = {};
 let saveTimer = null;
+
+/* ─── STEP DOTS ─── */
+function buildDots() {
+  const container = document.getElementById('stepDots');
+  for (let i = 1; i <= TOTAL; i++) {
+    const d = document.createElement('div');
+    d.className = 'step-dot' + (i === 1 ? ' active' : '');
+    d.id = 'dot' + i;
+    container.appendChild(d);
+  }
+}
+
+function updateDots(current) {
+  for (let i = 1; i <= TOTAL; i++) {
+    const d = document.getElementById('dot' + i);
+    if (!d) continue;
+    d.className = 'step-dot';
+    if (i < current) d.classList.add('done');
+    else if (i === current) d.classList.add('active');
+  }
+}
+
+/* ─── BMI CALCULATOR ─── */
+function calcBMI() {
+  const h = parseFloat(document.getElementById('i_height').value);
+  const w = parseFloat(document.getElementById('i_weight').value);
+  const box = document.getElementById('bmiBox');
+  if (!h || !w || h < 100 || w < 30) { box.classList.remove('show'); return; }
+  const bmi = (w / ((h / 100) ** 2)).toFixed(1);
+  let label = '', color = 'var(--gold)';
+  if (bmi < 18.5)      { label = 'نقص وزن'; color = '#4FC3F7'; }
+  else if (bmi < 25)   { label = 'وزن طبيعي ✓'; color = 'var(--green)'; }
+  else if (bmi < 30)   { label = 'زيادة وزن'; color = '#FFB74D'; }
+  else                 { label = 'سمنة'; color = 'var(--red)'; }
+  document.getElementById('bmiVal').textContent = bmi;
+  document.getElementById('bmiVal').style.color = color;
+  document.getElementById('bmiLabel').textContent = label;
+  document.getElementById('bmiLabel').style.color = color;
+  box.classList.add('show');
+}
 
 /* ─── AUTO-SAVE ─── */
 const LS_KEY = 'coach_anis_form';
@@ -425,28 +683,38 @@ function loadFromStorage() {
     const raw = localStorage.getItem(LS_KEY);
     if (!raw) return;
     const data = JSON.parse(raw);
-    // Restore field values
     if (data.fields) {
       Object.entries(data.fields).forEach(([name, val]) => {
         const el = document.querySelector(`[name="${name}"]`);
         if (el) el.value = val;
       });
     }
-    // Restore picks (chips)
     if (data.picks) {
       picks = data.picks;
       Object.entries(picks).forEach(([name, val]) => {
-        document.querySelectorAll(`.chip`).forEach(chip => {
+        document.querySelectorAll('.chip').forEach(chip => {
           if (chip.getAttribute('onclick') && chip.getAttribute('onclick').includes(`'${name}'`) && chip.getAttribute('onclick').includes(`'${val}'`)) {
             chip.classList.add('on');
           }
         });
       });
     }
+    // Restore section
+    if (data.cur && data.cur > 1) {
+      document.getElementById('sec1').classList.remove('active');
+      cur = data.cur;
+      document.getElementById('sec' + cur).classList.add('active');
+      const pct = Math.round((cur / TOTAL) * 100);
+      document.getElementById('pFill').style.width = pct + '%';
+      document.getElementById('pNum').textContent = cur;
+      document.getElementById('pTitle').textContent = TITLES[cur - 1];
+      updateDots(cur);
+    }
+    // Recalculate BMI if data was restored
+    calcBMI();
   } catch(e){}
 }
 
-// Attach auto-save listeners
 function attachSaveListeners() {
   document.querySelectorAll('.section-card input, .section-card textarea, .section-card select').forEach(el => {
     el.addEventListener('input', saveToStorage);
@@ -459,7 +727,6 @@ function pick(el, name, val) {
   el.closest('.chips').querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
   el.classList.add('on');
   picks[name] = val;
-  // Clear invalid state on chips-wrap if present
   const cw = el.closest('.chips-wrap');
   if (cw) {
     cw.classList.remove('invalid-chips');
@@ -478,12 +745,10 @@ function showToast(msg) {
 }
 
 /* ─── VALIDATION ─── */
-// Returns true if section is valid
 function validateSection(secNum) {
   let valid = true;
 
   if (secNum === 1) {
-    // Name
     const name = document.getElementById('i_name');
     const fName = document.getElementById('f_name');
     if (!name.value.trim()) {
@@ -491,7 +756,6 @@ function validateSection(secNum) {
     } else {
       name.classList.remove('invalid'); fName.classList.remove('has-err');
     }
-    // Age
     const age = document.querySelector('#sec1 [name="العمر"]');
     const fAge = document.getElementById('f_age');
     if (!age.value.trim()) {
@@ -499,7 +763,6 @@ function validateSection(secNum) {
     } else {
       age.classList.remove('invalid'); fAge.classList.remove('has-err');
     }
-    // Gender
     const gender = document.querySelector('#sec1 [name="الجنس"]');
     const fGender = document.getElementById('f_gender');
     if (!gender.value) {
@@ -524,8 +787,16 @@ function validateSection(secNum) {
   if (secNum === 12) {
     const wa = document.getElementById('i_wa');
     const fWa = document.getElementById('f_wa');
+    const errMsg = document.getElementById('wa_err_msg');
+    const digits = wa.value.replace(/\D/g, '');
     if (!wa.value.trim()) {
-      wa.classList.add('invalid'); fWa.classList.add('has-err'); valid = false;
+      wa.classList.add('invalid'); fWa.classList.add('has-err');
+      errMsg.textContent = 'رقم الواتساب مطلوب';
+      valid = false;
+    } else if (digits.length < 9) {
+      wa.classList.add('invalid'); fWa.classList.add('has-err');
+      errMsg.textContent = 'الرقم يبدو قصيراً — تحقق من الإدخال';
+      valid = false;
     } else {
       wa.classList.remove('invalid'); fWa.classList.remove('has-err');
     }
@@ -536,7 +807,6 @@ function validateSection(secNum) {
 
 /* ─── NAVIGATION ─── */
 function go(from, to) {
-  // Only validate when moving forward
   if (to > from) {
     if (!validateSection(from)) {
       showToast('⚠️ الرجاء تعبئة الحقول الإلزامية');
@@ -550,14 +820,15 @@ function go(from, to) {
   document.getElementById('pFill').style.width = pct + '%';
   document.getElementById('pNum').textContent = cur;
   document.getElementById('pTitle').textContent = TITLES[cur - 1];
+  updateDots(cur);
   window.scrollTo({ top: 0, behavior: 'smooth' });
   saveToStorage();
 }
 
-/* ─── SUBMIT via FETCH (not form.submit) ─── */
+/* ─── SUBMIT ─── */
 async function submitForm() {
   if (!validateSection(12)) {
-    showToast('⚠️ الرجاء إدخال رقم الواتساب');
+    showToast('⚠️ الرجاء إدخال رقم الواتساب الصحيح');
     return;
   }
 
@@ -567,14 +838,13 @@ async function submitForm() {
   btn.disabled = true;
   errBox.style.display = 'none';
 
-  // Build FormData
   const fd = new FormData();
   document.querySelectorAll('.section-card [name]').forEach(el => {
     const v = el.value.trim();
     if (v) fd.append(el.name, v);
   });
   Object.entries(picks).forEach(([n, v]) => fd.append(n, v));
-  const nameVal = document.getElementById('i_name')?.value || 'عميل';
+  const nameVal = document.getElementById('i_name')?.value.trim() || 'عميل';
   fd.append('_subject', 'استبيان جديد: ' + nameVal + ' — Coach Anis');
 
   try {
@@ -585,10 +855,12 @@ async function submitForm() {
     });
 
     if (res.ok) {
-      // Clear saved data on success
       try { localStorage.removeItem(LS_KEY); } catch(e){}
       document.getElementById('sec12').classList.remove('active');
       document.querySelector('.progress-wrap').style.display = 'none';
+      // Personalized thank you
+      const firstName = nameVal.split(' ')[0];
+      document.getElementById('ty_name').textContent = firstName + '!';
       document.getElementById('thankyou').style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
@@ -601,10 +873,37 @@ async function submitForm() {
   }
 }
 
+/* ─── RESET ─── */
+function resetForm() {
+  try { localStorage.removeItem(LS_KEY); } catch(e){}
+  picks = {};
+  cur = 1;
+  document.getElementById('thankyou').style.display = 'none';
+  document.querySelector('.progress-wrap').style.display = 'block';
+  // Reset all fields
+  document.querySelectorAll('.section-card input, .section-card textarea, .section-card select').forEach(el => { el.value = ''; });
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+  // Go back to sec1
+  document.querySelectorAll('.section-card').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec1').classList.add('active');
+  document.getElementById('pFill').style.width = '0%';
+  document.getElementById('pNum').textContent = '1';
+  document.getElementById('pTitle').textContent = TITLES[0];
+  document.getElementById('bmiBox').classList.remove('show');
+  updateDots(1);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 /* ─── INIT ─── */
 document.addEventListener('DOMContentLoaded', () => {
+  buildDots();
   loadFromStorage();
   attachSaveListeners();
+
+  // BMI listeners
+  document.getElementById('i_height').addEventListener('input', calcBMI);
+  document.getElementById('i_weight').addEventListener('input', calcBMI);
+
   // Remove invalid class on user interaction
   document.querySelectorAll('.section-card input, .section-card select, .section-card textarea').forEach(el => {
     el.addEventListener('input', () => {
