@@ -187,16 +187,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <div class="chip" onclick="pick(this,'ساعات_العمل_جالس_واقف','أكثر من 8 ساعات')">+8 س</div>
     </div>
   </div>
-  <!-- كيف وصلت إلينا -->
-  <div class="field">
-    <label>كيف وصلت إلينا؟</label>
-    <div class="chips">
-      <div class="chip" onclick="pick(this,'مصدر_الوصول','إنستغرام')">إنستغرام</div>
-      <div class="chip" onclick="pick(this,'مصدر_الوصول','إحالة صديق')">إحالة صديق</div>
-      <div class="chip" onclick="pick(this,'مصدر_الوصول','بحث Google')">Google</div>
-      <div class="chip" onclick="pick(this,'مصدر_الوصول','أخرى')">أخرى</div>
-    </div>
-  </div>
   <div class="nav-btns"><button class="btn-next" onclick="go(1,2)">التالي ←</button></div>
 </div>
 
@@ -210,7 +200,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         <div class="chip" onclick="pick(this,'الهدف_الرئيسي','تضخيم وبناء عضل')">تضخيم وبناء عضل</div>
         <div class="chip" onclick="pick(this,'الهدف_الرئيسي','تنشيف وحرق دهون')">تنشيف وحرق دهون</div>
         <div class="chip" onclick="pick(this,'الهدف_الرئيسي','إعادة تركيب الجسم')">إعادة تركيب الجسم</div>
-        <div class="chip" onclick="pick(this,'الهدف_الرئيسي','زيادة القوة')">زيادة القوة</div>
       </div>
       <span class="err-msg" style="display:none;color:var(--red);font-size:11px;margin-top:4px;">الرجاء اختيار هدف</span>
     </div>
@@ -294,7 +283,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       </div>
     </div>
   </div>
-  <div class="note-box"><strong>📸 بعد الإرسال:</strong> أرسل صور الجيم عبر الإنستغرام — المنطقة العامة، الأثقال الحرة، الأجهزة، الكارديو</div>
   <div class="field"><label>هل لديك إصابات أو آلام مزمنة تؤثر على التمرين؟</label><textarea name="الإصابات_والآلام" placeholder="مثال: ألم في الركبة اليسرى عند القرفصاء، ألم أسفل الظهر..."></textarea></div>
   <div class="field"><label>هل تلاحظ تعباً مبكراً أو ضيق تنفس أثناء التمرين؟</label>
     <div class="chips">
@@ -340,13 +328,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   <div class="sec-head"><div class="sec-icon">🩺</div><div><div class="sec-num">SECTION 06</div><div class="sec-title">الملف <span>الصحي</span></div></div></div>
   <div class="note-box">⚠️ <strong>هذا القسم سري تماماً</strong> — الإجابة الصادقة تحميك وتجعل البرنامج أكثر أماناً</div>
   <div class="field"><label>هل تعاني من أي مرض مزمن مشخّص؟</label><input type="text" name="أمراض_مزمنة" placeholder="مثال: سكري، ضغط دم، لا يوجد..."></div>
-  <div class="field"><label>هل لديك مشاكل في الغدة الدرقية؟</label>
-    <div class="chips">
-      <div class="chip" onclick="pick(this,'مشاكل_الغدة_الدرقية','نعم — خمول')">نعم — خمول</div>
-      <div class="chip" onclick="pick(this,'مشاكل_الغدة_الدرقية','نعم — فرط نشاط')">نعم — فرط نشاط</div>
-      <div class="chip" onclick="pick(this,'مشاكل_الغدة_الدرقية','لا')">لا</div>
-    </div>
-  </div>
   <div class="field"><label>هل تأخذ أي أدوية بشكل منتظم؟</label><input type="text" name="الأدوية_المنتظمة" placeholder="مثال: لا / نعم: ميتفورمين 500 ملغ..."></div>
   <div class="field"><label>هل خضعت لعمليات جراحية كبيرة؟</label><input type="text" name="العمليات_الجراحية" placeholder="مثال: لا / نعم: استئصال الزائدة 2019..."></div>
   <div class="field"><label>هل لديك حساسية من أطعمة أو مكملات؟</label><input type="text" name="الحساسية_الغذائية" placeholder="مثال: لا / نعم: حليب، مكسرات..."></div>
@@ -371,7 +352,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   <div class="sec-head"><div class="sec-icon">🧬</div><div><div class="sec-num">SECTION 07</div><div class="sec-title">الهرمونات <span>والتحاليل</span></div></div></div>
   <div class="note-box"><strong>اختياري — لكن مهم جداً</strong> — كلما أعطيت معلومات أكثر كان البرنامج أدق</div>
   <div class="field"><label>هل أجريت تحليلاً هرمونياً سابقاً؟ ما النتائج؟</label><textarea name="التحليل_الهرموني_ونتائجه" placeholder="مثال: نعم، التستوستيرون كان 350 ng/dL..."></textarea></div>
-  <div class="field"><label>هل تعاني من أعراض نقص التستوستيرون؟</label><textarea name="أعراض_نقص_التستوستيرون" placeholder="مثال: تعب مزمن، قلة التركيز، ضعف الرغبة، بطء الاستشفاء..."></textarea></div>
   <div class="field"><label>هل سبق أن استخدمت هرمونات خارجية؟</label>
     <div class="chips">
       <div class="chip" onclick="pick(this,'استخدام_هرمونات_خارجية','نعم — حالياً')">نعم — حالياً</div>
@@ -562,7 +542,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   <div class="field"><label>هل مررت بفترات توقف متكررة؟ ما السبب؟</label><textarea name="فترات_التوقف_وسببها" placeholder="مثال: نعم، أتوقف كل 2-3 أشهر بسبب الانشغال بالعمل..."></textarea></div>
   <div class="field"><label>ما أكثر شيء يحبطك في التدريب والتغذية؟</label><textarea name="أسباب_الإحباط" placeholder="مثال: بطء النتائج، صعوبة الالتزام بالحمية في المناسبات..."></textarea></div>
   <hr class="divider-line">
-  <div class="field"><label>📏 محيط الجسم (سم) — اختياري</label><textarea name="القياسات_الجسمية" placeholder="الصدر:      | الخصر:      | الذراع:     | الفخذ:" style="min-height:50px"></textarea></div>
+  <div class="field"><label>📏 محيط الجسم (سم)</label><textarea name="القياسات_الجسمية" placeholder="الصدر:      | الخصر:      | الذراع:     | الفخذ:" style="min-height:50px"></textarea></div>
   <div class="field"><label>💪 مستوى القوة الحالي — اختياري</label><textarea name="مستوى_القوة_الحالي" placeholder="سكوات:      | ديدليفت:    | بنش:        | أوفرهيد:    | Pull Up: __ تكرار" style="min-height:60px"></textarea></div>
   <div class="field">
     <label>هل عندك ميزان في البيت؟</label>
@@ -593,7 +573,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <input type="tel" name="رقم_الواتساب" id="i_wa" placeholder="مثال: 0555123456">
     <span class="err-msg" id="wa_err_msg">رقم الواتساب مطلوب (9 أرقام على الأقل)</span>
   </div>
-  <div class="note-box"><strong>📸 بعد الإرسال:</strong> أرسل صور الجسم (أمام/جانب/خلف) وصور الجيم وتقارير التحاليل عبر الإنستغرام <strong>@coach__anis</strong></div>
   <div class="send-error" id="sendErr">⚠️ حدث خطأ أثناء الإرسال. تحقق من اتصالك وحاول مجدداً.</div>
   <div class="nav-btns">
     <button class="btn-prev" onclick="go(12,11)">→</button>
@@ -607,7 +586,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <span class="ty-icon">🏆</span>
     <div class="ty-title">شكراً <span id="ty_name">لك!</span></div>
     <div class="ty-divider"></div>
-    <div class="ty-sub">وصل استبيانك بنجاح ✅<br>سيتواصل معك <strong>Coach Anis</strong> خلال <strong style="color:var(--gold)">24 ساعة</strong><br><br>في الوقت الحالي تابعني على الإنستغرام<br>وأرسل صور جسمك وصور الجيم</div>
+    <div class="ty-sub">وصل استبيانك بنجاح ✅<br>سيتواصل معك <strong>Coach Anis</strong> خلال <strong style="color:var(--gold)">24 ساعة</strong></div>
     <a href="https://instagram.com/coach__anis" class="btn-ig" target="_blank">📸 @coach__anis على الإنستغرام</a>
     <button class="btn-reset" onclick="resetForm()">↺ إرسال استبيان جديد</button>
     <div class="ty-handle">COACH ANIS · 2026 · SCIENCE · DISCIPLINE · RESULTS</div>
