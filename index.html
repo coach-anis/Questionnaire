@@ -1,0 +1,1759 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>استبيان الانضمام | Coach Anis</title>
+
+<!-- Open Graph / Social Preview -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Fitness Assessment | استبيان التقييم الرياضي">
+<meta property="og:description" content="DISCOVER YOUR LEVEL · BUILD YOUR PLAN — Assessment · Goals · Progress">
+<meta property="og:image" content="https://coach-anis.github.io/Questionnaire/preview.png">
+<meta property="og:image:width" content="1400">
+<meta property="og:image:height" content="700">
+<meta property="og:url" content="https://coach-anis.github.io/Questionnaire/">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fitness Assessment | استبيان التقييم الرياضي">
+<meta name="twitter:description" content="DISCOVER YOUR LEVEL · BUILD YOUR PLAN">
+<meta name="twitter:image" content="https://coach-anis.github.io/Questionnaire/preview.png">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#C9A84C;--gold2:#E8C97A;--dark:#080808;--dark2:#0F0F0F;--dark3:#161616;--text:#EFEFEF;--dim:#666;--dim2:#333;--border:rgba(201,168,76,0.18);--green:#2DC653;--red:#E63946;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--dark);color:var(--text);font-family:'Cairo',sans-serif;min-height:100vh;overflow-x:hidden;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:.4;}
+.bg-glow{position:fixed;inset:0;background:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(201,168,76,0.07) 0%,transparent 60%);pointer-events:none;z-index:0;}
+
+/* HEADER */
+.header{text-align:center;padding:40px 24px 24px;position:relative;z-index:1;}
+.header-line{width:1px;height:34px;background:linear-gradient(180deg,transparent,var(--gold));margin:0 auto 12px;}
+.header-tag{font-family:'Bebas Neue',sans-serif;letter-spacing:5px;font-size:11px;color:var(--gold);opacity:.7;margin-bottom:10px;}
+.header h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(26px,6vw,48px);letter-spacing:2px;line-height:1;margin-bottom:8px;}
+.header h1 span{color:var(--gold);}
+.header p{font-size:13px;color:var(--dim);max-width:380px;margin:0 auto;line-height:1.7;}
+
+/* AUTOSAVE BADGE */
+.save-badge{position:fixed;top:12px;left:12px;z-index:100;background:rgba(45,198,83,0.12);border:1px solid rgba(45,198,83,0.3);border-radius:20px;padding:5px 11px;font-size:11px;color:var(--green);display:flex;align-items:center;gap:5px;opacity:0;transition:opacity .4s;}
+.save-badge.show{opacity:1;}
+.save-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+/* PROGRESS */
+.progress-wrap{max-width:580px;margin:0 auto 18px;padding:0 20px;position:relative;z-index:1;}
+/* Step dots */
+.step-dots{display:flex;justify-content:center;gap:5px;margin-bottom:10px;}
+.step-dot{width:20px;height:4px;border-radius:2px;background:var(--dim2);transition:background .3s,width .3s;}
+.step-dot.done{background:rgba(201,168,76,.45);}
+.step-dot.active{background:var(--gold);width:28px;}
+.progress-bar-outer{background:var(--dark3);border:1px solid var(--border);border-radius:2px;height:3px;margin-bottom:7px;overflow:hidden;}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));transition:width .4s ease;box-shadow:0 0 8px rgba(201,168,76,.5);}
+.progress-info{display:flex;justify-content:space-between;font-size:11px;color:var(--dim);}
+.progress-info b{color:var(--gold);}
+
+/* FORM */
+.form-wrap{max-width:580px;margin:0 auto;padding:0 20px 60px;position:relative;z-index:1;}
+.section-card{background:var(--dark2);border:1px solid var(--border);border-radius:16px;padding:22px 18px;margin-bottom:12px;display:none;animation:slideIn .3s ease;}
+.section-card.active{display:block;}
+@keyframes slideIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* SEC HEAD */
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+.sec-icon{width:38px;height:38px;border-radius:9px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.25);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.sec-num{font-family:'Bebas Neue',sans-serif;font-size:9px;letter-spacing:3px;color:var(--gold);opacity:.6;}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;}
+.sec-title span{color:var(--gold);}
+
+/* FIELDS */
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.5;}
+.field label .req{color:var(--red);}
+.field input[type="text"],.field input[type="number"],.field input[type="tel"],.field textarea,.field select{width:100%;background:var(--dark3);border:1px solid rgba(255,255,255,.07);border-radius:9px;padding:10px 13px;color:var(--text);font-family:'Cairo',sans-serif;font-size:13px;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none;}
+.field textarea{resize:vertical;min-height:68px;line-height:1.6;}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:rgba(201,168,76,.5);background:rgba(201,168,76,.03);}
+.field input::placeholder,.field textarea::placeholder{color:var(--dim2);font-size:12px;}
+.field input.invalid,.field textarea.invalid,.field select.invalid{border-color:var(--red) !important;box-shadow:0 0 0 2px rgba(230,57,70,0.15);}
+.field .err-msg{color:var(--red);font-size:11px;margin-top:4px;display:none;}
+.field.has-err .err-msg{display:block;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+
+/* CHIPS */
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:4px;}
+.chip{padding:7px 13px;border-radius:18px;border:1px solid rgba(255,255,255,.07);background:var(--dark3);font-family:'Cairo',sans-serif;font-size:12px;font-weight:600;color:var(--dim);cursor:pointer;transition:all .2s;user-select:none;}
+.chip:hover{border-color:var(--gold);color:var(--text);}
+.chip.on{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08);}
+.chips-wrap.invalid-chips .chips{box-shadow:0 0 0 2px rgba(230,57,70,0.25);border-radius:10px;}
+
+/* BMI BOX */
+.bmi-box{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:9px;padding:9px 14px;font-size:12px;color:var(--dim);margin-top:6px;display:none;align-items:center;gap:8px;}
+.bmi-box.show{display:flex;}
+.bmi-val{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--gold);line-height:1;}
+.bmi-label{font-size:11px;font-weight:700;}
+
+/* NOTE */
+.note-box{background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.18);border-right:3px solid var(--gold);border-radius:8px;padding:10px 13px;font-size:11px;color:var(--dim);line-height:1.7;margin-bottom:13px;}
+.note-box strong{color:var(--gold);}
+.divider-line{border:none;border-top:1px solid var(--border);margin:14px 0;}
+
+/* NAV */
+.nav-btns{display:flex;gap:10px;margin-top:18px;}
+.btn-next{flex:1;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--dark);border:none;border-radius:10px;padding:13px;font-family:'Cairo',sans-serif;font-size:15px;font-weight:900;cursor:pointer;transition:all .25s;}
+.btn-next:hover{box-shadow:0 8px 24px rgba(201,168,76,.4);transform:translateY(-2px);}
+.btn-next:disabled{opacity:.5;cursor:default;transform:none;box-shadow:none;}
+.btn-prev{width:44px;height:44px;background:transparent;border:1px solid var(--border);border-radius:10px;color:var(--dim);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.btn-prev:hover{border-color:var(--gold);color:var(--text);}
+
+/* ERROR TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:rgba(230,57,70,0.95);color:#fff;padding:11px 20px;border-radius:10px;font-size:13px;font-weight:700;z-index:1000;transition:transform .3s ease;pointer-events:none;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* THANK YOU */
+.thankyou{display:none;text-align:center;padding:48px 20px;animation:slideIn .4s ease;position:relative;z-index:1;}
+.ty-card{background:var(--dark2);border:1px solid rgba(201,168,76,.3);border-radius:20px;padding:44px 26px;max-width:420px;margin:0 auto;position:relative;overflow:hidden;}
+.ty-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.ty-icon{font-size:52px;display:block;margin-bottom:18px;animation:popIn .5s ease;}
+@keyframes popIn{from{transform:scale(.5);opacity:0;}to{transform:scale(1);opacity:1;}}
+.ty-title{font-family:'Bebas Neue',sans-serif;font-size:34px;letter-spacing:2px;margin-bottom:8px;}
+.ty-title span{color:var(--gold);}
+.ty-divider{width:48px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 18px;}
+.ty-sub{font-size:13px;color:var(--dim);line-height:1.9;margin-bottom:24px;}
+.ty-sub strong{color:var(--text);}
+.btn-ig{display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--dark);padding:13px 24px;border-radius:10px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:900;text-decoration:none;transition:all .25s;margin-bottom:8px;}
+.btn-ig:hover{box-shadow:0 8px 24px rgba(201,168,76,.4);transform:translateY(-2px);}
+.btn-reset{display:flex;align-items:center;justify-content:center;gap:8px;background:transparent;border:1px solid var(--border);color:var(--dim);padding:11px 24px;border-radius:10px;font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .25s;margin-top:10px;width:100%;}
+.btn-reset:hover{border-color:var(--gold);color:var(--text);}
+.ty-handle{font-family:'Bebas Neue',sans-serif;letter-spacing:3px;font-size:10px;color:var(--dim);margin-top:18px;opacity:.4;}
+
+/* SEND ERROR */
+.send-error{background:rgba(230,57,70,0.1);border:1px solid rgba(230,57,70,0.3);border-radius:10px;padding:12px 16px;font-size:13px;color:var(--red);text-align:center;margin-top:10px;display:none;}
+
+@media(max-width:400px){.grid2{grid-template-columns:1fr;}.grid3{grid-template-columns:1fr 1fr;}}
+
+/* Light theme */
+body.light{--gold:#B8923F;--gold2:#9A7A30;--dark:#F5F2EB;--dark2:#FFFFFF;--dark3:#EBE6DC;--text:#1A1916;--dim:#6B6560;--dim2:#9A948A;--border:rgba(184,146,63,0.22);}
+body.light{background:var(--dark);color:var(--text);}
+body.light .btn-next,body.light .btn-ig{color:#fff;}
+body.light .chip{background:var(--dark3);color:var(--dim);}
+body.light .chip.on{color:var(--gold);background:rgba(184,146,63,.1);}
+body.light .section-card{background:var(--dark2);}
+body.light .field input,body.light .field textarea,body.light .field select{background:var(--dark3);color:var(--text);}
+
+/* Top controls */
+.top-controls{position:relative;z-index:50;display:flex;align-items:center;justify-content:space-between;max-width:580px;margin:0 auto;padding:12px 20px 0;}
+.theme-toggle{width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:var(--dark2);color:var(--gold2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 4px 12px rgba(0,0,0,.12);}
+.theme-toggle:hover{border-color:var(--gold);transform:scale(1.05);}
+.lang-switch{display:flex;gap:4px;background:var(--dark2);border:1px solid var(--border);border-radius:24px;padding:4px;box-shadow:0 4px 12px rgba(0,0,0,.12);}
+.lang-btn{font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;padding:6px 11px;border-radius:20px;border:none;background:transparent;color:var(--dim);cursor:pointer;}
+.lang-btn:hover{color:var(--gold2);}
+.lang-btn.active{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0800;}
+body.light .lang-btn.active{color:#fff;}
+
+/* Privacy note */
+.privacy-note{max-width:580px;margin:0 auto 8px;padding:0 20px;font-size:11px;color:var(--dim);text-align:center;line-height:1.6;position:relative;z-index:1;}
+.privacy-note strong{color:var(--gold);}
+
+/* Bigger clickable step dots */
+.step-dot{width:22px;height:6px;border-radius:3px;background:var(--dim2);transition:all .25s;cursor:default;}
+.step-dot.done{background:rgba(201,168,76,.5);cursor:pointer;}
+.step-dot.done:hover{background:var(--gold);transform:scaleY(1.3);}
+.step-dot.active{background:var(--gold);width:32px;}
+@media(max-width:480px){.step-dot{width:18px;height:5px;}.step-dot.active{width:26px;}}
+
+/* Optional label */
+.opt-tag{font-size:10px;color:var(--dim);font-weight:400;margin-right:4px;}
+
+/* Summary panel */
+.summary-box{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.25);border-radius:12px;padding:14px 16px;margin-bottom:16px;font-size:12px;line-height:1.8;color:var(--dim);}
+.summary-box h4{font-family:'Bebas Neue',sans-serif;letter-spacing:2px;color:var(--gold);font-size:14px;margin-bottom:8px;}
+.summary-box .s-row{display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px solid rgba(201,168,76,.08);}
+.summary-box .s-row:last-child{border-bottom:none;}
+.summary-box .s-k{color:var(--dim);}
+.summary-box .s-v{color:var(--text);font-weight:700;text-align:left;}
+html[dir="ltr"] .summary-box .s-v{text-align:right;}
+
+/* PDF btn */
+.btn-pdf{display:flex;align-items:center;justify-content:center;gap:8px;background:transparent;border:1px solid var(--border);color:var(--dim);padding:11px 24px;border-radius:10px;font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .25s;margin-top:8px;width:100%;}
+.btn-pdf:hover{border-color:var(--gold);color:var(--text);}
+
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+
+<div class="top-controls">
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Theme">🌙</button>
+  <div class="lang-switch" id="langSwitch">
+    <button type="button" class="lang-btn active" data-lang="ar">عربي</button>
+    <button type="button" class="lang-btn" data-lang="fr">FR</button>
+    <button type="button" class="lang-btn" data-lang="en">EN</button>
+  </div>
+</div>
+
+
+<!-- AUTO-SAVE BADGE -->
+<div class="save-badge" id="saveBadge"><span class="save-dot"></span> <span id="saveText" data-i18n="savedAuto">تم الحفظ تلقائياً</span></div>
+
+<!-- ERROR TOAST -->
+<div class="toast" id="toast"></div>
+
+<div class="header">
+  <div class="header-line"></div>
+  <div class="header-tag" data-i18n="headerTag">CLIENT INTAKE FORM · استبيان الانضمام</div>
+  <h1 data-i18n-html="headerTitle">ابدأ رحلتك مع<br><span>COACH ANIS</span></h1>
+  <p data-i18n="headerDesc">أجب بصدق وتفصيل — كلما كانت المعلومات أدق كان البرنامج أقوى</p>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <!-- Step dots indicator -->
+  <div class="step-dots" id="stepDots"></div>
+  <div class="progress-bar-outer"><div class="progress-bar-fill" id="pFill" style="width:0%"></div></div>
+  <div class="progress-info"><span data-i18n-html="progressLabel">القسم <b id="pNum">1</b> من 12</span><span id="pTitle">المعلومات الشخصية</span></div>
+</div>
+
+<div class="form-wrap">
+
+<!-- SEC 1: المعلومات الشخصية -->
+<div class="section-card active" id="sec1">
+  <div class="sec-head"><div class="sec-icon">👤</div><div><div class="sec-num">SECTION 01</div><div class="sec-title" data-i18n-html="sec1Title">المعلومات <span>الشخصية</span></div></div></div>
+  <div class="grid3">
+    <div class="field" id="f_name"><label data-i18n-html="lbl_name_req">الاسم الكامل <span class="req">*</span></label><input type="text" id="i_name" name="الاسم_الكامل" placeholder="مثال: أحمد بن علي"><span class="err-msg">هذا الحقل مطلوب</span></div>
+    <div class="field" id="f_age"><label data-i18n-html="lbl_age_req">العمر <span class="req">*</span></label><input type="number" name="العمر" placeholder="25" min="14" max="70"><span class="err-msg">هذا الحقل مطلوب</span></div>
+    <div class="field" id="f_gender"><label data-i18n-html="lbl_gender_req">الجنس <span class="req">*</span></label><select name="الجنس" id="i_gender" onchange="toggleWomenField()"><option value="" data-i18n="optChoose">اختر</option><option value="ذكر" data-i18n="optMale">ذكر</option><option value="أنثى" data-i18n="optFemale">أنثى</option></select><span class="err-msg">الرجاء الاختيار</span></div>
+  </div>
+  <div class="grid3">
+    <div class="field"><label data-i18n="lbl_height">الطول (سم)</label><input type="number" id="i_height" name="الطول_سم" placeholder="175" min="140" max="220"></div>
+    <div class="field"><label data-i18n="lbl_weight">الوزن الحالي (كغ)</label><input type="number" id="i_weight" name="الوزن_كغ" placeholder="80" min="40" max="250"></div>
+    <div class="field"><label data-i18n="lbl_wilaya">الولاية</label><input type="text" name="الولاية" placeholder="مثال: الجزائر العاصمة"></div>
+  </div>
+  <!-- BMI auto-calc -->
+  <div class="bmi-box" id="bmiBox">
+    <div><div class="bmi-val" id="bmiVal">--</div><div style="font-size:10px;color:var(--dim)">BMI</div></div>
+    <div><div class="bmi-label" id="bmiLabel">--</div><div style="font-size:10px;color:var(--dim);margin-top:2px" data-i18n="bmiIndex">مؤشر كتلة الجسم</div></div>
+  </div>
+  <div class="field"><label data-i18n="lblJob">المهنة وطبيعة العمل <span class="opt-tag" data-i18n="optional">(اختياري)</span></label><input type="text" name="المهنة" placeholder="مثال: موظف إداري — جالس أغلب اليوم"></div>
+  <div class="field"><label data-i18n="lbl_work_hours">كم ساعة تجلس أو تقف في العمل؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'ساعات_العمل_جالس_واقف','أقل من 4 ساعات')" data-i18n="c_work_lt4">أقل من 4 س</div>
+      <div class="chip" onclick="pick(this,'ساعات_العمل_جالس_واقف','4-6 ساعات')" data-i18n="c_work_4_6">4–6 س</div>
+      <div class="chip" onclick="pick(this,'ساعات_العمل_جالس_واقف','6-8 ساعات')" data-i18n="c_work_6_8">6–8 س</div>
+      <div class="chip" onclick="pick(this,'ساعات_العمل_جالس_واقف','أكثر من 8 ساعات')" data-i18n="c_slp_gt8">+8 س</div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="btn-next" onclick="go(1,2)" data-i18n="btnNext">التالي ←</button></div>
+</div>
+
+<!-- SEC 2: الهدف -->
+<div class="section-card" id="sec2">
+  <div class="sec-head"><div class="sec-icon">🎯</div><div><div class="sec-num">SECTION 02</div><div class="sec-title" data-i18n-html="sec2Title">الهدف <span>Goal</span></div></div></div>
+  <div class="field">
+    <label data-i18n-html="lbl_main_goal_req">ما هدفك الرئيسي؟ <span class="req">*</span></label>
+    <div class="chips-wrap" id="cw_goal" data-pick="الهدف_الرئيسي" data-req="true">
+      <div class="chips">
+        <div class="chip" onclick="pick(this,'الهدف_الرئيسي','تضخيم وبناء عضل')" data-i18n="c_goal_bulk">تضخيم وبناء عضل</div>
+        <div class="chip" onclick="pick(this,'الهدف_الرئيسي','تنشيف وحرق دهون')" data-i18n="c_goal_cut">تنشيف وحرق دهون</div>
+        <div class="chip" onclick="pick(this,'الهدف_الرئيسي','إعادة تركيب الجسم')" data-i18n="c_goal_recomp">إعادة تركيب الجسم</div>
+      </div>
+      <span class="err-msg" style="display:none;color:var(--red);font-size:11px;margin-top:4px;">الرجاء اختيار هدف</span>
+    </div>
+  </div>
+  <div class="field"><label data-i18n="lbl_why_goal">لماذا هذا الهدف تحديداً؟ ما الدافع الحقيقي؟</label><textarea name="الدافع_الحقيقي" placeholder="مثال: أريد أشعر بالثقة في نفسي، صحتي بدأت تتراجع..."></textarea></div>
+  <div class="field"><label data-i18n="lbl_timeline">في كم وقت تريد تحقيق هدفك؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'الوقت_المطلوب','3 أشهر')" data-i18n="c_time_3m">3 أشهر</div>
+      <div class="chip" onclick="pick(this,'الوقت_المطلوب','6 أشهر')" data-i18n="c_time_6m">6 أشهر</div>
+      <div class="chip" onclick="pick(this,'الوقت_المطلوب','سنة')" data-i18n="c_time_1y">سنة</div>
+      <div class="chip" onclick="pick(this,'الوقت_المطلوب','بلا توقيت محدد')" data-i18n="c_time_none">بلا توقيت</div>
+    </div>
+  </div>
+  <div class="field"><label data-i18n="lbl_past_goal">هل سبق وحققت هذا الهدف؟ إذا لا — ما الذي أوقفك؟</label><textarea name="هل_حققت_الهدف_سابقاً" placeholder="مثال: وصلت للهدف لكن رجعت بسبب الإصابة / لم أحققه بسبب عدم الانتظام..."></textarea></div>
+  <div class="field"><label data-i18n="lbl_success_3m">ما تعريفك للنجاح بعد 3 أشهر؟</label><textarea name="تعريف_النجاح_3_أشهر" placeholder="مثال: أفقد 8 كغ وأشعر بطاقة أكثر في الصباح..."></textarea></div>
+  <div class="nav-btns"><button class="btn-prev" onclick="go(2,1)">→</button><button class="btn-next" onclick="go(2,3)" data-i18n="btnNext">التالي ←</button></div>
+</div>
+
+<!-- SEC 3: التاريخ التدريبي -->
+<div class="section-card" id="sec3">
+  <div class="sec-head"><div class="sec-icon">🏋️</div><div><div class="sec-num">SECTION 03</div><div class="sec-title" data-i18n-html="sec3Title">التاريخ <span>التدريبي</span></div></div></div>
+  <div class="field">
+    <label data-i18n="lbl_years_train">كم سنة تتدرب؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'سنوات_التدريب','أقل من سنة')" data-i18n="c_yr_lt1">أقل من سنة</div>
+      <div class="chip" onclick="pick(this,'سنوات_التدريب','1-2 سنة')" data-i18n="c_yr_1_2">1–2 سنة</div>
+      <div class="chip" onclick="pick(this,'سنوات_التدريب','2-4 سنوات')" data-i18n="c_yr_2_4">2–4 سنوات</div>
+      <div class="chip" onclick="pick(this,'سنوات_التدريب','أكثر من 4 سنوات')" data-i18n="c_yr_gt4">+4 سنوات</div>
+    </div>
+  </div>
+  <div class="field">
+    <label data-i18n="lbl_level">كيف تصف مستواك الحالي؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'المستوى_الحالي','مبتدئ')" data-i18n="c_lvl_beg">مبتدئ</div>
+      <div class="chip" onclick="pick(this,'المستوى_الحالي','متوسط')" data-i18n="c_lvl_int">متوسط</div>
+      <div class="chip" onclick="pick(this,'المستوى_الحالي','متقدم')" data-i18n="c_lvl_adv">متقدم</div>
+    </div>
+  </div>
+  <div class="field"><label data-i18n="lbl_past_programs">ما البرامج التي اتبعتها سابقاً وما نتائجها؟</label><textarea name="البرامج_السابقة_ونتائجها" placeholder="مثال: اتبعت PPL لمدة 6 أشهر، اكتسبت عضل لكن توقفت بسبب انشغال..."></textarea></div>
+  <div class="field"><label data-i18n="lbl_past_coach">هل تدربت مع مدرب من قبل؟ وكيف كانت التجربة؟</label><textarea name="تجربة_المدرب_السابق" placeholder="مثال: نعم، لمدة 3 أشهر، كانت التجربة جيدة لكن البرنامج لم يكن مخصصاً..."></textarea></div>
+  <div class="field"><label data-i18n="lbl_weak_areas">ما المناطق العضلية الضعيفة التي تريد تطويرها؟</label><textarea name="المناطق_العضلية_الضعيفة" placeholder="مثال: الظهر، الكتف الخلفي، الساقين..."></textarea></div>
+  <div class="nav-btns"><button class="btn-prev" onclick="go(3,2)">→</button><button class="btn-next" onclick="go(3,4)" data-i18n="btnNext">التالي ←</button></div>
+</div>
+
+<!-- SEC 4: الوضع التدريبي الحالي -->
+<div class="section-card" id="sec4">
+  <div class="sec-head"><div class="sec-icon">💪</div><div><div class="sec-num">SECTION 04</div><div class="sec-title" data-i18n-html="sec4Title">الوضع التدريبي <span>الحالي</span></div></div></div>
+  <div class="field">
+    <label data-i18n="lbl_days_week">كم يوماً تتدرب في الأسبوع حالياً؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'أيام_التدريب_الأسبوعية','يوم أو يومان')" data-i18n="c_days_1_2">1–2 أيام</div>
+      <div class="chip" onclick="pick(this,'أيام_التدريب_الأسبوعية','3 أيام')" data-i18n="c_days_3">3 أيام</div>
+      <div class="chip" onclick="pick(this,'أيام_التدريب_الأسبوعية','4 أيام')" data-i18n="c_days_4">4 أيام</div>
+      <div class="chip" onclick="pick(this,'أيام_التدريب_الأسبوعية','5 أيام أو أكثر')" data-i18n="c_days_5p">5+ أيام</div>
+      <div class="chip" onclick="pick(this,'أيام_التدريب_الأسبوعية','غير منتظم')" data-i18n="c_days_irreg">غير منتظم</div>
+    </div>
+  </div>
+  <div class="field">
+    <label data-i18n="lbl_session_len">كم مدة الجلسة الواحدة؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'مدة_الجلسة','أقل من 45 دقيقة')" data-i18n="c_ses_lt45">أقل من 45 د</div>
+      <div class="chip" onclick="pick(this,'مدة_الجلسة','45-60 دقيقة')" data-i18n="c_ses_45_60">45–60 د</div>
+      <div class="chip" onclick="pick(this,'مدة_الجلسة','60-90 دقيقة')" data-i18n="c_ses_60_90">60–90 د</div>
+      <div class="chip" onclick="pick(this,'مدة_الجلسة','أكثر من 90 دقيقة')" data-i18n="c_ses_gt90">+90 د</div>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="field"><label data-i18n="lbl_where">أين تتدرب؟</label>
+      <div class="chips" style="flex-direction:column;gap:5px;">
+        <div class="chip" onclick="pick(this,'مكان_التدريب','جيم')" data-i18n="c_place_gym">جيم</div>
+        <div class="chip" onclick="pick(this,'مكان_التدريب','في البيت')" data-i18n="c_place_home">في البيت</div>
+        <div class="chip" onclick="pick(this,'مكان_التدريب','كلاهما')" data-i18n="chipBoth">كلاهما</div>
+      </div>
+    </div>
+    <div class="field"><label data-i18n="lbl_when">في أي وقت تتدرب؟</label>
+      <div class="chips" style="flex-direction:column;gap:5px;">
+        <div class="chip" onclick="pick(this,'وقت_التدريب','صباحاً')" data-i18n="c_tod_morn">صباحاً</div>
+        <div class="chip" onclick="pick(this,'وقت_التدريب','ظهراً')" data-i18n="c_tod_noon">ظهراً</div>
+        <div class="chip" onclick="pick(this,'وقت_التدريب','مساءً')" data-i18n="c_tod_eve">مساءً</div>
+        <div class="chip" onclick="pick(this,'وقت_التدريب','ليلاً')" data-i18n="c_tod_night">ليلاً</div>
+      </div>
+    </div>
+  </div>
+  <div class="field"><label data-i18n="lbl_injuries">هل لديك إصابات أو آلام مزمنة تؤثر على التمرين؟</label><textarea name="الإصابات_والآلام" placeholder="مثال: ألم في الركبة اليسرى عند القرفصاء، ألم أسفل الظهر..."></textarea></div>
+  <div class="field"><label data-i18n="lbl_fatigue">هل تلاحظ تعباً مبكراً أو ضيق تنفس أثناء التمرين؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'التعب_المبكر','لا، لياقتي جيدة')" data-i18n="c_fat_no">لا، لياقتي جيدة</div>
+      <div class="chip" onclick="pick(this,'التعب_المبكر','أحياناً')" data-i18n="c_sometimes">أحياناً</div>
+      <div class="chip" onclick="pick(this,'التعب_المبكر','نعم بشكل متكرر')" data-i18n="c_fat_yes">نعم بشكل متكرر</div>
+    </div>
+  </div>
+  <div class="field">
+    <label data-i18n="lbl_desired_days">كم تريد أن تكون أيام التدريب في البرنامج الجديد؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'الأيام_المرغوبة_في_البرنامج','3 أيام')" data-i18n="c_days_3">3 أيام</div>
+      <div class="chip" onclick="pick(this,'الأيام_المرغوبة_في_البرنامج','4 أيام')" data-i18n="c_days_4">4 أيام</div>
+      <div class="chip" onclick="pick(this,'الأيام_المرغوبة_في_البرنامج','5 أيام')" data-i18n="c_days_5">5 أيام</div>
+      <div class="chip" onclick="pick(this,'الأيام_المرغوبة_في_البرنامج','6 أيام')" data-i18n="c_days_6">6 أيام</div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="btn-prev" onclick="go(4,3)">→</button><button class="btn-next" onclick="go(4,5)" data-i18n="btnNext">التالي ←</button></div>
+</div>
+
+<!-- SEC 5: تفضيلات التمارين -->
+<div class="section-card" id="sec5">
+  <div class="sec-head"><div class="sec-icon">❤️‍🔥</div><div><div class="sec-num">SECTION 05</div><div class="sec-title" data-i18n-html="sec5Title">تفضيلات <span>التمارين</span></div></div></div>
+  <div class="field"><label data-i18n="lbl_liked_ex">ما التمارين التي تحبها وتستمتع بأدائها؟</label><textarea name="التمارين_المحبوبة" placeholder="مثال: السكوات، بنش بريس، ديدليفت..."></textarea></div>
+  <div class="field"><label data-i18n="lbl_disliked_ex">ما التمارين التي تكرهها أو تتجنبها؟ ولماذا؟</label><textarea name="التمارين_المكروهة_وسببها" placeholder="مثال: أتجنب اللانج لأنه يؤلم ركبتي..."></textarea></div>
+  <div class="field"><label data-i18n="lbl_feel_ex">ما التمارين التي تحس فيها بالعضلة بشكل جيد؟</label><textarea name="تمارين_الإحساس_الجيد" placeholder="مثال: كيبل فلاي للصدر، هامر كيرل للذراع..."></textarea></div>
+  <div class="field"><label data-i18n="lbl_hard_ex">ما التمارين التي تجد صعوبة في أدائها التقني؟</label><textarea name="التمارين_صعبة_التقنية" placeholder="مثال: الديدليفت، السكوات العميق..."></textarea></div>
+  <div class="field">
+    <label data-i18n="lbl_equip">تفضّل الأوزان الحرة أم الأجهزة؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'تفضيل_المعدات','أوزان حرة')" data-i18n="c_eq_free">أوزان حرة</div>
+      <div class="chip" onclick="pick(this,'تفضيل_المعدات','أجهزة')" data-i18n="c_eq_mach">أجهزة</div>
+      <div class="chip" onclick="pick(this,'تفضيل_المعدات','كلاهما')" data-i18n="c_place_both">كلاهما</div>
+    </div>
+    <textarea name="سبب_تفضيل_المعدات" placeholder="السبب إن أردت التوضيح..." style="margin-top:8px"></textarea>
+  </div>
+  <div class="field"><label data-i18n="lbl_after_feel">كيف تشعر بعد انتهاء التمرين؟</label><textarea name="الشعور_بعد_التمرين" placeholder="مثال: أشعر بنشاط وطاقة / أشعر بإرهاق شديد / لا أشعر بشيء..."></textarea></div>
+  <div class="nav-btns"><button class="btn-prev" onclick="go(5,4)">→</button><button class="btn-next" onclick="go(5,6)" data-i18n="btnNext">التالي ←</button></div>
+</div>
+
+<!-- SEC 6: الملف الصحي -->
+<div class="section-card" id="sec6">
+  <div class="sec-head"><div class="sec-icon">🩺</div><div><div class="sec-num">SECTION 06</div><div class="sec-title" data-i18n-html="sec6Title">الملف <span>الصحي</span></div></div></div>
+  <div class="note-box"><span data-i18n-html="noteHealth">⚠️ <strong>هذا القسم سري تماماً</strong> — الإجابة الصادقة تحميك وتجعل البرنامج أكثر أماناً</span></div>
+  <div class="field"><label data-i18n="lbl_chronic">هل تعاني من أي مرض مزمن مشخّص؟</label><input type="text" name="أمراض_مزمنة" placeholder="مثال: سكري، ضغط دم، لا يوجد..."></div>
+  <div class="field"><label data-i18n="lbl_meds">هل تأخذ أي أدوية بشكل منتظم؟</label><input type="text" name="الأدوية_المنتظمة" placeholder="مثال: لا / نعم: ميتفورمين 500 ملغ..."></div>
+  <div class="field"><label data-i18n="lbl_surgery">هل خضعت لعمليات جراحية كبيرة؟</label><input type="text" name="العمليات_الجراحية" placeholder="مثال: لا / نعم: استئصال الزائدة 2019..."></div>
+  <div class="field"><label data-i18n="lbl_allergy">هل لديك حساسية من أطعمة أو مكملات؟</label><input type="text" name="الحساسية_الغذائية" placeholder="مثال: لا / نعم: حليب، مكسرات..."></div>
+  <div class="field"><label data-i18n="lbl_digest">هل تعاني من مشاكل في الجهاز الهضمي؟</label><input type="text" name="مشاكل_الجهاز_الهضمي" placeholder="مثال: لا / نعم: انتفاخ متكرر، متهيج القولون..."></div>
+  <div class="field" id="womenOnlyField"><label data-i18n="lblWomenHormones">للنساء فقط — هل لديك مشاكل هرمونية؟</label><input type="text" name="مشاكل_هرمونية_نساء" placeholder="مثال: PCOS، عدم انتظام الدورة..."></div>
+  <!-- نقلنا أمراض القلب والسكري العائلية من sec12 لهنا -->
+  <hr class="divider-line">
+  <div class="field"><label data-i18n="lbl_family">🧬 هل في أمراض قلب أو سكري في العائلة؟</label><input type="text" name="أمراض_القلب_والسكري_العائلية" placeholder="مثال: الأب مصاب بضغط الدم / لا يوجد..."></div>
+  <div class="field">
+    <label data-i18n="lbl_parents_ob">هل الأب أو الأم يعانون من السمنة؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'سمنة_الوالدين','نعم أحدهما')" data-i18n="c_par_one">نعم أحدهما</div>
+      <div class="chip" onclick="pick(this,'سمنة_الوالدين','كلاهما')" data-i18n="c_place_both">كلاهما</div>
+      <div class="chip" onclick="pick(this,'سمنة_الوالدين','لا')" data-i18n="c_no">لا</div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="btn-prev" onclick="go(6,5)">→</button><button class="btn-next" onclick="go(6,7)" data-i18n="btnNext">التالي ←</button></div>
+</div>
+
+<!-- SEC 7: الهرمونات والتحاليل -->
+<div class="section-card" id="sec7">
+  <div class="sec-head"><div class="sec-icon">🧬</div><div><div class="sec-num">SECTION 07</div><div class="sec-title" data-i18n-html="sec7Title">الهرمونات <span>والتحاليل</span></div></div></div>
+  <div class="note-box"><span data-i18n-html="noteHormones"><strong>اختياري — لكن مهم جداً</strong> — كلما أعطيت معلومات أكثر كان البرنامج أدق</span></div>
+  <div class="field"><label data-i18n="lbl_horm_test">هل أجريت تحليلاً هرمونياً سابقاً؟ ما النتائج؟</label><textarea name="التحليل_الهرموني_ونتائجه" placeholder="مثال: نعم، التستوستيرون كان 350 ng/dL..."></textarea></div>
+  <div class="field"><label data-i18n="lbl_ext_horm">هل سبق أن استخدمت هرمونات خارجية؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'استخدام_هرمونات_خارجية','نعم — حالياً')" data-i18n="c_horm_now">نعم — حالياً</div>
+      <div class="chip" onclick="pick(this,'استخدام_هرمونات_خارجية','نعم — سابقاً')" data-i18n="c_horm_past">نعم — سابقاً</div>
+      <div class="chip" onclick="pick(this,'استخدام_هرمونات_خارجية','لا')" data-i18n="c_no">لا</div>
+    </div>
+  </div>
+  <div class="field">
+    <label data-i18n="lbl_blood">هل أجريت تحاليل دم مؤخراً (خلال 6 أشهر)؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'تحاليل_دم_حديثة','نعم — سأرسل التقرير عبر الإنستغرام')" data-i18n="c_blood_yes">نعم — سأرسل التقرير</div>
+      <div class="chip" onclick="pick(this,'تحاليل_دم_حديثة','لا')" data-i18n="c_no">لا</div>
+    </div>
+  </div>
+  <div class="field"><label data-i18n="lbl_lab_values">إذا تعرف القيم، اذكرها:</label><textarea name="قيم_التحاليل" placeholder="مثال: هيموغلوبين: 14  |  فيتامين D: 20  |  تستوستيرون: 400..."></textarea></div>
+  <div class="nav-btns"><button class="btn-prev" onclick="go(7,6)">→</button><button class="btn-next" onclick="go(7,8)" data-i18n="btnNext">التالي ←</button></div>
+</div>
+
+<!-- SEC 8: التغذية ونمط الحياة -->
+<div class="section-card" id="sec8">
+  <div class="sec-head"><div class="sec-icon">🍽️</div><div><div class="sec-num">SECTION 08</div><div class="sec-title" data-i18n-html="sec8Title">التغذية <span>ونمط الحياة</span></div></div></div>
+  <div class="grid2">
+    <div class="field">
+      <label data-i18n="lbl_meals">كم وجبة تأكل يومياً؟</label>
+      <div class="chips" style="flex-direction:column;gap:5px;">
+        <div class="chip" onclick="pick(this,'عدد_الوجبات','1-2 وجبات')" data-i18n="c_meal_1_2">1–2 وجبات</div>
+        <div class="chip" onclick="pick(this,'عدد_الوجبات','3 وجبات')" data-i18n="c_meal_3">3 وجبات</div>
+        <div class="chip" onclick="pick(this,'عدد_الوجبات','4-5 وجبات')" data-i18n="c_meal_4_5">4–5 وجبات</div>
+      </div>
+    </div>
+    <div class="field">
+      <label data-i18n="lbl_water">كم لتر ماء تشرب يومياً؟</label>
+      <div class="chips" style="flex-direction:column;gap:5px;">
+        <div class="chip" onclick="pick(this,'كمية_الماء_اليومية','أقل من 1.5 لتر')" data-i18n="c_wat_lt15">أقل من 1.5L</div>
+        <div class="chip" onclick="pick(this,'كمية_الماء_اليومية','1.5-2 لتر')" data-i18n="c_wat_15_2">1.5–2L</div>
+        <div class="chip" onclick="pick(this,'كمية_الماء_اليومية','2-3 لتر')" data-i18n="c_wat_2_3">2–3L</div>
+        <div class="chip" onclick="pick(this,'كمية_الماء_اليومية','أكثر من 3 لتر')" data-i18n="c_wat_gt3">+3L</div>
+      </div>
+    </div>
+  </div>
+  <div class="field"><label data-i18n="lbl_daily_diet">كيف يبدو نظامك الغذائي اليومي؟ اذكر وجباتك</label><textarea name="النظام_الغذائي_اليومي" placeholder="مثال:&#10;الفطور: بيض + خبز&#10;الغداء: دجاج + أرز&#10;العشاء: جبن + خضار"></textarea></div>
+  <div class="field"><label data-i18n="lbl_track_cal">هل تحسب السعرات أو البروتين؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'حساب_السعرات_والبروتين','نعم — بانتظام')" data-i18n="c_yes_reg">نعم بانتظام</div>
+      <div class="chip" onclick="pick(this,'حساب_السعرات_والبروتين','أحياناً')" data-i18n="c_sometimes">أحياناً</div>
+      <div class="chip" onclick="pick(this,'حساب_السعرات_والبروتين','لا')" data-i18n="c_no">لا</div>
+    </div>
+  </div>
+  <div class="field"><label data-i18n="lbl_foods_hate">ما الأطعمة التي لا تأكلها أو تكرهها؟</label><input type="text" name="الأطعمة_المكروهة" placeholder="مثال: لا أحب السمك، لا آكل الكبدة..."></div>
+  <div class="field"><label data-i18n="lbl_eat_out">هل تأكل خارج البيت بكثرة — وما ميزانيتك للأكل؟</label><input type="text" name="الأكل_خارج_والميزانية" placeholder="مثال: مرتين أسبوعياً، ميزانية ~3000 دج/يوم"></div>
+  <div class="field"><label data-i18n="lbl_smoke">هل تدخن؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'التدخين','لا')" data-i18n="c_no">لا</div>
+      <div class="chip" onclick="pick(this,'التدخين','نعم — أقل من علبة')" data-i18n="c_smok_lt">أقل من علبة/يوم</div>
+      <div class="chip" onclick="pick(this,'التدخين','نعم — علبة أو أكثر')" data-i18n="c_smok_pack">علبة أو أكثر</div>
+      <div class="chip" onclick="pick(this,'التدخين','سابقاً وتوقفت')" data-i18n="c_smok_quit">توقفت</div>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="field"><label data-i18n="lbl_fish">كم مرة تأكل السمك في الأسبوع؟</label>
+      <div class="chips" style="flex-direction:column;gap:5px;">
+        <div class="chip" onclick="pick(this,'استهلاك_السمك_أسبوعياً','نادراً أو لا')" data-i18n="c_fish_rare">نادراً / لا</div>
+        <div class="chip" onclick="pick(this,'استهلاك_السمك_أسبوعياً','مرة واحدة')" data-i18n="c_fish_1">مرة/أسبوع</div>
+        <div class="chip" onclick="pick(this,'استهلاك_السمك_أسبوعياً','مرتان أو أكثر')" data-i18n="c_fish_2">مرتان+</div>
+      </div>
+    </div>
+    <div class="field"><label data-i18n="lbl_eggs">كم بيضة تأكل في اليوم؟</label>
+      <div class="chips" style="flex-direction:column;gap:5px;">
+        <div class="chip" onclick="pick(this,'عدد_البيض_اليومي','لا آكل بيض')" data-i18n="c_egg_0">لا آكل</div>
+        <div class="chip" onclick="pick(this,'عدد_البيض_اليومي','1-2 بيضة')" data-i18n="c_egg_12">1–2</div>
+        <div class="chip" onclick="pick(this,'عدد_البيض_اليومي','3-4 بيضات')" data-i18n="c_egg_34">3–4</div>
+        <div class="chip" onclick="pick(this,'عدد_البيض_اليومي','5 أو أكثر')" data-i18n="c_egg_5">5+</div>
+      </div>
+    </div>
+  </div>
+  <div class="field"><label data-i18n="lbl_protein">ما مصادر البروتين اليومية وكم تأكل منها؟</label><textarea name="مصادر_البروتين_اليومية" placeholder="مثال: دجاج 200غ + بيض 3 + جبن + تونة..."></textarea></div>
+  <div class="field">
+    <label data-i18n="lbl_oil">تطبخ بأي نوع زيت؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'نوع_الزيت','زيت عادي')" data-i18n="c_oil_reg">زيت عادي</div>
+      <div class="chip" onclick="pick(this,'نوع_الزيت','زيت زيتون')" data-i18n="c_oil_olive">زيت زيتون</div>
+      <div class="chip" onclick="pick(this,'نوع_الزيت','كلاهما')" data-i18n="c_place_both">كلاهما</div>
+    </div>
+  </div>
+  <div class="field">
+    <label data-i18n="lbl_nuts">هل تتناول المكسرات؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'تناول_المكسرات','نعم — بانتظام')" data-i18n="c_yes_reg">نعم بانتظام</div>
+      <div class="chip" onclick="pick(this,'تناول_المكسرات','أحياناً')" data-i18n="c_sometimes">أحياناً</div>
+      <div class="chip" onclick="pick(this,'تناول_المكسرات','لا')" data-i18n="c_no">لا</div>
+    </div>
+  </div>
+  <div class="field">
+    <label data-i18n="lbl_diet_style">تفضّل ماكروز فقط أم وجبات محددة؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'تفضيل_خطة_التغذية','ماكروز فقط — أنا أقسّم')" data-i18n="c_diet_macro">ماكروز فقط</div>
+      <div class="chip" onclick="pick(this,'تفضيل_خطة_التغذية','وجبات محددة بأوقاتها')" data-i18n="c_diet_meals">وجبات محددة</div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="btn-prev" onclick="go(8,7)">→</button><button class="btn-next" onclick="go(8,9)" data-i18n="btnNext">التالي ←</button></div>
+</div>
+
+<!-- SEC 9: النوم والتعافي (موسّع — بعد حذف التكرار من sec1) -->
+<div class="section-card" id="sec9">
+  <div class="sec-head"><div class="sec-icon">😴</div><div><div class="sec-num">SECTION 09</div><div class="sec-title" data-i18n-html="sec9Title">النوم <span>والتعافي</span></div></div></div>
+  <div class="field">
+    <label data-i18n="lbl_sleep_h">كم ساعة تنام يومياً؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'ساعات_النوم','أقل من 5 ساعات')" data-i18n="c_slp_lt5">أقل من 5</div>
+      <div class="chip" onclick="pick(this,'ساعات_النوم','5-6 ساعات')" data-i18n="c_slp_5_6">5–6 س</div>
+      <div class="chip" onclick="pick(this,'ساعات_النوم','7-8 ساعات')" data-i18n="c_slp_7_8">7–8 س</div>
+      <div class="chip" onclick="pick(this,'ساعات_النوم','أكثر من 8 ساعات')" data-i18n="c_slp_gt8">+8 س</div>
+    </div>
+  </div>
+  <div class="field">
+    <label data-i18n="lbl_sleep_q">كيف جودة نومك؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'جودة_النوم','ممتازة — أستيقظ نشيطاً')" data-i18n="c_slpq_exc">ممتازة</div>
+      <div class="chip" onclick="pick(this,'جودة_النوم','جيدة')" data-i18n="c_slpq_good">جيدة</div>
+      <div class="chip" onclick="pick(this,'جودة_النوم','سيئة — أستيقظ متعباً')" data-i18n="c_slpq_bad">سيئة</div>
+      <div class="chip" onclick="pick(this,'جودة_النوم','أرق متكرر')" data-i18n="c_slpq_ins">أرق متكرر</div>
+    </div>
+  </div>
+  <div class="field">
+    <label data-i18n="lbl_stress">مستوى التوتر في حياتك اليومية؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'مستوى_التوتر','منخفض — هادئ')" data-i18n="c_str_low">منخفض</div>
+      <div class="chip" onclick="pick(this,'مستوى_التوتر','متوسط')" data-i18n="c_lvl_int">متوسط</div>
+      <div class="chip" onclick="pick(this,'مستوى_التوتر','مرتفع')" data-i18n="c_str_high">مرتفع</div>
+      <div class="chip" onclick="pick(this,'مستوى_التوتر','شديد جداً')" data-i18n="c_str_vhigh">شديد جداً</div>
+    </div>
+  </div>
+  <div class="field"><label data-i18n="lbl_snore">هل تعاني من شخير شديد أو انقطاع التنفس أثناء النوم؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'الشخير_وانقطاع_التنفس','لا')" data-i18n="c_no">لا</div>
+      <div class="chip" onclick="pick(this,'الشخير_وانقطاع_التنفس','شخير فقط')" data-i18n="c_snore_only">شخير فقط</div>
+      <div class="chip" onclick="pick(this,'الشخير_وانقطاع_التنفس','نعم انقطاع تنفس مشخص')" data-i18n="c_snore_apnea">انقطاع تنفس مشخص</div>
+    </div>
+  </div>
+  <div class="field">
+    <label data-i18n="lbl_mobility">هل تمارس تمديد أو موبيليتي بعد التمرين؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'التمديد_والموبيليتي','نعم دائماً')" data-i18n="c_mob_always">نعم دائماً</div>
+      <div class="chip" onclick="pick(this,'التمديد_والموبيليتي','أحياناً')" data-i18n="c_sometimes">أحياناً</div>
+      <div class="chip" onclick="pick(this,'التمديد_والموبيليتي','لا أبداً')" data-i18n="c_mob_never">لا أبداً</div>
+    </div>
+  </div>
+  <div class="field">
+    <label data-i18n="lbl_rest">كم يوم راحة تأخذ بين جلسات التدريب نفس العضلة؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'أيام_الراحة_بين_الجلسات','يوم واحد')" data-i18n="c_rest_1">يوم واحد</div>
+      <div class="chip" onclick="pick(this,'أيام_الراحة_بين_الجلسات','يومان')" data-i18n="c_rest_2">يومان</div>
+      <div class="chip" onclick="pick(this,'أيام_الراحة_بين_الجلسات','3 أيام أو أكثر')" data-i18n="c_rest_3">3 أيام+</div>
+      <div class="chip" onclick="pick(this,'أيام_الراحة_بين_الجلسات','لا أعرف')" data-i18n="c_rest_unk">لا أعرف</div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="btn-prev" onclick="go(9,8)">→</button><button class="btn-next" onclick="go(9,10)" data-i18n="btnNext">التالي ←</button></div>
+</div>
+
+<!-- SEC 10: المكملات الغذائية -->
+<div class="section-card" id="sec10">
+  <div class="sec-head"><div class="sec-icon">💊</div><div><div class="sec-num">SECTION 10</div><div class="sec-title" data-i18n-html="sec10Title">المكملات <span>الغذائية</span></div></div></div>
+  <div class="field"><label data-i18n="lbl_supps_now">ما المكملات التي تستخدمها حالياً مع الجرعة؟</label><textarea name="المكملات_الحالية_والجرعة" placeholder="مثال: كرياتين 5غ/يوم، واي بروتين سيرفيتشن بعد التمرين، فيتامين D3 2000IU..."></textarea></div>
+  <div class="field"><label data-i18n="lbl_supps_past">ما المكملات التي جربتها سابقاً وما نتيجتها؟</label><textarea name="المكملات_السابقة_ونتائجها" placeholder="مثال: جربت البري وركاوت — أعطاني طاقة جيدة / جربت BCAA — ما لاحظت فرقاً..."></textarea></div>
+  <div class="grid2">
+    <div class="field"><label data-i18n="lbl_caffeine">كيف تحملك للكافيين؟</label>
+      <div class="chips" style="flex-direction:column;gap:5px;">
+        <div class="chip" onclick="pick(this,'تحمل_الكافيين','ضعيف — يسبب قلق')" data-i18n="c_caf_low">ضعيف</div>
+        <div class="chip" onclick="pick(this,'تحمل_الكافيين','متوسط')" data-i18n="c_lvl_int">متوسط</div>
+        <div class="chip" onclick="pick(this,'تحمل_الكافيين','عالي — لا أحس بأثره')" data-i18n="c_caf_high">عالي</div>
+      </div>
+    </div>
+    <div class="field"><label data-i18n="lbl_whey">هل الواي بروتين يسبب مشاكل هضمية؟</label>
+      <div class="chips" style="flex-direction:column;gap:5px;">
+        <div class="chip" onclick="pick(this,'مشاكل_هضمية_من_الواي','نعم')" data-i18n="c_yes">نعم</div>
+        <div class="chip" onclick="pick(this,'مشاكل_هضمية_من_الواي','لا')" data-i18n="c_no">لا</div>
+        <div class="chip" onclick="pick(this,'مشاكل_هضمية_من_الواي','لم أجربه')" data-i18n="c_whey_never">لم أجربه</div>
+      </div>
+    </div>
+  </div>
+  <div class="field"><label data-i18n="lbl_supp_budget">كم ميزانيتك الشهرية للمكملات؟</label><input type="text" name="ميزانية_المكملات_الشهرية" placeholder="مثال: 3000–5000 دج / لا ميزانية محددة..."></div>
+  <div class="nav-btns"><button class="btn-prev" onclick="go(10,9)">→</button><button class="btn-next" onclick="go(10,11)" data-i18n="btnNext">التالي ←</button></div>
+</div>
+
+<!-- SEC 11: النفسي والقياسات -->
+<div class="section-card" id="sec11">
+  <div class="sec-head"><div class="sec-icon">🧠</div><div><div class="sec-num">SECTION 11</div><div class="sec-title" data-i18n-html="sec11Title">النفسي <span>والقياسات</span></div></div></div>
+  <div class="field"><label data-i18n="lbl_stops">هل مررت بفترات توقف متكررة؟ ما السبب؟</label><textarea name="فترات_التوقف_وسببها" placeholder="مثال: نعم، أتوقف كل 2-3 أشهر بسبب الانشغال بالعمل..."></textarea></div>
+  <div class="field"><label data-i18n="lbl_frustrate">ما أكثر شيء يحبطك في التدريب والتغذية؟</label><textarea name="أسباب_الإحباط" placeholder="مثال: بطء النتائج، صعوبة الالتزام بالحمية في المناسبات..."></textarea></div>
+  <hr class="divider-line">
+  <div class="field"><label data-i18n="lbl_measurements">📏 محيط الجسم (سم)</label><textarea name="القياسات_الجسمية" placeholder="الصدر:      | الخصر:      | الذراع:     | الفخذ:" style="min-height:50px"></textarea></div>
+  <div class="field"><label data-i18n="lbl_strength">💪 مستوى القوة الحالي — اختياري</label><textarea name="مستوى_القوة_الحالي" placeholder="سكوات:      | ديدليفت:    | بنش:        | أوفرهيد:    | Pull Up: __ تكرار" style="min-height:60px"></textarea></div>
+  <div class="field">
+    <label data-i18n="lbl_scale">هل عندك ميزان في البيت؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'ميزان_في_البيت','نعم')" data-i18n="c_yes">نعم</div>
+      <div class="chip" onclick="pick(this,'ميزان_في_البيت','لا')" data-i18n="c_no">لا</div>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="btn-prev" onclick="go(11,10)">→</button><button class="btn-next" onclick="go(11,12)" data-i18n="btnNext">التالي ←</button></div>
+</div>
+
+<!-- SEC 12: التوقعات والإنهاء -->
+<div class="section-card" id="sec12">
+  <div class="sec-head"><div class="sec-icon">🤝</div><div><div class="sec-num">SECTION 12</div><div class="sec-title" data-i18n-html="sec12Title">التوقعات <span>والإنهاء</span></div></div></div>
+  <div class="field"><label data-i18n="lbl_expect">ما الذي تتوقعه من المدرب تحديداً؟</label><textarea name="التوقعات_من_المدرب" placeholder="مثال: متابعة أسبوعية، تعديل البرنامج كل شهر، إجابة على أسئلتي..."></textarea></div>
+  <div class="field">
+    <label data-i18n="lbl_comm_style">تفضّل شرح الأسباب أم التنفيذ المباشر؟</label>
+    <div class="chips">
+      <div class="chip" onclick="pick(this,'أسلوب_التواصل','أريد أفهم كل شيء')" data-i18n="c_style_understand">أريد أفهم كل شيء</div>
+      <div class="chip" onclick="pick(this,'أسلوب_التواصل','أعطني البرنامج وأنفذ')" data-i18n="c_style_do">أعطني وأنفذ</div>
+      <div class="chip" onclick="pick(this,'أسلوب_التواصل','كلاهما')" data-i18n="c_place_both">كلاهما</div>
+    </div>
+  </div>
+  <div class="field"><label data-i18n="lbl_extra">هل هناك أي شيء مهم لم يُذكر تريد إضافته؟</label><textarea name="معلومات_إضافية" placeholder="أي معلومة تراها مهمة لمساعدتك بشكل أفضل..."></textarea></div>
+  <hr class="divider-line">
+  <div class="field" id="f_wa">
+    <label data-i18n-html="lbl_wa_req">رقم الواتساب للتواصل <span class="req">*</span></label>
+    <input type="tel" name="رقم_الواتساب" id="i_wa" placeholder="مثال: 0555123456">
+    <span class="err-msg" id="wa_err_msg">رقم الواتساب مطلوب (9 أرقام على الأقل)</span>
+  </div>
+  
+  <div class="summary-box" id="summaryBox">
+    <h4 data-i18n="summaryTitle">ملخص إجاباتك</h4>
+    <div id="summaryContent"></div>
+  </div>
+
+  <div class="send-error" id="sendErr"><span data-i18n="sendError">⚠️ حدث خطأ أثناء الإرسال. تحقق من اتصالك وحاول مجدداً.</span></div>
+  <div class="nav-btns">
+    <button class="btn-prev" onclick="go(12,11)">→</button>
+    <button class="btn-next" id="btnSub" onclick="submitForm()" data-i18n="btnSubmit">إرسال الاستبيان ✦</button>
+  </div>
+</div>
+
+<!-- THANK YOU -->
+<div class="thankyou" id="thankyou">
+  <div class="ty-card">
+    <span class="ty-icon">🏆</span>
+    <div class="ty-title" data-i18n-html="tyTitle">شكراً <span id="ty_name">لك!</span></div>
+    <div class="ty-divider"></div>
+    <div class="ty-sub" data-i18n-html="tySub">وصل استبيانك بنجاح ✅<br>سيتواصل معك <strong>Coach Anis</strong> خلال <strong style="color:var(--gold)">24 ساعة</strong></div>
+    <a href="https://instagram.com/coach__anis" class="btn-ig" target="_blank" data-i18n="btnIg">📸 @coach__anis على الإنستغرام</a>
+    <button class="btn-pdf" type="button" onclick="downloadSummary()" data-i18n="btnPdf">📄 تحميل ملخص الإجابات</button>
+    <button class="btn-reset" onclick="resetForm()" data-i18n="btnReset">↺ إرسال استبيان جديد</button>
+    <div class="ty-handle">COACH ANIS · 2026 · SCIENCE · DISCIPLINE · RESULTS</div>
+  </div>
+</div>
+
+</div><!-- form-wrap -->
+
+<script>
+const I18N = {
+  ar: {
+    privacyNote: "🔒 <strong>بياناتك سرية</strong> ولا تُشارك مع أي طرف ثالث",
+    headerTag: "CLIENT INTAKE FORM · استبيان الانضمام",
+    headerTitle: "ابدأ رحلتك مع<br><span>COACH ANIS</span>",
+    headerDesc: "أجب بصدق وتفصيل — كلما كانت المعلومات أدق كان البرنامج أقوى",
+    progressLabel: "القسم <b id=\"pNum\">1</b> من 12",
+    savedAuto: "تم الحفظ تلقائياً",
+    savedPct: "تم الحفظ · {pct}%",
+    btnNext: "التالي ←",
+    btnSubmit: "إرسال الاستبيان ✦",
+    btnSubmitting: "⏳ جاري الإرسال...",
+    btnIg: "📸 @coach__anis على الإنستغرام",
+    btnReset: "↺ إرسال استبيان جديد",
+    btnPdf: "📄 تحميل ملخص الإجابات",
+    tyTitle: "شكراً <span id=\"ty_name\">لك!</span>",
+    tySub: "وصل استبيانك بنجاح ✅<br>سيتواصل معك <strong>Coach Anis</strong> خلال <strong style=\"color:var(--gold)\">24 ساعة</strong>",
+    summaryTitle: "ملخص إجاباتك",
+    toastRequired: "⚠️ الرجاء تعبئة الحقول الإلزامية",
+    toastWa: "⚠️ الرجاء إدخال رقم الواتساب الصحيح",
+    optional: "(اختياري)",
+    optChoose: "اختر", optMale: "ذكر", optFemale: "أنثى",
+    lblWomenHormones: "للنساء فقط — هل لديك مشاكل هرمونية؟",
+    lblJob: "المهنة وطبيعة العمل",
+    chipBoth: "كلاهما",
+    titles: ["المعلومات الشخصية","الهدف","التاريخ التدريبي","الوضع الحالي","تفضيلات التمارين","الملف الصحي","الهرمونات والتحاليل","التغذية","النوم والتعافي","المكملات","النفسي والقياسات","التوقعات والإنهاء"],
+    leaveConfirm: "لم تُرسل الاستبيان بعد. هل تريد مغادرة الصفحة؟",
+    bmiUnder: "نقص وزن", bmiNormal: "وزن طبيعي ✓", bmiOver: "زيادة وزن", bmiObese: "سمنة",
+    errRequired: "هذا الحقل مطلوب", errChoose: "الرجاء الاختيار", errGoal: "الرجاء اختيار هدف",
+    errWaReq: "رقم الواتساب مطلوب", errWaShort: "الرقم يبدو قصيراً — تحقق من الإدخال",
+    sumName: "الاسم", sumAge: "العمر", sumGender: "الجنس", sumGoal: "الهدف", sumWa: "واتساب", sumLevel: "المستوى", sumDays: "أيام التدريب",
+    "sec1Title": "المعلومات <span>الشخصية</span>",
+    "sec2Title": "الهدف <span>Goal</span>",
+    "sec3Title": "التاريخ <span>التدريبي</span>",
+    "sec4Title": "الوضع التدريبي <span>الحالي</span>",
+    "sec5Title": "تفضيلات <span>التمارين</span>",
+    "sec6Title": "الملف <span>الصحي</span>",
+    "sec7Title": "الهرمونات <span>والتحاليل</span>",
+    "sec8Title": "التغذية <span>ونمط الحياة</span>",
+    "sec9Title": "النوم <span>والتعافي</span>",
+    "sec10Title": "المكملات <span>الغذائية</span>",
+    "sec11Title": "النفسي <span>والقياسات</span>",
+    "sec12Title": "التوقعات <span>والإنهاء</span>",
+    "noteHealth": "⚠️ <strong>هذا القسم سري تماماً</strong> — الإجابة الصادقة تحميك وتجعل البرنامج أكثر أماناً",
+    "noteHormones": "<strong>اختياري — لكن مهم جداً</strong> — كلما أعطيت معلومات أكثر كان البرنامج أدق",
+    "bmiIndex": "مؤشر كتلة الجسم",
+    "sendError": "⚠️ حدث خطأ أثناء الإرسال. تحقق من اتصالك وحاول مجدداً.",
+    "lbl_name": "الاسم الكامل",
+    "lbl_name_req": "الاسم الكامل <span class=\"req\">*</span>",
+    "lbl_age": "العمر",
+    "lbl_age_req": "العمر <span class=\"req\">*</span>",
+    "lbl_gender": "الجنس",
+    "lbl_gender_req": "الجنس <span class=\"req\">*</span>",
+    "lbl_height": "الطول (سم)",
+    "lbl_weight": "الوزن الحالي (كغ)",
+    "lbl_wilaya": "الولاية",
+    "lbl_work_hours": "كم ساعة تجلس أو تقف في العمل؟",
+    "lbl_main_goal": "ما هدفك الرئيسي؟",
+    "lbl_main_goal_req": "ما هدفك الرئيسي؟ <span class=\"req\">*</span>",
+    "lbl_why_goal": "لماذا هذا الهدف تحديداً؟ ما الدافع الحقيقي؟",
+    "lbl_timeline": "في كم وقت تريد تحقيق هدفك؟",
+    "lbl_past_goal": "هل سبق وحققت هذا الهدف؟ إذا لا — ما الذي أوقفك؟",
+    "lbl_success_3m": "ما تعريفك للنجاح بعد 3 أشهر؟",
+    "lbl_years_train": "كم سنة تتدرب؟",
+    "lbl_level": "كيف تصف مستواك الحالي؟",
+    "lbl_past_programs": "ما البرامج التي اتبعتها سابقاً وما نتائجها؟",
+    "lbl_past_coach": "هل تدربت مع مدرب من قبل؟ وكيف كانت التجربة؟",
+    "lbl_weak_areas": "ما المناطق العضلية الضعيفة التي تريد تطويرها؟",
+    "lbl_days_week": "كم يوماً تتدرب في الأسبوع حالياً؟",
+    "lbl_session_len": "كم مدة الجلسة الواحدة؟",
+    "lbl_where": "أين تتدرب؟",
+    "lbl_when": "في أي وقت تتدرب؟",
+    "lbl_injuries": "هل لديك إصابات أو آلام مزمنة تؤثر على التمرين؟",
+    "lbl_fatigue": "هل تلاحظ تعباً مبكراً أو ضيق تنفس أثناء التمرين؟",
+    "lbl_desired_days": "كم تريد أن تكون أيام التدريب في البرنامج الجديد؟",
+    "lbl_liked_ex": "ما التمارين التي تحبها وتستمتع بأدائها؟",
+    "lbl_disliked_ex": "ما التمارين التي تكرهها أو تتجنبها؟ ولماذا؟",
+    "lbl_feel_ex": "ما التمارين التي تحس فيها بالعضلة بشكل جيد؟",
+    "lbl_hard_ex": "ما التمارين التي تجد صعوبة في أدائها التقني؟",
+    "lbl_equip": "تفضّل الأوزان الحرة أم الأجهزة؟",
+    "lbl_after_feel": "كيف تشعر بعد انتهاء التمرين؟",
+    "lbl_chronic": "هل تعاني من أي مرض مزمن مشخّص؟",
+    "lbl_meds": "هل تأخذ أي أدوية بشكل منتظم؟",
+    "lbl_surgery": "هل خضعت لعمليات جراحية كبيرة؟",
+    "lbl_allergy": "هل لديك حساسية من أطعمة أو مكملات؟",
+    "lbl_digest": "هل تعاني من مشاكل في الجهاز الهضمي؟",
+    "lbl_family": "🧬 هل في أمراض قلب أو سكري في العائلة؟",
+    "lbl_parents_ob": "هل الأب أو الأم يعانون من السمنة؟",
+    "lbl_horm_test": "هل أجريت تحليلاً هرمونياً سابقاً؟ ما النتائج؟",
+    "lbl_ext_horm": "هل سبق أن استخدمت هرمونات خارجية؟",
+    "lbl_blood": "هل أجريت تحاليل دم مؤخراً (خلال 6 أشهر)؟",
+    "lbl_lab_values": "إذا تعرف القيم، اذكرها:",
+    "lbl_meals": "كم وجبة تأكل يومياً؟",
+    "lbl_water": "كم لتر ماء تشرب يومياً؟",
+    "lbl_daily_diet": "كيف يبدو نظامك الغذائي اليومي؟ اذكر وجباتك",
+    "lbl_track_cal": "هل تحسب السعرات أو البروتين؟",
+    "lbl_foods_hate": "ما الأطعمة التي لا تأكلها أو تكرهها؟",
+    "lbl_eat_out": "هل تأكل خارج البيت بكثرة — وما ميزانيتك للأكل؟",
+    "lbl_smoke": "هل تدخن؟",
+    "lbl_fish": "كم مرة تأكل السمك في الأسبوع؟",
+    "lbl_eggs": "كم بيضة تأكل في اليوم؟",
+    "lbl_protein": "ما مصادر البروتين اليومية وكم تأكل منها؟",
+    "lbl_oil": "تطبخ بأي نوع زيت؟",
+    "lbl_nuts": "هل تتناول المكسرات؟",
+    "lbl_diet_style": "تفضّل ماكروز فقط أم وجبات محددة؟",
+    "lbl_sleep_h": "كم ساعة تنام يومياً؟",
+    "lbl_sleep_q": "كيف جودة نومك؟",
+    "lbl_stress": "مستوى التوتر في حياتك اليومية؟",
+    "lbl_snore": "هل تعاني من شخير شديد أو انقطاع التنفس أثناء النوم؟",
+    "lbl_mobility": "هل تمارس تمديد أو موبيليتي بعد التمرين؟",
+    "lbl_rest": "كم يوم راحة تأخذ بين جلسات التدريب نفس العضلة؟",
+    "lbl_supps_now": "ما المكملات التي تستخدمها حالياً مع الجرعة؟",
+    "lbl_supps_past": "ما المكملات التي جربتها سابقاً وما نتيجتها؟",
+    "lbl_caffeine": "كيف تحملك للكافيين؟",
+    "lbl_whey": "هل الواي بروتين يسبب مشاكل هضمية؟",
+    "lbl_supp_budget": "كم ميزانيتك الشهرية للمكملات؟",
+    "lbl_stops": "هل مررت بفترات توقف متكررة؟ ما السبب؟",
+    "lbl_frustrate": "ما أكثر شيء يحبطك في التدريب والتغذية؟",
+    "lbl_measurements": "📏 محيط الجسم (سم)",
+    "lbl_strength": "💪 مستوى القوة الحالي — اختياري",
+    "lbl_scale": "هل عندك ميزان في البيت؟",
+    "lbl_expect": "ما الذي تتوقعه من المدرب تحديداً؟",
+    "lbl_comm_style": "تفضّل شرح الأسباب أم التنفيذ المباشر؟",
+    "lbl_extra": "هل هناك أي شيء مهم لم يُذكر تريد إضافته؟",
+    "lbl_wa": "رقم الواتساب للتواصل",
+    "lbl_wa_req": "رقم الواتساب للتواصل <span class=\"req\">*</span>",
+    "c_work_lt4": "أقل من 4 س",
+    "c_work_4_6": "4–6 س",
+    "c_work_6_8": "6–8 س",
+    "c_work_gt8": "+8 س",
+    "c_goal_bulk": "تضخيم وبناء عضل",
+    "c_goal_cut": "تنشيف وحرق دهون",
+    "c_goal_recomp": "إعادة تركيب الجسم",
+    "c_time_3m": "3 أشهر",
+    "c_time_6m": "6 أشهر",
+    "c_time_1y": "سنة",
+    "c_time_none": "بلا توقيت",
+    "c_yr_lt1": "أقل من سنة",
+    "c_yr_1_2": "1–2 سنة",
+    "c_yr_2_4": "2–4 سنوات",
+    "c_yr_gt4": "+4 سنوات",
+    "c_lvl_beg": "مبتدئ",
+    "c_lvl_int": "متوسط",
+    "c_lvl_adv": "متقدم",
+    "c_days_1_2": "1–2 أيام",
+    "c_days_3": "3 أيام",
+    "c_days_4": "4 أيام",
+    "c_days_5p": "5+ أيام",
+    "c_days_irreg": "غير منتظم",
+    "c_days_5": "5 أيام",
+    "c_days_6": "6 أيام",
+    "c_ses_lt45": "أقل من 45 د",
+    "c_ses_45_60": "45–60 د",
+    "c_ses_60_90": "60–90 د",
+    "c_ses_gt90": "+90 د",
+    "c_place_gym": "جيم",
+    "c_place_home": "في البيت",
+    "c_place_both": "كلاهما",
+    "c_tod_morn": "صباحاً",
+    "c_tod_noon": "ظهراً",
+    "c_tod_eve": "مساءً",
+    "c_tod_night": "ليلاً",
+    "c_fat_no": "لا، لياقتي جيدة",
+    "c_sometimes": "أحياناً",
+    "c_fat_yes": "نعم بشكل متكرر",
+    "c_eq_free": "أوزان حرة",
+    "c_eq_mach": "أجهزة",
+    "c_par_one": "نعم أحدهما",
+    "c_horm_now": "نعم — حالياً",
+    "c_horm_past": "نعم — سابقاً",
+    "c_blood_yes": "نعم — سأرسل التقرير",
+    "c_meal_1_2": "1–2 وجبات",
+    "c_meal_3": "3 وجبات",
+    "c_meal_4_5": "4–5 وجبات",
+    "c_wat_lt15": "أقل من 1.5L",
+    "c_wat_15_2": "1.5–2L",
+    "c_wat_2_3": "2–3L",
+    "c_wat_gt3": "+3L",
+    "c_yes_reg": "نعم بانتظام",
+    "c_smok_lt": "أقل من علبة/يوم",
+    "c_smok_pack": "علبة أو أكثر",
+    "c_smok_quit": "توقفت",
+    "c_fish_rare": "نادراً / لا",
+    "c_fish_1": "مرة/أسبوع",
+    "c_fish_2": "مرتان+",
+    "c_egg_0": "لا آكل",
+    "c_egg_12": "1–2",
+    "c_egg_34": "3–4",
+    "c_egg_5": "5+",
+    "c_oil_reg": "زيت عادي",
+    "c_oil_olive": "زيت زيتون",
+    "c_diet_macro": "ماكروز فقط",
+    "c_diet_meals": "وجبات محددة",
+    "c_slp_lt5": "أقل من 5",
+    "c_slp_5_6": "5–6 س",
+    "c_slp_7_8": "7–8 س",
+    "c_slp_gt8": "+8 س",
+    "c_slpq_exc": "ممتازة",
+    "c_slpq_good": "جيدة",
+    "c_slpq_bad": "سيئة",
+    "c_slpq_ins": "أرق متكرر",
+    "c_str_low": "منخفض",
+    "c_str_high": "مرتفع",
+    "c_str_vhigh": "شديد جداً",
+    "c_snore_only": "شخير فقط",
+    "c_snore_apnea": "انقطاع تنفس مشخص",
+    "c_mob_always": "نعم دائماً",
+    "c_mob_never": "لا أبداً",
+    "c_rest_1": "يوم واحد",
+    "c_rest_2": "يومان",
+    "c_rest_3": "3 أيام+",
+    "c_rest_unk": "لا أعرف",
+    "c_caf_low": "ضعيف",
+    "c_caf_high": "عالي",
+    "c_whey_never": "لم أجربه",
+    "c_style_understand": "أريد أفهم كل شيء",
+    "c_style_do": "أعطني وأنفذ",
+    "c_yes": "نعم",
+    "c_no": "لا"
+  },
+  fr: {
+    privacyNote: "🔒 <strong>Vos données sont confidentielles</strong> et ne sont partagées avec aucun tiers",
+    headerTag: "FORMULAIRE D'INSCRIPTION · Client Intake",
+    headerTitle: "Commencez votre parcours avec<br><span>COACH ANIS</span>",
+    headerDesc: "Répondez avec sincérité et détail — plus les infos sont précises, plus le programme est efficace",
+    progressLabel: "Section <b id=\"pNum\">1</b> sur 12",
+    savedAuto: "Enregistré automatiquement",
+    savedPct: "Enregistré · {pct}%",
+    btnNext: "Suivant →",
+    btnSubmit: "Envoyer le questionnaire ✦",
+    btnSubmitting: "⏳ Envoi en cours...",
+    btnIg: "📸 @coach__anis sur Instagram",
+    btnReset: "↺ Nouveau questionnaire",
+    btnPdf: "📄 Télécharger le résumé",
+    tyTitle: "Merci <span id=\"ty_name\">!</span>",
+    tySub: "Questionnaire reçu avec succès ✅<br><strong>Coach Anis</strong> vous contactera sous <strong style=\"color:var(--gold)\">24 heures</strong>",
+    summaryTitle: "Résumé de vos réponses",
+    toastRequired: "⚠️ Veuillez remplir les champs obligatoires",
+    toastWa: "⚠️ Veuillez entrer un numéro WhatsApp valide",
+    optional: "(optionnel)",
+    optChoose: "Choisir", optMale: "Homme", optFemale: "Femme",
+    lblWomenHormones: "Femmes uniquement — problèmes hormonaux ?",
+    lblJob: "Profession et nature du travail",
+    chipBoth: "Les deux",
+    titles: ["Infos personnelles","Objectif","Historique d'entraînement","Situation actuelle","Préférences d'exercices","Dossier santé","Hormones et analyses","Nutrition","Sommeil et récupération","Compléments","Psychologie et mesures","Attentes et fin"],
+    leaveConfirm: "Le questionnaire n'est pas encore envoyé. Quitter la page ?",
+    bmiUnder: "Insuffisance pondérale", bmiNormal: "Poids normal ✓", bmiOver: "Surpoids", bmiObese: "Obésité",
+    errRequired: "Ce champ est requis", errChoose: "Veuillez choisir", errGoal: "Veuillez choisir un objectif",
+    errWaReq: "Numéro WhatsApp requis", errWaShort: "Le numéro semble trop court",
+    sumName: "Nom", sumAge: "Âge", sumGender: "Sexe", sumGoal: "Objectif", sumWa: "WhatsApp", sumLevel: "Niveau", sumDays: "Jours d'entraînement",
+    "sec1Title": "Infos <span>personnelles</span>",
+    "sec2Title": "Objectif <span>Goal</span>",
+    "sec3Title": "Historique <span>d'entraînement</span>",
+    "sec4Title": "Situation <span>actuelle</span>",
+    "sec5Title": "Préférences <span>d'exercices</span>",
+    "sec6Title": "Dossier <span>santé</span>",
+    "sec7Title": "Hormones <span>et analyses</span>",
+    "sec8Title": "Nutrition <span>et mode de vie</span>",
+    "sec9Title": "Sommeil <span>et récupération</span>",
+    "sec10Title": "Compléments <span>alimentaires</span>",
+    "sec11Title": "Psychologie <span>et mesures</span>",
+    "sec12Title": "Attentes <span>et fin</span>",
+    "noteHealth": "⚠️ <strong>Section strictement confidentielle</strong> — des réponses honnêtes vous protègent et rendent le programme plus sûr",
+    "noteHormones": "<strong>Optionnel — mais très important</strong> — plus vous donnez d'infos, plus le programme est précis",
+    "bmiIndex": "Indice de masse corporelle",
+    "sendError": "⚠️ Erreur d'envoi. Vérifiez votre connexion et réessayez.",
+    "lbl_name": "Nom complet",
+    "lbl_name_req": "Nom complet <span class=\"req\">*</span>",
+    "lbl_age": "Âge",
+    "lbl_age_req": "Âge <span class=\"req\">*</span>",
+    "lbl_gender": "Sexe",
+    "lbl_gender_req": "Sexe <span class=\"req\">*</span>",
+    "lbl_height": "Taille (cm)",
+    "lbl_weight": "Poids actuel (kg)",
+    "lbl_wilaya": "Wilaya / Ville",
+    "lbl_work_hours": "Combien d'heures assis ou debout au travail ?",
+    "lbl_main_goal": "Quel est votre objectif principal ?",
+    "lbl_main_goal_req": "Quel est votre objectif principal ? <span class=\"req\">*</span>",
+    "lbl_why_goal": "Pourquoi cet objectif ? Quelle est votre vraie motivation ?",
+    "lbl_timeline": "Dans quel délai voulez-vous atteindre votre objectif ?",
+    "lbl_past_goal": "Avez-vous déjà atteint cet objectif ? Sinon, qu'est-ce qui vous a arrêté ?",
+    "lbl_success_3m": "Comment définissez-vous le succès dans 3 mois ?",
+    "lbl_years_train": "Depuis combien d'années vous entraînez-vous ?",
+    "lbl_level": "Comment décrivez-vous votre niveau actuel ?",
+    "lbl_past_programs": "Quels programmes avez-vous suivis et quels résultats ?",
+    "lbl_past_coach": "Avez-vous déjà travaillé avec un coach ? Comment s'est passée l'expérience ?",
+    "lbl_weak_areas": "Quelles zones musculaires faibles voulez-vous développer ?",
+    "lbl_days_week": "Combien de jours vous entraînez-vous par semaine actuellement ?",
+    "lbl_session_len": "Quelle est la durée d'une séance ?",
+    "lbl_where": "Où vous entraînez-vous ?",
+    "lbl_when": "À quel moment de la journée ?",
+    "lbl_injuries": "Avez-vous des blessures ou douleurs chroniques qui affectent l'entraînement ?",
+    "lbl_fatigue": "Remarquez-vous une fatigue précoce ou un essoufflement pendant l'effort ?",
+    "lbl_desired_days": "Combien de jours d'entraînement voulez-vous dans le nouveau programme ?",
+    "lbl_liked_ex": "Quels exercices aimez-vous et appréciez-vous faire ?",
+    "lbl_disliked_ex": "Quels exercices détestez-vous ou évitez-vous ? Pourquoi ?",
+    "lbl_feel_ex": "Dans quels exercices sentez-vous bien le muscle ?",
+    "lbl_hard_ex": "Quels exercices trouvez-vous techniquement difficiles ?",
+    "lbl_equip": "Préférez-vous les poids libres ou les machines ?",
+    "lbl_after_feel": "Comment vous sentez-vous après l'entraînement ?",
+    "lbl_chronic": "Souffrez-vous d'une maladie chronique diagnostiquée ?",
+    "lbl_meds": "Prenez-vous des médicaments régulièrement ?",
+    "lbl_surgery": "Avez-vous subi des opérations chirurgicales majeures ?",
+    "lbl_allergy": "Avez-vous des allergies alimentaires ou aux compléments ?",
+    "lbl_digest": "Avez-vous des problèmes digestifs ?",
+    "lbl_family": "🧬 Antécédents familiaux de maladies cardiaques ou diabète ?",
+    "lbl_parents_ob": "Un de vos parents souffre-t-il d'obésité ?",
+    "lbl_horm_test": "Avez-vous déjà fait un bilan hormonal ? Quels résultats ?",
+    "lbl_ext_horm": "Avez-vous déjà utilisé des hormones exogènes ?",
+    "lbl_blood": "Avez-vous fait des analyses de sang récemment (6 mois) ?",
+    "lbl_lab_values": "Si vous connaissez les valeurs, indiquez-les :",
+    "lbl_meals": "Combien de repas par jour ?",
+    "lbl_water": "Combien de litres d'eau par jour ?",
+    "lbl_daily_diet": "À quoi ressemble votre alimentation quotidienne ?",
+    "lbl_track_cal": "Comptez-vous les calories ou les protéines ?",
+    "lbl_foods_hate": "Quels aliments évitez-vous ou n'aimez-vous pas ?",
+    "lbl_eat_out": "Mangez-vous souvent dehors — et quel est votre budget nourriture ?",
+    "lbl_smoke": "Fumez-vous ?",
+    "lbl_fish": "Combien de fois mangez-vous du poisson par semaine ?",
+    "lbl_eggs": "Combien d'œufs par jour ?",
+    "lbl_protein": "Quelles sont vos sources de protéines quotidiennes ?",
+    "lbl_oil": "Avec quelle huile cuisinez-vous ?",
+    "lbl_nuts": "Consommez-vous des noix / fruits secs ?",
+    "lbl_diet_style": "Préférez-vous uniquement les macros ou des repas planifiés ?",
+    "lbl_sleep_h": "Combien d'heures dormez-vous par jour ?",
+    "lbl_sleep_q": "Quelle est la qualité de votre sommeil ?",
+    "lbl_stress": "Niveau de stress au quotidien ?",
+    "lbl_snore": "Ronflements importants ou apnée du sommeil ?",
+    "lbl_mobility": "Faites-vous des étirements ou de la mobilité après l'entraînement ?",
+    "lbl_rest": "Combien de jours de repos entre deux séances pour le même muscle ?",
+    "lbl_supps_now": "Quels compléments prenez-vous actuellement (avec doses) ?",
+    "lbl_supps_past": "Quels compléments avez-vous déjà testés et avec quel résultat ?",
+    "lbl_caffeine": "Quelle est votre tolérance à la caféine ?",
+    "lbl_whey": "La whey vous cause-t-elle des problèmes digestifs ?",
+    "lbl_supp_budget": "Quel est votre budget mensuel pour les compléments ?",
+    "lbl_stops": "Avez-vous eu des arrêts répétés ? Pour quelle raison ?",
+    "lbl_frustrate": "Qu'est-ce qui vous frustre le plus en entraînement et nutrition ?",
+    "lbl_measurements": "📏 Tour de corps (cm)",
+    "lbl_strength": "💪 Niveau de force actuel — optionnel",
+    "lbl_scale": "Avez-vous une balance à la maison ?",
+    "lbl_expect": "Qu'attendez-vous précisément du coach ?",
+    "lbl_comm_style": "Préférez-vous les explications ou l'exécution directe ?",
+    "lbl_extra": "Y a-t-il quelque chose d'important à ajouter ?",
+    "lbl_wa": "Numéro WhatsApp",
+    "lbl_wa_req": "Numéro WhatsApp <span class=\"req\">*</span>",
+    "c_work_lt4": "< 4 h",
+    "c_work_4_6": "4–6 h",
+    "c_work_6_8": "6–8 h",
+    "c_work_gt8": "+8 h",
+    "c_goal_bulk": "Prise de muscle",
+    "c_goal_cut": "Sèche / perte de gras",
+    "c_goal_recomp": "Recomposition",
+    "c_time_3m": "3 mois",
+    "c_time_6m": "6 mois",
+    "c_time_1y": "1 an",
+    "c_time_none": "Sans délai",
+    "c_yr_lt1": "< 1 an",
+    "c_yr_1_2": "1–2 ans",
+    "c_yr_2_4": "2–4 ans",
+    "c_yr_gt4": "+4 ans",
+    "c_lvl_beg": "Débutant",
+    "c_lvl_int": "Intermédiaire",
+    "c_lvl_adv": "Avancé",
+    "c_days_1_2": "1–2 jours",
+    "c_days_3": "3 jours",
+    "c_days_4": "4 jours",
+    "c_days_5p": "5+ jours",
+    "c_days_irreg": "Irrégulier",
+    "c_days_5": "5 jours",
+    "c_days_6": "6 jours",
+    "c_ses_lt45": "< 45 min",
+    "c_ses_45_60": "45–60 min",
+    "c_ses_60_90": "60–90 min",
+    "c_ses_gt90": "+90 min",
+    "c_place_gym": "Salle",
+    "c_place_home": "Maison",
+    "c_place_both": "Les deux",
+    "c_tod_morn": "Matin",
+    "c_tod_noon": "Midi",
+    "c_tod_eve": "Soir",
+    "c_tod_night": "Nuit",
+    "c_fat_no": "Non, bonne condition",
+    "c_sometimes": "Parfois",
+    "c_fat_yes": "Oui, souvent",
+    "c_eq_free": "Poids libres",
+    "c_eq_mach": "Machines",
+    "c_par_one": "Oui, un des deux",
+    "c_horm_now": "Oui — actuellement",
+    "c_horm_past": "Oui — par le passé",
+    "c_blood_yes": "Oui — j'enverrai le rapport",
+    "c_meal_1_2": "1–2 repas",
+    "c_meal_3": "3 repas",
+    "c_meal_4_5": "4–5 repas",
+    "c_wat_lt15": "< 1.5L",
+    "c_wat_15_2": "1.5–2L",
+    "c_wat_2_3": "2–3L",
+    "c_wat_gt3": "+3L",
+    "c_yes_reg": "Oui, régulièrement",
+    "c_smok_lt": "< 1 paquet/jour",
+    "c_smok_pack": "1 paquet ou +",
+    "c_smok_quit": "Arrêté",
+    "c_fish_rare": "Rarement / non",
+    "c_fish_1": "1× / semaine",
+    "c_fish_2": "2× ou +",
+    "c_egg_0": "Aucun",
+    "c_egg_12": "1–2",
+    "c_egg_34": "3–4",
+    "c_egg_5": "5+",
+    "c_oil_reg": "Huile classique",
+    "c_oil_olive": "Huile d'olive",
+    "c_diet_macro": "Macros seulement",
+    "c_diet_meals": "Repas planifiés",
+    "c_slp_lt5": "< 5 h",
+    "c_slp_5_6": "5–6 h",
+    "c_slp_7_8": "7–8 h",
+    "c_slp_gt8": "+8 h",
+    "c_slpq_exc": "Excellente",
+    "c_slpq_good": "Bonne",
+    "c_slpq_bad": "Mauvaise",
+    "c_slpq_ins": "Insomnie",
+    "c_str_low": "Faible",
+    "c_str_high": "Élevé",
+    "c_str_vhigh": "Très élevé",
+    "c_snore_only": "Ronflement seul",
+    "c_snore_apnea": "Apnée diagnostiquée",
+    "c_mob_always": "Toujours",
+    "c_mob_never": "Jamais",
+    "c_rest_1": "1 jour",
+    "c_rest_2": "2 jours",
+    "c_rest_3": "3 jours+",
+    "c_rest_unk": "Je ne sais pas",
+    "c_caf_low": "Faible",
+    "c_caf_high": "Élevée",
+    "c_whey_never": "Jamais essayé",
+    "c_style_understand": "Je veux tout comprendre",
+    "c_style_do": "Donnez-moi le plan",
+    "c_yes": "Oui",
+    "c_no": "Non"
+  },
+  en: {
+    privacyNote: "🔒 <strong>Your data is private</strong> and is never shared with third parties",
+    headerTag: "CLIENT INTAKE FORM",
+    headerTitle: "Start your journey with<br><span>COACH ANIS</span>",
+    headerDesc: "Answer honestly and in detail — the more accurate the info, the stronger the program",
+    progressLabel: "Section <b id=\"pNum\">1</b> of 12",
+    savedAuto: "Saved automatically",
+    savedPct: "Saved · {pct}%",
+    btnNext: "Next →",
+    btnSubmit: "Submit questionnaire ✦",
+    btnSubmitting: "⏳ Sending...",
+    btnIg: "📸 @coach__anis on Instagram",
+    btnReset: "↺ New questionnaire",
+    btnPdf: "📄 Download summary",
+    tyTitle: "Thank you <span id=\"ty_name\">!</span>",
+    tySub: "Your questionnaire was received successfully ✅<br><strong>Coach Anis</strong> will contact you within <strong style=\"color:var(--gold)\">24 hours</strong>",
+    summaryTitle: "Your answers summary",
+    toastRequired: "⚠️ Please fill required fields",
+    toastWa: "⚠️ Please enter a valid WhatsApp number",
+    optional: "(optional)",
+    optChoose: "Choose", optMale: "Male", optFemale: "Female",
+    lblWomenHormones: "Women only — any hormonal issues?",
+    lblJob: "Job and work nature",
+    chipBoth: "Both",
+    titles: ["Personal info","Goal","Training history","Current training","Exercise preferences","Health profile","Hormones & labs","Nutrition","Sleep & recovery","Supplements","Mindset & measurements","Expectations"],
+    leaveConfirm: "You haven't submitted the form yet. Leave this page?",
+    bmiUnder: "Underweight", bmiNormal: "Normal weight ✓", bmiOver: "Overweight", bmiObese: "Obesity",
+    errRequired: "This field is required", errChoose: "Please choose", errGoal: "Please choose a goal",
+    errWaReq: "WhatsApp number required", errWaShort: "Number seems too short",
+    sumName: "Name", sumAge: "Age", sumGender: "Gender", sumGoal: "Goal", sumWa: "WhatsApp", sumLevel: "Level", sumDays: "Training days",
+    "sec1Title": "Personal <span>info</span>",
+    "sec2Title": "Goal",
+    "sec3Title": "Training <span>history</span>",
+    "sec4Title": "Current <span>training</span>",
+    "sec5Title": "Exercise <span>preferences</span>",
+    "sec6Title": "Health <span>profile</span>",
+    "sec7Title": "Hormones <span>& labs</span>",
+    "sec8Title": "Nutrition <span>& lifestyle</span>",
+    "sec9Title": "Sleep <span>& recovery</span>",
+    "sec10Title": "Supplements",
+    "sec11Title": "Mindset <span>& measurements</span>",
+    "sec12Title": "Expectations <span>& finish</span>",
+    "noteHealth": "⚠️ <strong>This section is fully private</strong> — honest answers protect you and make the program safer",
+    "noteHormones": "<strong>Optional — but very important</strong> — the more info you give, the more precise the program",
+    "bmiIndex": "Body mass index",
+    "sendError": "⚠️ Send failed. Check your connection and try again.",
+    "lbl_name": "Full name",
+    "lbl_name_req": "Full name <span class=\"req\">*</span>",
+    "lbl_age": "Age",
+    "lbl_age_req": "Age <span class=\"req\">*</span>",
+    "lbl_gender": "Gender",
+    "lbl_gender_req": "Gender <span class=\"req\">*</span>",
+    "lbl_height": "Height (cm)",
+    "lbl_weight": "Current weight (kg)",
+    "lbl_wilaya": "City / State",
+    "lbl_work_hours": "How many hours do you sit or stand at work?",
+    "lbl_main_goal": "What is your main goal?",
+    "lbl_main_goal_req": "What is your main goal? <span class=\"req\">*</span>",
+    "lbl_why_goal": "Why this goal specifically? What is your real motivation?",
+    "lbl_timeline": "In how much time do you want to reach your goal?",
+    "lbl_past_goal": "Have you reached this goal before? If not, what stopped you?",
+    "lbl_success_3m": "How do you define success after 3 months?",
+    "lbl_years_train": "How many years have you been training?",
+    "lbl_level": "How would you describe your current level?",
+    "lbl_past_programs": "What programs have you followed and what were the results?",
+    "lbl_past_coach": "Have you trained with a coach before? How was the experience?",
+    "lbl_weak_areas": "Which weak muscle groups do you want to develop?",
+    "lbl_days_week": "How many days per week do you train currently?",
+    "lbl_session_len": "How long is one session?",
+    "lbl_where": "Where do you train?",
+    "lbl_when": "What time of day do you train?",
+    "lbl_injuries": "Any injuries or chronic pain affecting training?",
+    "lbl_fatigue": "Do you notice early fatigue or shortness of breath during training?",
+    "lbl_desired_days": "How many training days do you want in the new program?",
+    "lbl_liked_ex": "Which exercises do you enjoy?",
+    "lbl_disliked_ex": "Which exercises do you dislike or avoid? Why?",
+    "lbl_feel_ex": "Which exercises give you a good muscle connection?",
+    "lbl_hard_ex": "Which exercises do you find technically hard?",
+    "lbl_equip": "Do you prefer free weights or machines?",
+    "lbl_after_feel": "How do you feel after finishing a workout?",
+    "lbl_chronic": "Any diagnosed chronic illness?",
+    "lbl_meds": "Do you take any medication regularly?",
+    "lbl_surgery": "Any major surgeries?",
+    "lbl_allergy": "Any food or supplement allergies?",
+    "lbl_digest": "Any digestive issues?",
+    "lbl_family": "🧬 Family history of heart disease or diabetes?",
+    "lbl_parents_ob": "Do either of your parents struggle with obesity?",
+    "lbl_horm_test": "Have you done a hormone panel before? Results?",
+    "lbl_ext_horm": "Have you ever used exogenous hormones?",
+    "lbl_blood": "Have you done blood work in the last 6 months?",
+    "lbl_lab_values": "If you know the values, list them:",
+    "lbl_meals": "How many meals per day?",
+    "lbl_water": "How many liters of water per day?",
+    "lbl_daily_diet": "What does your daily diet look like?",
+    "lbl_track_cal": "Do you track calories or protein?",
+    "lbl_foods_hate": "Foods you don't eat or dislike?",
+    "lbl_eat_out": "Do you eat out often — and what's your food budget?",
+    "lbl_smoke": "Do you smoke?",
+    "lbl_fish": "How often do you eat fish per week?",
+    "lbl_eggs": "How many eggs per day?",
+    "lbl_protein": "Daily protein sources and amounts?",
+    "lbl_oil": "What oil do you cook with?",
+    "lbl_nuts": "Do you eat nuts?",
+    "lbl_diet_style": "Prefer macros only or fixed meals?",
+    "lbl_sleep_h": "How many hours do you sleep?",
+    "lbl_sleep_q": "How is your sleep quality?",
+    "lbl_stress": "Daily stress level?",
+    "lbl_snore": "Heavy snoring or sleep apnea?",
+    "lbl_mobility": "Do you stretch or do mobility work after training?",
+    "lbl_rest": "Rest days between sessions for the same muscle?",
+    "lbl_supps_now": "Current supplements and doses?",
+    "lbl_supps_past": "Past supplements and results?",
+    "lbl_caffeine": "Caffeine tolerance?",
+    "lbl_whey": "Does whey cause digestive issues?",
+    "lbl_supp_budget": "Monthly supplement budget?",
+    "lbl_stops": "Repeated training stops? Why?",
+    "lbl_frustrate": "What frustrates you most about training and nutrition?",
+    "lbl_measurements": "📏 Body measurements (cm)",
+    "lbl_strength": "💪 Current strength levels — optional",
+    "lbl_scale": "Do you have a scale at home?",
+    "lbl_expect": "What do you expect from the coach specifically?",
+    "lbl_comm_style": "Prefer explanations or just the plan?",
+    "lbl_extra": "Anything important to add?",
+    "lbl_wa": "WhatsApp number",
+    "lbl_wa_req": "WhatsApp number <span class=\"req\">*</span>",
+    "c_work_lt4": "< 4 hrs",
+    "c_work_4_6": "4–6 hrs",
+    "c_work_6_8": "6–8 hrs",
+    "c_work_gt8": "+8 hrs",
+    "c_goal_bulk": "Build muscle",
+    "c_goal_cut": "Cut / fat loss",
+    "c_goal_recomp": "Recomposition",
+    "c_time_3m": "3 months",
+    "c_time_6m": "6 months",
+    "c_time_1y": "1 year",
+    "c_time_none": "No deadline",
+    "c_yr_lt1": "< 1 year",
+    "c_yr_1_2": "1–2 years",
+    "c_yr_2_4": "2–4 years",
+    "c_yr_gt4": "+4 years",
+    "c_lvl_beg": "Beginner",
+    "c_lvl_int": "Intermediate",
+    "c_lvl_adv": "Advanced",
+    "c_days_1_2": "1–2 days",
+    "c_days_3": "3 days",
+    "c_days_4": "4 days",
+    "c_days_5p": "5+ days",
+    "c_days_irreg": "Irregular",
+    "c_days_5": "5 days",
+    "c_days_6": "6 days",
+    "c_ses_lt45": "< 45 min",
+    "c_ses_45_60": "45–60 min",
+    "c_ses_60_90": "60–90 min",
+    "c_ses_gt90": "+90 min",
+    "c_place_gym": "Gym",
+    "c_place_home": "Home",
+    "c_place_both": "Both",
+    "c_tod_morn": "Morning",
+    "c_tod_noon": "Noon",
+    "c_tod_eve": "Evening",
+    "c_tod_night": "Night",
+    "c_fat_no": "No, good fitness",
+    "c_sometimes": "Sometimes",
+    "c_fat_yes": "Yes, often",
+    "c_eq_free": "Free weights",
+    "c_eq_mach": "Machines",
+    "c_par_one": "Yes, one parent",
+    "c_horm_now": "Yes — currently",
+    "c_horm_past": "Yes — in the past",
+    "c_blood_yes": "Yes — I'll send the report",
+    "c_meal_1_2": "1–2 meals",
+    "c_meal_3": "3 meals",
+    "c_meal_4_5": "4–5 meals",
+    "c_wat_lt15": "< 1.5L",
+    "c_wat_15_2": "1.5–2L",
+    "c_wat_2_3": "2–3L",
+    "c_wat_gt3": "+3L",
+    "c_yes_reg": "Yes, regularly",
+    "c_smok_lt": "< 1 pack/day",
+    "c_smok_pack": "1 pack or more",
+    "c_smok_quit": "Quit",
+    "c_fish_rare": "Rarely / no",
+    "c_fish_1": "1× / week",
+    "c_fish_2": "2× or more",
+    "c_egg_0": "None",
+    "c_egg_12": "1–2",
+    "c_egg_34": "3–4",
+    "c_egg_5": "5+",
+    "c_oil_reg": "Regular oil",
+    "c_oil_olive": "Olive oil",
+    "c_diet_macro": "Macros only",
+    "c_diet_meals": "Fixed meals",
+    "c_slp_lt5": "< 5 hrs",
+    "c_slp_5_6": "5–6 hrs",
+    "c_slp_7_8": "7–8 hrs",
+    "c_slp_gt8": "+8 hrs",
+    "c_slpq_exc": "Excellent",
+    "c_slpq_good": "Good",
+    "c_slpq_bad": "Poor",
+    "c_slpq_ins": "Insomnia",
+    "c_str_low": "Low",
+    "c_str_high": "High",
+    "c_str_vhigh": "Very high",
+    "c_snore_only": "Snoring only",
+    "c_snore_apnea": "Diagnosed apnea",
+    "c_mob_always": "Always",
+    "c_mob_never": "Never",
+    "c_rest_1": "1 day",
+    "c_rest_2": "2 days",
+    "c_rest_3": "3+ days",
+    "c_rest_unk": "Don't know",
+    "c_caf_low": "Low",
+    "c_caf_high": "High",
+    "c_whey_never": "Never tried",
+    "c_style_understand": "I want to understand everything",
+    "c_style_do": "Just give me the plan",
+    "c_yes": "Yes",
+    "c_no": "No"
+  }
+};
+
+let currentLang = 'ar';
+let TITLES = I18N.ar.titles;
+const TOTAL = 12;
+let cur = 1;
+let picks = {};
+let saveTimer = null;
+let formSubmitted = false;
+
+function t(key) {
+  return (I18N[currentLang] && I18N[currentLang][key]) || I18N.ar[key] || key;
+}
+
+function applyLanguage(lang) {
+  currentLang = lang;
+  const dict = I18N[lang] || I18N.ar;
+  TITLES = dict.titles;
+  document.documentElement.setAttribute('lang', lang);
+  document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key] !== undefined) el.textContent = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (dict[key] !== undefined) el.innerHTML = dict[key];
+  });
+
+  // Re-bind pNum after progressLabel html replace
+  const pNum = document.getElementById('pNum');
+  if (pNum) pNum.textContent = cur;
+  const pTitle = document.getElementById('pTitle');
+  if (pTitle) pTitle.textContent = TITLES[cur - 1];
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+  });
+
+  // Update all next buttons text
+  document.querySelectorAll('.btn-next:not(#btnSub)').forEach(b => { b.textContent = dict.btnNext; });
+  const btnSub = document.getElementById('btnSub');
+  if (btnSub && !btnSub.disabled) btnSub.textContent = dict.btnSubmit;
+
+  // Prev arrows direction
+  document.querySelectorAll('.btn-prev').forEach(b => {
+    b.textContent = lang === 'ar' ? '→' : '←';
+  });
+
+  updateSummary();
+  try { localStorage.setItem('q-lang', lang); } catch(e) {}
+}
+
+/* Theme */
+function applyTheme(mode) {
+  const btn = document.getElementById('themeToggle');
+  if (mode === 'light') {
+    document.body.classList.add('light');
+    if (btn) btn.textContent = '☀️';
+  } else {
+    document.body.classList.remove('light');
+    if (btn) btn.textContent = '🌙';
+  }
+  try { localStorage.setItem('q-theme', mode); } catch(e) {}
+}
+
+/* Women field */
+function toggleWomenField() {
+  const g = document.getElementById('i_gender');
+  const f = document.getElementById('womenOnlyField');
+  if (!g || !f) return;
+  f.style.display = (g.value === 'ذكر' || g.value === 'Male' || g.value === 'Homme') ? 'none' : '';
+}
+
+/* Step dots */
+function buildDots() {
+  const container = document.getElementById('stepDots');
+  container.innerHTML = '';
+  for (let i = 1; i <= TOTAL; i++) {
+    const d = document.createElement('div');
+    d.className = 'step-dot' + (i === 1 ? ' active' : '');
+    d.id = 'dot' + i;
+    d.setAttribute('data-step', i);
+    d.addEventListener('click', function() {
+      const target = parseInt(this.getAttribute('data-step'), 10);
+      if (target < cur) go(cur, target);
+    });
+    container.appendChild(d);
+  }
+}
+
+function updateDots(current) {
+  for (let i = 1; i <= TOTAL; i++) {
+    const d = document.getElementById('dot' + i);
+    if (!d) continue;
+    d.className = 'step-dot';
+    if (i < current) d.classList.add('done');
+    else if (i === current) d.classList.add('active');
+  }
+}
+
+function completionPct() {
+  return Math.round((cur / TOTAL) * 100);
+}
+
+/* BMI */
+function calcBMI() {
+  const h = parseFloat(document.getElementById('i_height').value);
+  const w = parseFloat(document.getElementById('i_weight').value);
+  const box = document.getElementById('bmiBox');
+  if (!h || !w || h < 100 || w < 30) { box.classList.remove('show'); return; }
+  const bmi = (w / ((h / 100) ** 2)).toFixed(1);
+  let label = '', color = 'var(--gold)';
+  if (bmi < 18.5)      { label = t('bmiUnder'); color = '#4FC3F7'; }
+  else if (bmi < 25)   { label = t('bmiNormal'); color = 'var(--green)'; }
+  else if (bmi < 30)   { label = t('bmiOver'); color = '#FFB74D'; }
+  else                 { label = t('bmiObese'); color = 'var(--red)'; }
+  document.getElementById('bmiVal').textContent = bmi;
+  document.getElementById('bmiVal').style.color = color;
+  document.getElementById('bmiLabel').textContent = label;
+  document.getElementById('bmiLabel').style.color = color;
+  box.classList.add('show');
+}
+
+/* Auto-save */
+const LS_KEY = 'coach_anis_form';
+
+function saveToStorage() {
+  const data = { cur, picks, fields: {}, lang: currentLang };
+  document.querySelectorAll('.section-card [name]').forEach(el => {
+    if (el.value.trim()) data.fields[el.name] = el.value;
+  });
+  try { localStorage.setItem(LS_KEY, JSON.stringify(data)); } catch(e){}
+  const badge = document.getElementById('saveBadge');
+  const saveText = document.getElementById('saveText');
+  if (saveText) saveText.textContent = t('savedPct').replace('{pct}', completionPct());
+  badge.classList.add('show');
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => badge.classList.remove('show'), 2000);
+}
+
+function loadFromStorage() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    if (data.fields) {
+      Object.entries(data.fields).forEach(([name, val]) => {
+        const el = document.querySelector('[name="' + name + '"]');
+        if (el) el.value = val;
+      });
+    }
+    if (data.picks) {
+      picks = data.picks;
+      Object.entries(picks).forEach(([name, val]) => {
+        document.querySelectorAll('.chip').forEach(chip => {
+          const oc = chip.getAttribute('onclick') || '';
+          if (oc.includes("'" + name + "'") && oc.includes("'" + val + "'")) {
+            chip.classList.add('on');
+          }
+        });
+      });
+    }
+    if (data.cur && data.cur > 1) {
+      document.getElementById('sec1').classList.remove('active');
+      cur = data.cur;
+      document.getElementById('sec' + cur).classList.add('active');
+      const pct = Math.round((cur / TOTAL) * 100);
+      document.getElementById('pFill').style.width = pct + '%';
+      document.getElementById('pNum').textContent = cur;
+      document.getElementById('pTitle').textContent = TITLES[cur - 1];
+      updateDots(cur);
+    }
+    calcBMI();
+    toggleWomenField();
+  } catch(e){}
+}
+
+function attachSaveListeners() {
+  document.querySelectorAll('.section-card input, .section-card textarea, .section-card select').forEach(el => {
+    el.addEventListener('input', saveToStorage);
+    el.addEventListener('change', saveToStorage);
+  });
+}
+
+function pick(el, name, val) {
+  el.closest('.chips').querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+  picks[name] = val;
+  const cw = el.closest('.chips-wrap');
+  if (cw) {
+    cw.classList.remove('invalid-chips');
+    const em = cw.querySelector('.err-msg');
+    if (em) em.style.display = 'none';
+  }
+  saveToStorage();
+  if (cur === 12) updateSummary();
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+function validateSection(secNum) {
+  let valid = true;
+  if (secNum === 1) {
+    const name = document.getElementById('i_name');
+    const fName = document.getElementById('f_name');
+    if (!name.value.trim()) { name.classList.add('invalid'); fName.classList.add('has-err'); valid = false; }
+    else { name.classList.remove('invalid'); fName.classList.remove('has-err'); }
+    const age = document.querySelector('#sec1 [name="العمر"]');
+    const fAge = document.getElementById('f_age');
+    if (!age.value.trim()) { age.classList.add('invalid'); fAge.classList.add('has-err'); valid = false; }
+    else { age.classList.remove('invalid'); fAge.classList.remove('has-err'); }
+    const gender = document.querySelector('#sec1 [name="الجنس"]');
+    const fGender = document.getElementById('f_gender');
+    if (!gender.value) { gender.classList.add('invalid'); fGender.classList.add('has-err'); valid = false; }
+    else { gender.classList.remove('invalid'); fGender.classList.remove('has-err'); }
+  }
+  if (secNum === 2) {
+    const cw = document.getElementById('cw_goal');
+    if (!picks['الهدف_الرئيسي']) {
+      cw.classList.add('invalid-chips');
+      cw.querySelector('.err-msg').style.display = 'block';
+      valid = false;
+    } else {
+      cw.classList.remove('invalid-chips');
+      cw.querySelector('.err-msg').style.display = 'none';
+    }
+  }
+  if (secNum === 12) {
+    const wa = document.getElementById('i_wa');
+    const fWa = document.getElementById('f_wa');
+    const errMsg = document.getElementById('wa_err_msg');
+    const digits = wa.value.replace(/\D/g, '');
+    if (!wa.value.trim()) {
+      wa.classList.add('invalid'); fWa.classList.add('has-err');
+      errMsg.textContent = t('errWaReq');
+      valid = false;
+    } else if (digits.length < 9) {
+      wa.classList.add('invalid'); fWa.classList.add('has-err');
+      errMsg.textContent = t('errWaShort');
+      valid = false;
+    } else {
+      wa.classList.remove('invalid'); fWa.classList.remove('has-err');
+    }
+  }
+  return valid;
+}
+
+function go(from, to) {
+  if (to > from) {
+    if (!validateSection(from)) {
+      showToast(t('toastRequired'));
+      return;
+    }
+  }
+  document.getElementById('sec' + from).classList.remove('active');
+  cur = to;
+  document.getElementById('sec' + to).classList.add('active');
+  const pct = Math.round((cur / TOTAL) * 100);
+  document.getElementById('pFill').style.width = pct + '%';
+  document.getElementById('pNum').textContent = cur;
+  document.getElementById('pTitle').textContent = TITLES[cur - 1];
+  updateDots(cur);
+  if (to === 12) updateSummary();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  saveToStorage();
+}
+
+function fieldVal(name) {
+  const el = document.querySelector('[name="' + name + '"]');
+  return el ? el.value.trim() : '';
+}
+
+function updateSummary() {
+  const box = document.getElementById('summaryContent');
+  if (!box) return;
+  const rows = [
+    [t('sumName'), fieldVal('الاسم_الكامل') || document.getElementById('i_name')?.value || '—'],
+    [t('sumAge'), fieldVal('العمر') || '—'],
+    [t('sumGender'), fieldVal('الجنس') || '—'],
+    [t('sumGoal'), picks['الهدف_الرئيسي'] || '—'],
+    [t('sumLevel'), picks['المستوى_الحالي'] || '—'],
+    [t('sumDays'), picks['الأيام_المرغوبة_في_البرنامج'] || picks['أيام_التدريب_الأسبوعية'] || '—'],
+    [t('sumWa'), fieldVal('رقم_الواتساب') || '—']
+  ];
+  box.innerHTML = rows.map(r => '<div class="s-row"><span class="s-k">' + r[0] + '</span><span class="s-v">' + (r[1] || '—') + '</span></div>').join('');
+}
+
+function downloadSummary() {
+  const name = fieldVal('الاسم_الكامل') || document.getElementById('i_name')?.value || 'client';
+  let text = 'Coach Anis — Questionnaire Summary\\n';
+  text += '==============================\\n';
+  text += t('sumName') + ': ' + name + '\\n';
+  text += t('sumAge') + ': ' + (fieldVal('العمر') || '—') + '\\n';
+  text += t('sumGender') + ': ' + (fieldVal('الجنس') || '—') + '\\n';
+  text += t('sumGoal') + ': ' + (picks['الهدف_الرئيسي'] || '—') + '\\n';
+  text += t('sumLevel') + ': ' + (picks['المستوى_الحالي'] || '—') + '\\n';
+  text += t('sumDays') + ': ' + (picks['الأيام_المرغوبة_في_البرنامج'] || '—') + '\\n';
+  text += t('sumWa') + ': ' + (fieldVal('رقم_الواتساب') || '—') + '\\n';
+  text += '==============================\\n';
+  Object.entries(picks).forEach(([k, v]) => { text += k + ': ' + v + '\\n'; });
+  document.querySelectorAll('.section-card [name]').forEach(el => {
+    if (el.value.trim()) text += el.name + ': ' + el.value.trim() + '\\n';
+  });
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'coach-anis-summary-' + name.replace(/\\s+/g, '-') + '.txt';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+async function submitForm() {
+  if (!validateSection(12)) {
+    showToast(t('toastWa'));
+    return;
+  }
+  const btn = document.getElementById('btnSub');
+  const errBox = document.getElementById('sendErr');
+  btn.textContent = t('btnSubmitting');
+  btn.disabled = true;
+  errBox.style.display = 'none';
+
+  const fd = new FormData();
+  document.querySelectorAll('.section-card [name]').forEach(el => {
+    const v = el.value.trim();
+    if (v) fd.append(el.name, v);
+  });
+  Object.entries(picks).forEach(([n, v]) => fd.append(n, v));
+  const nameVal = document.getElementById('i_name')?.value.trim() || 'عميل';
+  fd.append('_subject', 'استبيان جديد: ' + nameVal + ' — Coach Anis');
+
+  try {
+    const res = await fetch('https://formspree.io/f/maqlwbdy', {
+      method: 'POST',
+      body: fd,
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      formSubmitted = true;
+      try { localStorage.removeItem(LS_KEY); } catch(e){}
+      document.getElementById('sec12').classList.remove('active');
+      document.querySelector('.progress-wrap').style.display = 'none';
+      const firstName = nameVal.split(' ')[0];
+      document.getElementById('ty_name').textContent = firstName + '!';
+      document.getElementById('thankyou').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      throw new Error('Server error ' + res.status);
+    }
+  } catch(err) {
+    btn.textContent = t('btnSubmit');
+    btn.disabled = false;
+    errBox.style.display = 'block';
+  }
+}
+
+function resetForm() {
+  try { localStorage.removeItem(LS_KEY); } catch(e){}
+  picks = {};
+  cur = 1;
+  formSubmitted = false;
+  document.getElementById('thankyou').style.display = 'none';
+  document.querySelector('.progress-wrap').style.display = 'block';
+  document.querySelectorAll('.section-card input, .section-card textarea, .section-card select').forEach(el => { el.value = ''; });
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+  document.querySelectorAll('.section-card').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec1').classList.add('active');
+  document.getElementById('pFill').style.width = '0%';
+  document.getElementById('pNum').textContent = '1';
+  document.getElementById('pTitle').textContent = TITLES[0];
+  document.getElementById('bmiBox').classList.remove('show');
+  updateDots(1);
+  toggleWomenField();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* Leave confirmation */
+window.addEventListener('beforeunload', function(e) {
+  if (formSubmitted) return;
+  const hasData = Object.keys(picks).length > 0 ||
+    Array.from(document.querySelectorAll('.section-card [name]')).some(el => el.value.trim());
+  if (hasData) {
+    e.preventDefault();
+    e.returnValue = t('leaveConfirm');
+    return e.returnValue;
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Theme
+  let savedTheme = 'dark';
+  try { savedTheme = localStorage.getItem('q-theme') || 'dark'; } catch(e) {}
+  applyTheme(savedTheme);
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+      applyTheme(document.body.classList.contains('light') ? 'dark' : 'light');
+    });
+  }
+
+  // Language
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => applyLanguage(btn.getAttribute('data-lang')));
+  });
+  let savedLang = 'ar';
+  try { savedLang = localStorage.getItem('q-lang') || 'ar'; } catch(e) {}
+  applyLanguage(savedLang);
+
+  buildDots();
+  loadFromStorage();
+  attachSaveListeners();
+  toggleWomenField();
+
+  document.getElementById('i_height').addEventListener('input', calcBMI);
+  document.getElementById('i_weight').addEventListener('input', calcBMI);
+
+  document.querySelectorAll('.section-card input, .section-card select, .section-card textarea').forEach(el => {
+    el.addEventListener('input', () => {
+      el.classList.remove('invalid');
+      el.closest('.field')?.classList.remove('has-err');
+      if (cur === 12) updateSummary();
+    });
+    el.addEventListener('change', () => {
+      el.classList.remove('invalid');
+      el.closest('.field')?.classList.remove('has-err');
+      if (cur === 12) updateSummary();
+    });
+  });
+});
+</script>
+</body>
+</html>
