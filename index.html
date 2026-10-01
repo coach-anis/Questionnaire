@@ -1588,9 +1588,11 @@ function openWhatsAppFallback() {
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 async function trySubmitToFormSubmit(data, attempts = 3) {
+  const endpoint = 'https://formsubmit.co/ajax/anisbitam21@gmail.com';
+
   for (let i = 1; i <= attempts; i++) {
     try {
-      const res = await fetch('https://formsubmit.co/ajax/anisbitam997@gmail.com', {
+      const res = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1598,13 +1600,37 @@ async function trySubmitToFormSubmit(data, attempts = 3) {
         },
         body: JSON.stringify(data)
       });
+
       if (res.ok) {
         const json = await res.json().catch(() => ({}));
-        if (json.success === 'false') return false;
+        if (json.success === false || json.success === 'false') {
+          console.warn('FormSubmit rejected:', json);
+          return false;
+        }
         return true;
       }
-    } catch (e) { /* network error, retry */ }
-    if (i < attempts) await sleep(1200 * i);
+    } catch (e) {
+      console.warn('FormSubmit attempt failed:', e);
+    }
+
+    if (i >= 2) {
+      try {
+        const fd = new FormData();
+        Object.entries(data).forEach(([k, v]) => fd.append(k, v));
+        const res2 = await fetch(endpoint, {
+          method: 'POST',
+          body: fd,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res2.ok) {
+          const json2 = await res2.json().catch(() => ({}));
+          if (json2.success === false || json2.success === 'false') return false;
+          return true;
+        }
+      } catch (e2) { /* ignore */ }
+    }
+
+    if (i < attempts) await sleep(1000 * i);
   }
   return false;
 }
@@ -1644,6 +1670,7 @@ async function submitForm() {
   data['_subject'] = `استبيان ${currentPkg.label}: ${nameVal} — Coach Anis`;
   data['_template'] = 'table';
   data['_captcha'] = 'false';
+  data['_honey'] = '';
 
   btn.textContent = '⏳ جاري الإرسال... (قد يعيد المحاولة تلقائياً)';
   const ok = await trySubmitToFormSubmit(data, 3);
@@ -1660,7 +1687,7 @@ async function submitForm() {
     btn.textContent = 'إرسال الاستبيان ✦';
     btn.disabled = false;
     errBox.style.display = 'block';
-    errBox.innerHTML = '⚠️ تعذّر الإرسال المباشر — تم فتح واتساب لإرسال بياناتك مباشرة للمدرب، الرجاء الضغط على "إرسال" هناك.<br><button type="button" onclick="openWhatsAppFallback()" style="margin-top:8px;background:#25D366;color:#fff;border:none;border-radius:8px;padding:9px 16px;font-family:\'Cairo\',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">📲 إرسال عبر واتساب الآن</button>';
+    errBox.innerHTML = '⚠️ تعذّر الإرسال المباشر — تم فتح واتساب لإرسال بياناتك مباشرة للمدرب، الرجاء الضغط على "إرسال" هناك.<br><br><small style="color:#999">إذا كانت هذه أول مرة: تحقق من إيميل anisbitam21@gmail.com واضغط Activate form</small><br><button type="button" onclick="openWhatsAppFallback()" style="margin-top:8px;background:#25D366;color:#fff;border:none;border-radius:8px;padding:9px 16px;font-family:\'Cairo\',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">📲 إرسال عبر واتساب الآن</button>';
     openWhatsAppFallback();
   }
 }
