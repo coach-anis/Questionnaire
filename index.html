@@ -1587,52 +1587,46 @@ function openWhatsAppFallback() {
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-async function trySubmitToFormSubmit(data, attempts = 3) {
-  const endpoint = 'https://formsubmit.co/ajax/anisbitam21@gmail.com';
+// ─── Web3Forms access key (free at https://web3forms.com) ───
+const WEB3FORMS_KEY = '751c342c-ae38-4ca4-bbd7-5fb673f50887';
+const ORDER_TIMEOUT_MS = 10000;
 
-  for (let i = 1; i <= attempts; i++) {
-    try {
-      const res = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
+async function sendViaFormSubmit(data) {
+  const res = await fetch('https://formsubmit.co/ajax/anisbitam21@gmail.com', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  let json = null;
+  try { json = await res.json(); } catch (e) {}
+  return !!(res.ok && json && (json.success === true || json.success === 'true'));
+}
 
-      if (res.ok) {
-        const json = await res.json().catch(() => ({}));
-        if (json.success === false || json.success === 'false') {
-          console.warn('FormSubmit rejected:', json);
-          return false;
-        }
-        return true;
-      }
-    } catch (e) {
-      console.warn('FormSubmit attempt failed:', e);
-    }
+async function sendViaWeb3Forms(data) {
+  if (!WEB3FORMS_KEY) return false;
+  const payload = { access_key: WEB3FORMS_KEY, subject: data['_subject'] || 'استبيان جديد — Coach Anis', from_name: 'Coach Anis Questionnaire' };
+  Object.entries(data).forEach(([k, v]) => { if (k.charAt(0) !== '_') payload[k] = v; });
+  const res = await fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  let json = null;
+  try { json = await res.json(); } catch (e) {}
+  return !!(res.ok && json && json.success === true);
+}
 
-    if (i >= 2) {
-      try {
-        const fd = new FormData();
-        Object.entries(data).forEach(([k, v]) => fd.append(k, v));
-        const res2 = await fetch(endpoint, {
-          method: 'POST',
-          body: fd,
-          headers: { 'Accept': 'application/json' }
-        });
-        if (res2.ok) {
-          const json2 = await res2.json().catch(() => ({}));
-          if (json2.success === false || json2.success === 'false') return false;
-          return true;
-        }
-      } catch (e2) { /* ignore */ }
-    }
-
-    if (i < attempts) await sleep(1000 * i);
-  }
-  return false;
+// Sends to both services in parallel; succeeds as soon as ONE confirms, fails if both fail or time out.
+function sendOrderEverywhere(data) {
+  const jobs = [sendViaWeb3Forms(data), sendViaFormSubmit(data)];
+  return new Promise(resolve => {
+    let pending = jobs.length, done = false, timer;
+    const finish = v => { if (!done) { done = true; clearTimeout(timer); resolve(v); } };
+    const failOne = () => { if (--pending === 0) finish(false); };
+    timer = setTimeout(() => finish(false), ORDER_TIMEOUT_MS);
+    jobs.forEach(p => p.then(ok => { if (ok) finish(true); else failOne(); })
+                       .catch(e => { console.warn('send failed:', e); failOne(); }));
+  });
 }
 
 async function submitForm() {
@@ -1672,8 +1666,8 @@ async function submitForm() {
   data['_captcha'] = 'false';
   data['_honey'] = '';
 
-  btn.textContent = '⏳ جاري الإرسال... (قد يعيد المحاولة تلقائياً)';
-  const ok = await trySubmitToFormSubmit(data, 3);
+  btn.textContent = '⏳ جاري الإرسال...';
+  const ok = await sendOrderEverywhere(data);
 
   if (ok) {
     try { localStorage.removeItem(LS_KEY); } catch(e){}
@@ -1687,8 +1681,7 @@ async function submitForm() {
     btn.textContent = 'إرسال الاستبيان ✦';
     btn.disabled = false;
     errBox.style.display = 'block';
-    errBox.innerHTML = '⚠️ تعذّر الإرسال المباشر — تم فتح واتساب لإرسال بياناتك مباشرة للمدرب، الرجاء الضغط على "إرسال" هناك.<br><br><small style="color:#999">إذا كانت هذه أول مرة: تحقق من إيميل anisbitam21@gmail.com واضغط Activate form</small><br><button type="button" onclick="openWhatsAppFallback()" style="margin-top:8px;background:#25D366;color:#fff;border:none;border-radius:8px;padding:9px 16px;font-family:\'Cairo\',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">📲 إرسال عبر واتساب الآن</button>';
-    openWhatsAppFallback();
+    errBox.innerHTML = '⚠️ لم نتمكن من تأكيد إرسال الاستبيان. اضغط الزر أدناه لإرسال بياناتك مباشرة للمدرب عبر واتساب (أو أعد المحاولة).<br><button type="button" onclick="openWhatsAppFallback()" style="margin-top:8px;background:#25D366;color:#fff;border:none;border-radius:8px;padding:9px 16px;font-family:\'Cairo\',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">📲 إرسال عبر واتساب الآن</button>';
   }
 }
 
