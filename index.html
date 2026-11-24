@@ -1587,6 +1587,20 @@ function openWhatsAppFallback() {
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
+// ─── Silent backup: saves the order to Google Sheet + Telegram + email via Apps Script ───
+var BACKUP_URL = 'https://script.google.com/macros/s/AKfycbxHAh1GuDGhQ9K73fDWbrzOjnX7clXnOyk4VHrtoARXWz2n74XHxkITUoBAxhxKclW2/exec';
+function sendBackupToSheet(site, fields) {
+  try {
+    fetch(BACKUP_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ site: site, fields: fields }),
+      keepalive: true
+    }).catch(function(){});
+  } catch (e) {}
+}
+
 // ─── Web3Forms access key (free at https://web3forms.com) ───
 const WEB3FORMS_KEY = '751c342c-ae38-4ca4-bbd7-5fb673f50887';
 const ORDER_TIMEOUT_MS = 10000;
@@ -1618,6 +1632,7 @@ async function sendViaWeb3Forms(data) {
 
 // Sends to both services in parallel; succeeds as soon as ONE confirms, fails if both fail or time out.
 function sendOrderEverywhere(data) {
+  (function () { var f = {}; Object.keys(data).forEach(function (k) { if (k.charAt(0) !== '_') f[k] = data[k]; }); sendBackupToSheet('Questionnaire', f); })();
   const jobs = [sendViaWeb3Forms(data), sendViaFormSubmit(data)];
   return new Promise(resolve => {
     let pending = jobs.length, done = false, timer;
