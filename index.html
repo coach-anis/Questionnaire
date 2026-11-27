@@ -1590,15 +1590,16 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 // ─── Silent backup: saves the order to Google Sheet + Telegram + email via Apps Script ───
 var BACKUP_URL = 'https://script.google.com/macros/s/AKfycbxHAh1GuDGhQ9K73fDWbrzOjnX7clXnOyk4VHrtoARXWz2n74XHxkITUoBAxhxKclW2/exec';
 function sendBackupToSheet(site, fields) {
+  // Returns a promise: true as soon as the request is sent (no-cors => opaque response), false on network failure.
   try {
-    fetch(BACKUP_URL, {
+    return fetch(BACKUP_URL, {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify({ site: site, fields: fields }),
       keepalive: true
-    }).catch(function(){});
-  } catch (e) {}
+    }).then(function(){ return true; }).catch(function(){ return false; });
+  } catch (e) { return Promise.resolve(false); }
 }
 
 // ─── Web3Forms access key (free at https://web3forms.com) ───
@@ -1632,8 +1633,8 @@ async function sendViaWeb3Forms(data) {
 
 // Sends to both services in parallel; succeeds as soon as ONE confirms, fails if both fail or time out.
 function sendOrderEverywhere(data) {
-  (function () { var f = {}; Object.keys(data).forEach(function (k) { if (k.charAt(0) !== '_') f[k] = data[k]; }); sendBackupToSheet('Questionnaire', f); })();
-  const jobs = [sendViaWeb3Forms(data), sendViaFormSubmit(data)];
+  const backupFields = {}; Object.keys(data).forEach(function (k) { if (k.charAt(0) !== '_') backupFields[k] = data[k]; });
+  const jobs = [sendBackupToSheet('Questionnaire', backupFields), sendViaWeb3Forms(data), sendViaFormSubmit(data)];
   return new Promise(resolve => {
     let pending = jobs.length, done = false, timer;
     const finish = v => { if (!done) { done = true; clearTimeout(timer); resolve(v); } };
